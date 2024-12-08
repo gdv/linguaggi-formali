@@ -1,4 +1,4 @@
-# Linguaggi e Computabilità
+# Lezioni
 
 | # | Data | Argomento |
 |---|------|-----------|
