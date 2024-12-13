@@ -1,8 +1,8 @@
-# Linguaggi, Grammatiche, Parser
+* Linguaggi, Grammatiche, Parser
 
 Materiale dell'insegnamento di Linguaggi e Computabilità
 
-## Lezioni
+** Lezioni
 
 | Data | Inizio | Fine | Tipo | Argomento                                                                                                                                                                            |
 |------|--------|------|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
