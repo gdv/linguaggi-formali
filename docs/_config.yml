@@ -1,1 +1,1 @@
-theme: minima
+remote-theme: minima
