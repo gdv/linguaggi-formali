@@ -12,7 +12,7 @@ Iniziamo con le definizioni di base che saranno fondamentali in tutto il testo.
 Un \textbf{simbolo} o \textbf{carattere} è un qualsiasi elemento.
 
 
-\begin{definition}\label{def:alfabeto}
+\begin{definition}[Alfabeto]\label{def:alfabeto}
 Un \keyword{alfabeto}, normalmente indicato con $\Sigma$, è un insieme finito e non vuoto di simboli.
 \end{definition}
 
@@ -26,7 +26,7 @@ $\Sigma_{C}$ per l'alfabeto delle cifre.
 La giustapposizione di simboli permette di creare parole o stringhe, quali ad
 esempio \texttt{parola} o \texttt{2301}.
 
-\begin{definition}\label{def:parola}
+\begin{definition}[Parola]\label{def:parola}
 Sia $\Sigma$ un alfabeto.
 Allora una \keyword{parola} è una sequenza $\sigma_{1}\cdots\sigma_{n}$ di simboli, non necessariamente
 distinti, dell'alfabeto $\Sigma$.
@@ -43,7 +43,7 @@ Alcuni simboli sono speciali perchè hanno un significato particolare e non fann
 Il primo simbolo speciale che vediamo è $\epsilon$ e rappresenta la stringa vuota,
 formata dalla sequenza di zero simboli.
 
-\begin{definition}\label{def:linguaggio}
+\begin{definition}[Linguaggio]\label{def:linguaggio}
 Dato un alfabeto $\Sigma$, un \keyword{linguaggio} $L$ è un insieme di parole su $\Sigma$.
 \end{definition}
 
@@ -85,20 +85,53 @@ Siano $L$ un linguaggio e $z$ una parola, entrambi sull'alfabeto $\Sigma$.
 Determinare se $z$ sia una parola del linguaggio $L$.
 \end{problem}
 
-Il problema dell'appartenenza è un problema di \keyword{decisione}, perchè
+Il problema dell'appartenenza è un \keyword{problema di decisione}, perchè
 ammette solo due risposte: sì o no.
 
 
-\begin{itemize}
-	\item si definisce \textbf{potenza di un alfabeto} $\Sigma^k$ come l'insieme di tutte le sequenze (espressi come stringhe e non simboli) di lunghezza $k\in\mathbb{N},\, k>0$ ottenibili da quell'alfabeto (se $\Sigma^2$ si avranno tutte le sequenza di 2 elementi etc...). Se ho $k=1$ si ha $\Sigma^1\neq \Sigma$ in quanto ora ho stringhe e non simboli. Se ho $k=0$ ho $\Sigma^0=\varepsilon$. Dato $k$ ho $|\Sigma|$ che è la cardinalità dell'insieme $\Sigma$ (e non la sua lunghezza come nel caso delle stringhe); sia $w\in\Sigma^k=a_1,a_2,...,a_k,\,a_i\in\Sigma$ e $|\Sigma|=q$ ora: $$|\Sigma^k|=q^k$$
-	\item si definisce $\Sigma^*$ come\textbf{ chiusura di Kleene} che è l'unione infinita di $\Sigma^k$ ovvero $$\Sigma*=\Sigma^0\cup \Sigma^1\cup...\cup \Sigma^k$$
-	\item si ha che $\Sigma^+$ è l'unione per $k\geq 1$ di $\Sigma^k$ ovvero:
-				$$\Sigma+=\Sigma^1\cup \Sigma^2\cup...\cup \Sigma^k= \Sigma^*-\Sigma^0$$
+\begin{definition}\label{def:concatenazione-parole}
+concatenazione di due parole
+\end{definition}
+
+\begin{definition}\label{def:concatenazione-linguaggi}
+concatenazione di due linguaggi come prodotto cartesiano
+\end{definition}
+
+potenza di un linguaggio
+
+ si definisce \textbf{potenza di un alfabeto} $\Sigma^k$ come l'insieme di tutte le sequenze (espressi come stringhe e non simboli) di lunghezza $k\in\mathbb{N},\, k>0$ ottenibili da quell'alfabeto (se $\Sigma^2$ si avranno tutte le sequenza di 2 elementi etc...). Se ho $k=1$ si ha $\Sigma^1\neq \Sigma$ in quanto ora ho stringhe e non simboli. Se ho $k=0$ ho $\Sigma^0=\varepsilon$. Dato $k$ ho $|\Sigma|$ che è la cardinalità dell'insieme $\Sigma$ (e non la sua lunghezza come nel caso delle stringhe); sia $w\in\Sigma^k=a_1,a_2,...,a_k,\,a_i\in\Sigma$ e $|\Sigma|=q$ ora: $$|\Sigma^k|=q^k$$
+
+\begin{definition}\label{def:punto-fisso}
+minimo insieme chiuso rispetto ad un'operazione
+\end{definition}
+
+\begin{definition}\label{def:kleene}
+chiusura di Kleene come unione infinita di potenze.
+di $\Sigma^k$ ovvero $$\Sigma*=\Sigma^0\cup \Sigma^1\cup...\cup \Sigma^k$$
+\end{definition}
+
+\begin{proposition}\label{prop:kleene-punto-fisso}
+chiusura di Kleene come minimo punto fisso di $L\cup \{\epsilon\}$ rispetto alla concatenazione.
+\end{proposition}
+
+\begin{example}\label{exa:chiusura-kleene}
 				per esempio, per l'insieme $\{0,1\}$ si ha:
-				$$\Sigma^*=\{\varepsilon,0,1,00,01,10,100,000,...\}$$
-	\item quindi un \textbf{linguaggio} \textit{L} è un insieme di stringhe e:
-				$$L\subseteq \Sigma^*$$
-				si hanno sottoinsiemi particolari, come l'insieme vuoto, che resta però un linguaggio, il \textbf{linguaggio vuoto} e $\emptyset\in\Sigma^k,\,|\emptyset|=0$ che è diverso dal linguaggio che contiene la stringa vuota $|\varepsilon|=1$ (che conta come una stringa). Inoltre $\Sigma^*\subseteq \Sigma^*$ che ha lunghezza infinita. Posso concatenare due stringhe con un punto: $a\cdot b\cdot c=abc$ e $a\cdot \varepsilon=a$. Ovviamente la stringa concatenata è lunga come la somma delle lunghezze delle stringhe che la compongono. Vediamo qualche esempio di linguaggio:
+				$\Sigma^*=\{\varepsilon,0,1,00,01,10,100,000,...\}$
+\end{example}
+
+\begin{observation}\label{obs:linguaggio}
+Un linguaggio $L$ su alfabeto $\Sigma$ è un sottoinsieme di stringhe in $ \Sigma^*$,
+quindi $L\subseteq \Sigma^*$.
+\end{observation}
+
+Linguaggi particolari: il \textbf{linguaggio vuoto} e $\emptyset\in\Sigma^k,\,|\emptyset|=0$ che è
+diverso dal linguaggio che contiene la stringa vuota $|\varepsilon|=1$ (che conta come una
+stringa).
+
+Inoltre $\Sigma^*$ è sempre un linguaggio infinito.
+
+Esempi
+
 				\begin{itemize}
 					\item il linguaggio di tutte le stringhe che consistono in $n$ 0 seguiti da $n$ 1:
 								$$\{\varepsilon,01,0011,000111,...\}$$
@@ -109,8 +142,8 @@ ammette solo due risposte: sì o no.
 					\item $\Sigma^*$ è un linguaggio per ogni alfabeto $\Sigma$
 					\item $\emptyset$, il linguaggio vuoto, e $\{\varepsilon\}$ sono un linguaggio rispetto a qualunque alfabeto
 				\end{itemize}
-\end{itemize}
-Prendiamo un alfabeto $\Sigma=\{0, 1\}$ con la sua chiusura di Kleen $\Sigma=\{0, 1\}^*$. Quando si ha un input si può avere un problema di decisione, \textit{P}, che dia come output "si" o "no". Posso avere un problema di decisione (o \textit{membership}) su $w\in\Sigma=\{0, 1\}^*$, con \textit{w} stringa, che dia in output "si" o "no". Un linguaggio \textit{L} sarà:
+
+				Prendiamo un alfabeto $\Sigma=\{0, 1\}$ con la sua chiusura di Kleen $\Sigma=\{0, 1\}^*$. Quando si ha un input si può avere un problema di decisione, \textit{P}, che dia come output "si" o "no". Posso avere un problema di decisione (o \textit{membership}) su $w\in\Sigma=\{0, 1\}^*$, con \textit{w} stringa, che dia in output "si" o "no". Un linguaggio \textit{L} sarà:
 $$L=\{w\in\{0, 1\}^*\,|\,\, P(w)=si$$
 quindi si ha che:
 $$\Sigma^*\backslash L=\{P(w)=no\}$$
@@ -1004,6 +1037,6 @@ $$(0+1)^*\neq 0^*+1^*$$
 
 %%% Local Variables:
 %%% mode: LaTeX
-%%% TeX-master: "../linguaggi-book"
+%%% TeX-master: "../libro-linguaggi"
 %%% TeX-engine: luatex
 %%% End:

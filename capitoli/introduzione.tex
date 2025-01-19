@@ -1,0 +1,30 @@
+\chapter{Introduzione}
+
+Questo testo si prefigge di introdurre i linguaggi formali e descrivere la
+rilevanza che questi hanno nel disegno di un compilatore.
+
+In sintesi, un compilatore è un programma che riceve il codice sorgente di un
+programma e produce un programma equivalente, detto codice oggetto, in un altro
+linguaggio di programmazione: spesso in assembler.
+
+L'anatomia di un compilatore individua tre componenti
+principali~\sidecite{engineering-a-compiler}:
+\begin{enumerate}
+\item
+      Frontend: trasforma il codice sorgente in una rappresentazione intermedia
+      (IR) indipendente dal linguaggio di programmazione.
+\item
+      Optimizer: manipola la rappresentazione intermedia per migliorarne le
+      caratteristiche (rendere più veloce il programma, usare meno memoria,
+      ecc.)
+\item
+      Backend: riceve la rappresentazione intermedia ed emette il corrispondente
+      codice oggetto.
+\end{enumerate}
+
+Vedremo che i linguaggi formali sono il fondamento di ogni frontend.
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../libro-linguaggi"
+%%% End:
