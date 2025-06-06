@@ -1,0 +1,181 @@
+% Choose the language
+\usepackage{polyglossia}
+\setmainlanguage{italian}
+\usepackage[english=british]{csquotes}	% English quotes
+
+% Creative commons license
+\usepackage[
+	type={CC},
+	modifier={by-sa},
+	version={4.0},
+]{doclicense}
+
+
+% Load the bibliography package
+\usepackage[sorting=nyt]{kaobiblio}
+\addbibresource{compilatori.bib} % Bibliography file
+
+%\usepackage[framed=true]{kaotheorems}
+\usepackage{amsmath} % Improved mathematics
+\usepackage{amsthm} % Mathematical environments
+\usepackage{thmtools} % Theorem styles
+\usepackage[framemethod=TikZ]{mdframed}
+% From kaobook
+\mdfsetup{skipabove=\topskip,skipbelow=-.5\topskip}
+\mdfdefinestyle{mdfkao}{
+  skipabove=\topskip,
+  skipbelow=\topskip, % Does not work :(
+  rightmargin=0pt,
+  leftmargin=0pt,
+  innertopmargin=7pt,
+  innerbottommargin=7pt,
+  innerrightmargin=7pt,
+  innerleftmargin=7pt,
+  topline=false,
+  bottomline=true,
+  rightline=false,
+  leftline=false,
+  frametitlerule=true,
+}
+
+\declaretheoremstyle[
+spaceabove=6pt,
+spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+shaded={bgcolor=Goldenrod!45!white},
+headpunct={}
+]{mythmstyle}
+
+\theoremstyle{mythmstyle}
+\declaretheorem[
+name=Teorema,
+style=mythmstyle,
+refname={Teorema,Teeoremi},
+Refname={Teorema,Teeoremi},
+numberwithin=chapter,
+]{theorem}
+\declaretheorem[
+name=Proposizione,
+style=mythmstyle,
+sibling=theorem,
+refname={Proposizione,Proposizioni},
+Refname={Proposizione,Proposizioni},
+numberwithin=chapter,
+]{proposition}
+\declaretheorem[
+name=Corollario,
+style=mythmstyle,
+sibling=theorem,
+refname={Corollario,Corollari},
+Refname={Corollario,Corollari},
+numberwithin=chapter,
+]{corollary}
+\declaretheorem[
+name=Lemma,
+style=mythmstyle,
+sibling=theorem,
+refname={Lemma,Lemmi},
+Refname={Lemma,Lemmi},
+numberwithin=chapter,
+]{lemma}
+\declaretheorem[
+name=Nota,
+style=mythmstyle,
+sibling=theorem,
+refname={Nota,Note},
+Refname={Nota,Note},
+numberwithin=chapter,
+]{observation}
+
+
+% Quello che segue non ha la stessa numerazione di teoremi, lemmi, ecc.
+\declaretheoremstyle[
+spaceabove=6pt,
+spacebelow=12pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+shaded={bgcolor=green!15!white},
+headpunct={}
+]{mydefstyle}
+\declaretheorem[
+name=Definizione,
+style=mydefstyle,
+refname={Definizione,Definizioni},
+Refname={Definizione,Definizioni},
+numberwithin=chapter,
+]{definition}
+
+\declaretheorem[
+name=Problema,
+style=mydefstyle,
+refname={Problema,Problemi},
+Refname={Problema,Problemi},
+]{problem}
+
+
+
+\declaretheoremstyle[
+spaceabove=6pt,
+spacebelow=6pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries, notebraces={(}{)},
+bodyfont=\normalfont,
+postheadspace=1em,
+shaded={bgcolor=gray!15!white},
+headpunct={}
+]{myexamplestyle}
+\declaretheorem[
+name=Esempio,
+style=myexamplestyle,
+refname={Esempio,Esempi},
+Refname={Esempio,Esempi},
+numberwithin=chapter,
+]{example}
+
+\declaretheorem[
+name=Esercizio,
+style=mythmstyle,
+refname={Esercizio,Esercizi},
+Refname={Esercizio,Esercizi},
+numberwithin=chapter,
+]{exercise}
+
+
+\usepackage{subfiles}
+
+\newcommand{\parte}[1]{\pagelayout{wide}\addpart{#1}\pagelayout{margin}}
+
+
+\usepackage{kaorefs}
+
+% Set the paths where to look for images
+\usepackage{subcaption}
+\graphicspath{{./imgs/}{./img/}}
+
+\makeindex[columns=3, title=Alphabetical Index, intoc] % Make LaTeX produce the files required to compile the index
+
+\makeglossaries% Make LaTeX produce the files required to compile the glossary
+\makenomenclature
+% Tikz
+\usetikzlibrary{automata,positioning}
+
+\newcommand{\keyword}[1]{\textbf{#1}\marginnote{#1}}
+
+\usepackage{upref}
+\usepackage{siunitx}
+\usepackage{upquote}
+\let\refeq\relax
+\usepackage{mathtools}
+\usepackage{unicode-math}
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-engine: luatex
+%%% TeX-master: "libro-linguaggi"
+%%% End:
