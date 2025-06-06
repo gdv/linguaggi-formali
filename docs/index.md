@@ -1,30 +1,27 @@
-| Data | Inizio | Fine | Tipo | Argomento                                                                                                                                                                            |
-|------|--------|------|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 1    |        |      |      | I linguaggi e la computabilità, teoria e applicazioni.                                                                                                                               |
-| 2    |        |      |      | I linguaggi formali: definizioni di base Rappresentazione finita dei linguaggi, riconoscitori e generatori. La gerarchia di macchine astratte e quella di Chomsky delle grammatiche. |
-| 3    |        |      |      | Le grammatiche di tipo 2 o libere dal contesto. Derivazioni e linguaggio generato dalla grammatica, derivazioni left most e right most.                                              |
-| 4    |        |      |      | Le grammatiche di tipo 2: derivazioni e alberi sintattici. Esempi tipici di grammatiche di tipo 2 (sequenze di blocchi e blocchi innestati).                                         |
-| 5    |        |      |      | Esercizi sulle grammatiche di tipo 2, derivazioni e alberi di derivazione. Esempio di grammatica ambigua e discussione                                                               |
-| 6    |        |      |      | Grammatiche ambigue e linguaggi non ambigui o inerentemente ambigui. Introduzione alle grammatiche di tipo 3: la grammatica degli identificatori.                                    |
-| 7    |        |      |      | Le grammatiche di tipo 3, lineari destre e lineari sinistre.                                                                                                                         |
-| 8    |        |      |      | Grammatiche di tipo 1.                                                                                                                                                               |
-| 9    |        |      |      | Operazioni tra linguaggi. Espressioni Regolari.                                                                                                                                      |
-| 10   |        |      |      | Esercizi sulle espressioni regolari. Automi a stati finiti deterministici (DFA).                                                                                                     |
-| 11   |        |      |      | Automi a stati finiti deterministici (DFA): la funzione delta cappuccio e il linguaggi accettato. Esercizi.                                                                          |
-| 12   |        |      |      | Automi a stati finiti non deterministici (NFA): la funzione delta cappuccio e il linguaggi accettato.                                                                                |
-| 13   |        |      |      | Automi a stati finiti non deterministici con epsilon mosse (\epsilon-NFA): la funzione delta cappuccio e il linguaggi accettato.                                                     |
-| 14   |        |      |      | Trasformazione di un automa a stati finiti non deterministico con epsilon mosse (\epsilon-NFA) in un DFA che accetta lo stesso linguaggio. .                                         |
-| 15   |        |      |      | Discussione sulla costruzione differita rispetto alla costruzione esaustiva. Espressioni Regolari a \epsilon-NFA.                                                                    |
-| 16   |        |      |      | Espressioni Regolari (operatore di chiusura di Kleene) a \epsilon-NFA.                                                                                                               |
-| 17   |        |      |      | Proprietà di chiusura dei linguaggi regolari. Il prodotto di automi. Da automi a stati finiti a espressioni regolari.                                                                |
-| 18   |        |      |      | Automa minimo: equivalenza tra automi.                                                                                                                                               |
-| 19   |        |      |      | DFA: equivalenza tra stati e distinguibilità tra stati. Algoritmo riempi-tabella per identificare tutte le coppie di stati distinguibili. Costruzione dell'Automa minimo.            |
-| 20   |        |      |      | Automa minimo.                                                                                                                                                                       |
-| 21   |        |      |      | Il Pumping Lemma per Linguaggi regolari.                                                                                                                                             |
-| 22   |        |      |      | Gli automi a pila (PDA).                                                                                                                                                             |
-| 23   |        |      |      | Gli automi a pila                                                                                                                                                                    |
-| 24   |        |      |      | Automi a pila deterministici (DPDA). La proprietà "prefix-free" dei linguaggi e il riconoscimento dei DPDA per stato finale o per pila vuota.                                        |
-| 25   |        |      |      | Automi a pila deterministici (DPDA). Introduzione alla macchina di Turing                                                                                                            |
-| 26   |        |      |      | La macchina di Turing. Classificazione Linguaggi e Problemi: Ricorsivamente enumerabili (RE), ricorsivi e non RE.                                                                    |
-| 27   |        |      |      |                                                                                                                                                                                      |
-| 28   |        |      |      |                                                                                                                                                                                      |
+1.  I linguaggi formali: definizioni di base. Rappresentazione finita dei linguaggi, riconoscitori e generatori. Gerarchia di macchine astratte. Gerarchia grammatiche. 
+2.  Espressioni Regolari. Automi a stati finiti deterministici (DFA). Grammatiche di tipo 1.                                                                            
+3.  Automi a stati finiti deterministici (DFA) e non deterministici (NFA): la funzione delta cappuccio e il linguaggio accettato.                                       
+4.  Automi a stati finiti non deterministici con epsilon mosse (ε-NFA). Equivalenza DFA, NFA, ε-NFA.                                                      
+5.  Espressioni Regolari.                                                                                                                                               
+6.  DFA -> Espressioni regolari.                                                                                                                                        
+7.  Espressioni regolari -> DFA                                                                                                                                         
+8.  Proprietà delle Espressioni regolari. Pumping Lemma.                                                                                                                
+9.  Costruzione dell'Automa minimo.                                                                                                                                     
+10. Le grammatiche di tipo 2 o libere dal contesto. Derivazioni e linguaggio generato dalla grammatica, derivazioni left most e right most.                             
+11. Le grammatiche di tipo 2: derivazioni e alberi sintattici.                                                                                                          
+12. Grammatiche ambigue                                                                                                                                                 
+13. Gli automi a pila non deterministici (PDA). Riconoscimento per stato finale o per pila vuota.                                                                       
+14. Da CFG a PDA.                                                                                                                                                       
+15. Automi a pila deterministici (DPDA). Proprietà dei linguaggi liberi da contesto.                                                                                    
+16. Introduzione ai parser. Recursive descent parser. Legame con CFG.                                                                                                   
+17. Parser top-down e bottom-up.                                                                                                                                        
+17. Parser LL(1)                                                                                                                                                        
+18. Parser LR(k)                                                                                                                                                        
+19. Parser LALR e SLR.                                                                                                                                                  
+20. Parsing Expression Grammar e Packrat parser.                                                                                                                        
+23. La macchina di Turing (MdT). Problemi di decisione e riconoscimento di linguaggi.                                                                                   
+24. Problemi Ricorsivamente enumerabili (RE), ricorsivi e non RE.                                                                                                       
+25. Problema dell'arresto e Problema di corrispondenza di Post.                                                                                                         
+26. MdT universale. Teorema di Rice.                                                                                                                                    
+27. Modello RAM. Da RAM a MdT                                                                                                                                           
+16. Pumping lemma per CFG                                                                                                                                               
