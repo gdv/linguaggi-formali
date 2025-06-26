@@ -1,5 +1,5 @@
 1.  I linguaggi formali: definizioni di base. Rappresentazione finita dei linguaggi, riconoscitori e generatori. Gerarchia di macchine astratte. Gerarchia grammatiche. 
-2.  Espressioni Regolari. Automi a stati finiti deterministici (DFA). Grammatiche di tipo 1.                                                                            
+2.  Espressioni Regolari. Automi a stati finiti deterministici (DFA). Grammatiche di tipo 3.
 3.  Automi a stati finiti deterministici (DFA) e non deterministici (NFA): la funzione delta cappuccio e il linguaggio accettato.                                       
 4.  Automi a stati finiti non deterministici con epsilon mosse (ε-NFA). Equivalenza DFA, NFA, ε-NFA.                                                      
 5.  Espressioni Regolari.                                                                                                                                               
