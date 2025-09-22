@@ -26,16 +26,45 @@ fontmethod = modern,
 %\author[GDV]{Gianluca Della Vedova}
 \date{\today}
 
-\frontmatter
+
+%----------------------------------------------------------------------------------------
+
+\frontmatter % Denotes the start of the pre-document content, uses roman numerals
+
+%----------------------------------------------------------------------------------------
+%       OPENING PAGE
+%----------------------------------------------------------------------------------------
+
+%\makeatletter
+%\extratitle{
+%       % In the title page, the title is vspaced by 9.5\baselineskip
+%       \vspace*{9\baselineskip}
+%       \vspace*{\parskip}
+%       \begin{center}
+%               % In the title page, \huge is set after the komafont for title
+%               \usekomafont{title}\huge\@title
+%       \end{center}
+%}
+%\makeatother
+
+
+
+%----------------------------------------------------------------------------------------
+%       OUTPUT TITLE PAGE AND PREVIOUS
+%----------------------------------------------------------------------------------------
+
+% Note that \maketitle outputs the pages before here
+
+\maketitle
 
 %----------------------------------------------------------------------------------------
 %       COPYRIGHT PAGE
 %----------------------------------------------------------------------------------------
 
-\makeatletter
-\uppertitleback{\@titlehead} % Header
 
-\lowertitleback{\doclicenseThis%
+\vfill
+
+\doclicenseThis%
 Sei libero di riprodurre, distribuire, comunicare al pubblico, esporre
 in pubblico, rappresentare, eseguire, recitare e modificare quest'opera
 alle seguenti condizioni:
@@ -54,17 +83,14 @@ una licenza identica o equivalente a  questa.
 Tutto il materiale si trova al link
 \url{https://github.com/gdv/linguaggi-formali}.
 Tutti sono invitati a contribuire a questo libro.
-}
-\makeatother
-\maketitle
-
-
+\newpage
 %----------------------------------------------------------------------------------------
 %       PREFACE
 %----------------------------------------------------------------------------------------
 
 %\input{chapters/preface.tex}
 %\index{preface}
+
 
 %----------------------------------------------------------------------------------------
 %       TABLE OF CONTENTS & LIST OF FIGURES/TABLES
@@ -96,24 +122,26 @@ Tutti sono invitati a contribuire a questo libro.
 \input{capitoli/introduzione.tex}
 
 
-\parte{Linguaggi e grammatiche}
+\parte{Linguaggi e grammatiche}\label{part:linguaggi}
 \input{capitoli/linguaggi.tex}
-\input{capitoli/automi-stati-finiti.tex}
+\input{capitoli/espressioni-regolari.tex}
 \input{capitoli/automi-pila.tex}
+
+\parte{Computabilità}\label{part:turing}
 \input{capitoli/macchine-turing.tex}
 
 
-\parte{Parser}
+\parte{Parser}\label{part:parser}
 \input{capitoli/analisi-lessicale.tex}
-\input{capitoli/parser-ricorsivi.tex}
+\input{capitoli/parser-top-down.tex}
 \input{capitoli/ll.tex}
 \input{capitoli/lrk.tex}
 \input{capitoli/peg.tex}
 
 
-\appendix % From here onwards, chapters are numbered with letters, as is the appendix convention
+%\appendix % From here onwards, chapters are numbered with letters, as is the appendix convention
 
-\parte{Appendix}
+%\parte{Appendix}
 
 %\input{chapters/appendix.tex}
 
@@ -138,13 +166,17 @@ Tutti sono invitati a contribuire a questo libro.
 
 % The nomenclature needs to be compiled on the command line with 'makeindex main.nlo -s nomencl.ist -o main.nls' from the template directory
 
-%\nomenclature{$c$}{Speed of light in a vacuum inertial frame}
+\nomenclature{$A$, $B$}{Insieme generico}
+\nomenclature{$\Sigma$}{Alfabeto}
+\nomenclature{$w, x, y, z$}{Parole o stringhe}
+\nomenclature{$\epsilon$}{Parola vuota}
+\nomenclature{$L$}{Linguaggio}
 %\nomenclature{$h$}{Planck constant}
 %
-%\renewcommand{\nomname}{Notation} % Rename the default 'Nomenclature'
-%\renewcommand{\nompreamble}{The next list describes several symbols that will be later used within the body of the document.} % Prepend this text to the nomenclature
+\renewcommand{\nomname}{Lista dei simboli} % Rename the default 'Nomenclature'
+\renewcommand{\nompreamble}{Lista dei simboli.} % Prepend this text to the nomenclature
 %
-%\printnomenclature % Output the nomenclature
+\printnomenclature% Output the nomenclature
 
 
 %----------------------------------------------------------------------------------------
@@ -164,8 +196,30 @@ Tutti sono invitati a contribuire a questo libro.
 
 %\printindex % Output the index
 
-%\newpage
-%\listoftheorems
+\newpage
+\listoftheorems
+
+%----------------------------------------------------------------------------------------
+%       LIST OF FIGURES/TABLES
+%----------------------------------------------------------------------------------------
+
+\begingroup % Local scope for the following commands
+
+% Define the style for the TOC, LOF, and LOT
+%\setstretch{1} % Uncomment to modify line spacing in the ToC
+%\hypersetup{linkcolor=blue} % Uncomment to set the colour of links in the ToC
+\setlength{\textheight}{230\hscale} % Manually adjust the height of the ToC pages
+
+\listoffigures % Output the list of figures
+
+% Comment both of the following lines to have the LOF and the LOT on different pages
+%\let\cleardoublepage\bigskip
+%\let\clearpage\bigskip
+
+\listoftables % Output the list of tables
+
+\endgroup
+
 
 \end{document}
 

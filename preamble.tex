@@ -53,8 +53,8 @@ headpunct={}
 \declaretheorem[
 name=Teorema,
 style=mythmstyle,
-refname={Teorema,Teeoremi},
-Refname={Teorema,Teeoremi},
+refname={Teorema,Teoremi},
+Refname={Teorema,Teoremi},
 numberwithin=chapter,
 ]{theorem}
 \declaretheorem[
@@ -161,10 +161,22 @@ numberwithin=chapter,
 
 \makeglossaries% Make LaTeX produce the files required to compile the glossary
 \makenomenclature
+
 % Tikz
 \usetikzlibrary{automata,positioning}
 
 \newcommand{\keyword}[1]{\textbf{#1}\marginnote{#1}}
+
+% Produzioni
+\usepackage{stackrel}
+\newcommand{\sprod}[1]{\ensuremath{\stackrel[#1]{}{\Longrightarrow}}}
+\newcommand{\eprod}[1]{\ensuremath{\xRightarrow[#1]{*}}}
+\newcommand{\prodgen}{\ensuremath{\alpha\to\beta}\xspace}
+
+
+% Grammatiche
+\newcommand{\gramm}{\ensuremath{G=\langle V, T, P, S \rangle}\xspace}
+
 
 \usepackage{upref}
 \usepackage{siunitx}

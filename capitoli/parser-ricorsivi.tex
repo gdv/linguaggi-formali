@@ -1,5 +1,26 @@
-\chapter{Parser ricorsivi}
-\label{cha:parser-ricorsivi}
+\chapter{Parser}\label{cha:parser}
+
+L'obiettivo principale di ogni parser è rispondere a due domande fortemente collegate fra loro:
+\begin{enumerate}
+\item Dato un testo $T$, determinare se $T$ è una parola del linguaggio generato dalla grammatica $G$;
+\item Data una parola del linguaggio generato dalla grammatica $G$, determinare un suo albero di derivazione.
+\end{enumerate}
+
+Queste domande partono dal presupposto che la grammatica $G$ sia nota.
+Un problema diverso, che non viene affrontato in questo capitolo, è disegnare una grammatica in grado di generare un
+linguaggio complesso quale, ad esempio, il linguaggio formato da tutte le possibili espressioni JSON~\cite{ECMA:JSON} o tutti i possibili
+programmi scritti in C~\cite{gustedt:modern-c}.
+
+Inoltre spesso non è sufficiente avere \emph{una} grammatica, ma è necessario ottenere una grammatica che permetta di
+avere un parser efficiente e veloce.
+Questo capitolo è dedicato ad affrontare queste ultime richieste.
+Spesso, ma non sempre, l'efficienza è ottenuta grazie alla ricerca di una grammatica semplice: ciò porta ad indagare se
+sia effettivamente necessario utilizzare una CFG.
+Mentre le limitazioni delle ER sono state ampiamente discusse in precedenza, ci si potrebbe chiedere se una classe di
+linguaggi \emph{intermedi}, che includono le ER ma sono strettamente inclusi nelle CFG, non sia adeguata in pratica.
+In effetti quasi tutti i parser decidono di limitare l'insieme dei linguaggi riconoscibili, in cambio di una maggiore efficienza.
+
+
 
 Una strategia di parsing relativamente semplice consiste nel provare tutte le
 produzioni della grammatica e visitando l'albero delle soluzioni in modo ricorsivo.

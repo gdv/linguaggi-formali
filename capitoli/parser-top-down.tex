@@ -1,0 +1,20 @@
+\section{Parser Top-down}\label{sec:parser-top-down}
+
+L'idea intuitiva dei \textbf{parser top-down} è estremamente semplice: costruire l'albero di derivazione a partire da un albero $D$ formato dalla
+sola radice ed estendere l'albero con l'espansione di una produzione alla volta, finchè non si ottiene esattamente il
+testo $T$.
+
+Questa tipologia di parser si contrappone a quella dei \textbf{parser bottom-up} che invece partono dall'analisi del
+testo e costruiscono l'albero di derivazione partendo dalle foglie, finchè non viene ricostruita la radice dell'albero.
+Questa tipologia era dominante in passato, quando i computer erano decisamente meno potenti e procedure efficienti, ma
+complesse, erano necessarie per effettuare il parsing in tempi ragionevoli.
+Negli ultimi anni si vede invece una tendenza verso i parser top-down, in quanto gli algoritmi utilizzati sono semplici,
+sia da descrivere che da implementare, sebbene non abbiano le stesse garanzie di efficienza di alcuni parser bottom-up.
+
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../libro-linguaggi"
+%%% TeX-engine: luatex
+%%% End:
