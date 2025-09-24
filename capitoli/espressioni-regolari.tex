@@ -1,119 +1,190 @@
 \setchapterpreamble[u]{\margintoc}
-\chapter{Espressioni Regolari}\label{cha:espressioni-regolari}
-\labch{Espressioni Regolari}
+\chapter{Linguaggi Regolari}\label{cha:Linguaggi-regolari}
+\labch{Linguaggi Regolari}
 
 
-\section{Definizioni}
-le regex sono usate per la ricerca di un pattern in un testo o negli analizzatori lessicali. Una regex denota il linguaggio e non la grammatica. Si hanno le seguenti operazioni tra due linguaggi $L$ e $M$:
+
+
+\section{Introduzione}\label{sec:regolari-introduzione}
+
+In questo caso vogliamo identificare una classe di linguaggi che sia semplice da definire, che ammetta un riconoscitore
+efficiente, ma non sia così ristretta da ammettere solo linguaggi banali.
+Per ottenere questo obiettivo, introduciamo le espressioni regolari che portano ad una definizione di tipo
+insiemistico dei linguaggi regolari.
+
+\begin{definition}[espressione regolare]\label{def:regex}
+Sia $\Sigma$ un alfabeto. Un'\keyword{espressione regolare} è definita secondo le seguenti regole.
+\begin{enumerate}
+\item $\varepsilon$ e $\emptyset$ sono espressioni regolari;
+\item Ogni simbolo $\sigma\in\Sigma$ è un'espressione regolare;
+\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 \cup E_2$ è un'espressione regolare corrispondente
+	  all'unione, o alternanza, fra $E_1$ e $E_2$;
+\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 E_2$ è un'espressione regolare corrispondente
+	  alla concatenazione di $E_1$ e $E_2$;
+\item Se $E$ è un'espressione regolare, allora $E_1^{*}$ è un'espressione regolare corrispondente
+	  alla chiusura di Kleene di $E$, ovvero alla ripetizione di $E$ un numero imprecisato (incluso $0$) di volte;
+\item Se $E$ è un'espressione regolare, allora $(E)$ è un'espressione regolare.
+\end{enumerate}
+\end{definition}
+
+Le operazioni hanno un ordine di precedenza di valutazione (a parità di precedenza, si valuta da sinistra a destra), in
+ordine descrescente di precedenza:
+\begin{enumerate}
+	\item parentesi
+	\item chiusura di Kleene *
+	\item concatenazione
+	\item unione
+\end{enumerate}
+
+
+Notiamo che le espressioni regolari sono una sintassi che, al momento, può apparire priva di significato concreto.
+Abbiamo bisogno di introdurre il linguaggio associato ad un'espressione regolare, seguendo pedissequamente i casi della \Cref{def:regex}.
+
+\begin{definition}[Linguaggio associato ad un'espressione regolare]\label{def:regex-linguaggio}
+Sia $E$ un'espressione regolare. Il linguaggio $L(E)$ associato a $E$ è definito secondo le seguenti regole.
+\begin{enumerate}
+	  \item $L(\epsilon) = \{\epsilon\}$, $L(\emptyset) = \emptyset$;
+\item Se $E$ consiste unicamente di un simbolo $\sigma\in\Sigma$, allora $L(E) = \{\sigma\}$;
+\item Se $E=E_1 \cup E_2$, allora $L(E) = \{w\in \Sigma^{*} : w\in L(E_{1}) \vee  w\in L(E_{2})\}$;
+\item Se $E=E_1E_2$, allora $L(E) = \{ w_{1}w_{2} : w\in L(E_1) L(E_2) \}$;
+\item Se $E = E_1^{*}$, allora $L(E) = \{\epsilon\} \cup L(E_1) \bigcup_{k=1}^{*} \{w_1 \cdots w_{k}: w_{1}, \ldots, w_{k}\in L(E) \}$.
+\item Se $E = (E_1)$, allora $L(((E)) = L(E)$.
+\end{enumerate}
+\end{definition}
+
+Un linguaggio $L$ viene detto regolare se e solo se esiste un'espressione regolare $E$ che ha $L$ come linguaggio associato.
+Notiamo che un'espressione regolare non è una grammatica, ma una sintassi minimale per specificare un linguaggio regolare.
+Se consideriamo due espressioni regolari identiche quando hanno lo stesso linguaggio associato, possiamo dare alcune proprietà delle operazioni.
+
+\begin{proposition}\label{prop:regex-associative-commutative}
 \begin{itemize}
-	\item \textbf{unione:} dati $L,\, M\in \Sigma^*$, l'unione $L\cup M$ è l'insieme delle stringhe che si trovano in entrambi i linguaggi o solo in uno dei due
-				\begin{example}
-					$$L=\{001,10,111\}$$
-					$$M=\{\varepsilon,001\}$$
-					$$L\cup M=\{\varepsilon,01,10,111,\varepsilon\}$$
-				\end{example}
-				si ha che:
-				$$L\cup M=M\cup L$$
-	\item \textbf{concatenazione:} dati $L,\, M\in \Sigma^*$, la concatenazione $L\cdot M$ (o $LM$) è lisieme di tutte le stringhe ottenibili concatenandone una di $L$ a una di $M$
-				\begin{example}
-					$$L=\{001,10,111\}$$
-					$$M=\{\varepsilon,001\}$$
-					$$L\cdot M=\{001,001001,10,...\}$$
-				\end{example}
-				si ha che:
-				$$L\cdot M\neq M\cdot L$$
-	\item si definiscono:
-				\begin{itemize}
-					\item $L\cdot L=L^2$, $L\cdot L\cdot L=L^3$ etc...
-					\item $L^1=L$
-					\item $L^0=\{\varepsilon\}$
-				\end{itemize}
-	\item \textbf{chiusura di Kleene:} dato $L\subseteq \Sigma^*$ si ha che la chiusura di Kleen di $L$ è:
-				$$L^*=\underset{i\geq 0}{\cup}L^i$$
-				ricordando che $l^0=\varepsilon$
-				\begin{example}
-					Sia $L=\{0,11\}$, si ha:
-					$$L^0=\varepsilon$$
-					$$L^1=L=\{0,11\}$$
-					$$L^2=L\cdot L=\{00,011,110,1111\}$$
-					$$L^3=L\cdot L\cdot L=L^2\cdot L=\{000,0110,1100,11110,0011,01111,11011,111111\}$$
-				\end{example}
-				vediamo dei casi particolari:
-				\begin{itemize}
-					\item $L=\{0^n|\,n\geq 0\}$ implica $|L|=\infty$ e quindi, essendo $L^i=L,\, i\geq 1$ e quindi $|L^i|=\infty$, $|L^*|=\infty$. Si ha quindi:
-								$$L^*=L^0\cup L^1\cup ... \cup L^i=L$$
-					\item $L=\emptyset$ implica $L^0=\{\varepsilon\}$, $L^2=L\cdot L=\emptyset$ e così via per ogni concatenazione di $L$. Si ha quindi:
-								$$L^*=L^0=\{\varepsilon\}$$
-					\item $L=\{\varepsilon\}$ implica $L^0=\{\varepsilon\}=L=L^1=L^2=...$, si ha quindi:
-								$$L^*=\{\varepsilon\}=L$$
-				\end{itemize}
-				L'insieme vuoto e l'insieme contenente la stringa vuota hanno le uniche chiusure di kleene finite
+\item
+L'unione è commutativa ($E_1 \cup E_2 = E_2 \cup E_1$), associativa $E_1 \cup (E_2 \cup E_3) = (E_1 \cup E_2) \cup E_3$
+e idempotente ($E\cup E = E$).
+\item
+La concatenazione è associativa ma non è commutativa.
+\item
+	  $\emptyset$ è identità per l'unione ($\emptyset+E=E+\emptyset=E$),
+\item
+	  $ \{\varepsilon \} $ è identità per la concatenazione
+($\varepsilon E=E\varepsilon=L$).
+\item
+$\emptyset$ è l'annichilitore per la concatenazione ($\emptyset L=L\emptyset=\emptyset$).
+\item
+	$(E^{*})^{*}=E^{*}$,
+\item
+$\emptyset^*=\varepsilon$;
+\item
+$\varepsilon^*=\varepsilon$;
 \end{itemize}
-\begin{definition}
-	Si riporta la definizione ricorsiva di un'espressione regolare:
-	\begin{itemize}
-		\item \textbf{casi base:} si hanno tre casi base:
-					\begin{enumerate}
-						\item $\varepsilon$ e $\emptyset$ sono espressioni regolari
-						\item se $a\in \Sigma$, con $a$ che è un'esprssione regolare, $L(a)=\{a\}$
-						\item le variabili che rappresentano linguaggi regolari sono espressioni regolari, $L(L)=L$
-					\end{enumerate}
-		\item \textbf{casi passo:} si hanno i 4 casi passo:
-					\begin{enumerate}
-						\item \textbf{unione:} se $E$ e $F$ sono espressioni regolari allora anche $E+F=E\cup F$ è un'espressione regolare e si ha:
-									$$L(E+F)=L(E)\cup L(F)$$
-						\item \textbf{concatenazione:} se $E$ e $F$ sono espressioni regolari allora anche $EF=E\cdot F$ è un'espressione regolare e si ha:
-									$$L(EF)=L(E)\cdot L(F)$$
-						\item \textbf{chiusura:} se $E$ è un'espressione regolare allora $E^*$ è un'espressione regolare e si ha:
-									$$L(E^*)=(L(E))^*$$
-						\item \textbf{parentesi:} se $E$è un'espressione regolare allora $(E)$ è un'espressione regolare e si ha:
-									$$L((E))=L(E)$$
-					\end{enumerate}
-	\end{itemize}
-	\newpage
-	\begin{example}
+\end{proposition}
+
+L'enfasi sulla minimalità della sintassi è tipica dell'analisi della capacità espressiva.
+In altre parole, per capire quali siano i linguaggi regolari è preferibile avere espressioni costruite a partire da un
+numero estremamente limitato di operazioni.
+Se invece vogliamo pensare ad espressioni regolari che possano essere utilizzate in pratica, ci aspettiamo di avere
+altre operazioni o della sintassi addizionale che permetta di esprimere con semplicità casi particolarmente rilevanti.
+Mostriamo di seguito alcune possibili estensioni della \Cref{def:regex} che \textbf{non ne aumentano il potere espressivo}.
+In altre parole, l'insieme dei linguaggi associati ad un'espressione regolare non cambia se ammettiamo queste
+estensioni, dove $E$, $E_1$, $E_2$ sono tutte espressioni regolari:
+
+\begin{enumerate}
+\item $E^{+}$, corrispondente  alla ripetizione di $E$ un numero imprecisato, ma strettamente positivo,  di volte.
+È equivalente all'espressione $E E^{*}$;
+\item $E\{n,m\}$, corrispondente  alla ripetizione di $E$ un numero di volte compreso fra $n$ ed $m$, estremi inclusi.
+L'espressione $E\{0,m\}$ è equivalente a $\epsilon$, $E\{0,m\}$ (con $m>0$) è equivalente a $E \cup E\{1,m\}$,
+	  $E\{n,m\}$ (con $n>0$) è equivalente a $E E\{n-1,m-1\}$;
+\item $[abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli indicati.
+	  L'espressione regolare equivalente è $a\cup b\cup c$;
+\item $[\^ abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli \emph{non} indicati.
+	  L'espressione regolare equivalente è $\bigcup_{a_{1}\in \Sigma \setminus \{a,b,c\}} a_{1}$.
+\end{enumerate}
+
+
+
+% le regex sono usate per la ricerca di un pattern in un testo o negli analizzatori lessicali. Una regex denota il linguaggio e non la grammatica. Si hanno le seguenti operazioni tra due linguaggi $L$ e $M$:
+% \begin{itemize}
+% 	\item \textbf{unione:} dati $L,\, M\in \Sigma^*$, l'unione $L\cup M$ è l'insieme delle stringhe che si trovano in entrambi i linguaggi o solo in uno dei due
+% 				\begin{example}
+% 					$$L=\{001,10,111\}$$
+% 					$$M=\{\varepsilon,001\}$$
+% 					$$L\cup M=\{\varepsilon,01,10,111,\varepsilon\}$$
+% 				\end{example}
+% 				si ha che:
+% 				$$L\cup M=M\cup L$$
+% 	\item \textbf{concatenazione:} dati $L,\, M\in \Sigma^*$, la concatenazione $L\cdot M$ (o $LM$) è lisieme di tutte le stringhe ottenibili concatenandone una di $L$ a una di $M$
+% 				\begin{example}
+% 					$$L=\{001,10,111\}$$
+% 					$$M=\{\varepsilon,001\}$$
+% 					$$L\cdot M=\{001,001001,10,\cdots\}$$
+% 				\end{example}
+% 				si ha che:
+% 				$$L\cdot M\neq M\cdot L$$
+% 	\item si definiscono:
+% 				\begin{itemize}
+% 					\item $L\cdot L=L^2$, $L\cdot L\cdot L=L^3$ etc\cdots
+% 					\item $L^1=L$
+% 					\item $L^0=\{\varepsilon\}$
+% 				\end{itemize}
+% 	\item \textbf{chiusura di Kleene:} dato $L\subseteq \Sigma^*$ si ha che la chiusura di Kleen di $L$ è:
+% 				$$L^*=\underset{i\geq 0}{\cup}L^i$$
+% 				ricordando che $l^0=\varepsilon$
+% 				\begin{example}
+% 					Sia $L=\{0,11\}$, si ha:
+% 					$$L^0=\varepsilon$$
+% 					$$L^1=L=\{0,11\}$$
+% 					$$L^2=L\cdot L=\{00,011,110,1111\}$$
+% 					$$L^3=L\cdot L\cdot L=L^2\cdot L=\{000,0110,1100,11110,0011,01111,11011,111111\}$$
+% 				\end{example}
+% 				vediamo dei casi particolari:
+% 				\begin{itemize}
+% 					\item $L=\{0^n|\,n\geq 0\}$ implica $|L|=\infty$ e quindi, essendo $L^i=L,\, i\geq 1$ e quindi $|L^i|=\infty$, $|L^*|=\infty$. Si ha quindi:
+% 								$$L^*=L^0\cup L^1\cup \cdots \cup L^i=L$$
+% 					\item $L=\emptyset$ implica $L^0=\{\varepsilon\}$, $L^2=L\cdot L=\emptyset$ e così via per ogni concatenazione di $L$. Si ha quindi:
+% 								$$L^*=L^0=\{\varepsilon\}$$
+% 					\item $L=\{\varepsilon\}$ implica $L^0=\{\varepsilon\}=L=L^1=L^2=\cdots$, si ha quindi:
+% 								$$L^*=\{\varepsilon\}=L$$
+% 				\end{itemize}
+% 				L'insieme vuoto e l'insieme contenente la stringa vuota hanno le uniche chiusure di kleene finite
+% \end{itemize}
+% \begin{definition}
+% 	Si riporta la definizione ricorsiva di un'espressione regolare:
+% 	\begin{itemize}
+% 		\item \textbf{casi base:} si hanno tre casi base:
+% 					\begin{enumerate}
+% 						\item $\varepsilon$ e $\emptyset$ sono espressioni regolari
+% 						\item se $a\in \Sigma$, con $a$ che è un'esprssione regolare, $L(a)=\{a\}$
+% 						\item le variabili che rappresentano linguaggi regolari sono espressioni regolari, $L(L)=L$
+% 					\end{enumerate}
+% 		\item \textbf{casi passo:} si hanno i 4 casi passo:
+% 					\begin{enumerate}
+% 						\item \textbf{unione:} se $E$ e $F$ sono espressioni regolari allora anche $E+F=E\cup F$ è un'espressione regolare e si ha:
+% 									$$L(E+F)=L(E)\cup L(F)$$
+% 						\item \textbf{concatenazione:} se $E$ e $F$ sono espressioni regolari allora anche $EF=E\cdot F$ è un'espressione regolare e si ha:
+% 									$$L(EF)=L(E)\cdot L(F)$$
+% 						\item \textbf{chiusura:} se $E$ è un'espressione regolare allora $E^*$ è un'espressione regolare e si ha:
+% 									$$L(E^*)=(L(E))^*$$
+% 						\item \textbf{parentesi:} se $E$è un'espressione regolare allora $(E)$ è un'espressione regolare e si ha:
+% 									$$L((E))=L(E)$$
+% 					\end{enumerate}
+% 	\end{itemize}
+% 	\newpage
+
+\begin{example}
 		trovo regex per l'insieme di stringhe in $\{0,1\}^*$ che consistono in 0 e 1 alternati:\\
 		$$01\to \{01\}$$
-		$$(01)^*\to \{\varepsilon, 01, 0101,010101,...\}$$
-		$$(01)^*+(10)^*\to\{\varepsilon, 01,10,0101,1010,...\}$$
+		$$(01)^*\to \{\varepsilon, 01, 0101,010101,\cdots\}$$
+		$$(01)^*+(10)^*\to\{\varepsilon, 01,10,0101,1010,\cdots\}$$
 		ma posso volere diverse quantità di 0 e 1, sempre mantenendo l'alternanza, metto o uno 0 o un 1 davanti a quanto ottenuto appena sopra:
-		$$(01)^*+(10)^*+0(10)^*+1(01)^*\to \{\varepsilon,01,10,010,101,...\}$$
+		$$(01)^*+(10)^*+0(10)^*+1(01)^*\to \{\varepsilon,01,10,010,101,\cdots\}$$
 		non è comunque l'unica soluzione, si può avere:
-		$$(\varepsilon+1)(01)^*(\varepsilon+0)\to \{\varepsilon,01,10,010,101,...\}$$
+		$$(\varepsilon+1)(01)^*(\varepsilon+0)\to \{\varepsilon,01,10,010,101,\cdots\}$$
 		oppure ancora:
 		$$(\varepsilon+0)(10)^*(\varepsilon+1)$$
 	\end{example}
-\end{definition}
-Si ha una precedenza degli operatori, in ordine di precedenza (si valuta da sinistra a destra):
-\begin{enumerate}
-	\item chiusura di Kleene *
-	\item concatenazione $\cdot$, che è associativo ($(E\cdot F)\cdot G=E\cdot (F\cdot G)$) ma non è commutativo ($E\cdot F\neq F\cdot E$)
-	\item unione + che è associativa ($(E+ F)+ G=E+ (F+ G)$) ed è commutativo ($E+F= F+ E$)
-	\item infine le parentesi
-\end{enumerate}
-si hanno anche delle proprietà algebriche:
-\begin{itemize}
-	\item due espressioni regolari sono equivalenti se denotano le stesso linguaggio
-	\item due espressioni regolari con variaboli sono equivalenti se lo sono $\forall$ assegnamento alle variabili
-	\item l'unione è commutativa e associativa, la concatenazione è solo associativa
-	\item si definiscono:
-				\begin{itemize}
-					\item \textbf{identità:} ovvero un valore unito all'identità è pari a se stesso (elemento neutro della somma $0+x=x+0=x$). $\emptyset$ è identità per l'unione ($\emptyset+L=L+\emptyset=L$), $\{\varepsilon\}$ è identità per la concatenazione ($\varepsilon L=L\varepsilon=L$)
-					\item \textbf{annichilitore:} ovvero un valore concatenato all'annichilatore da l'annichilitore (l'elemento nullo del prodotto $0x=x0=0$).  $\emptyset$ è l'annichilitore per la concatenazione ($\emptyset L=L\emptyset=\emptyset$)
-				\end{itemize}
-	\item \textbf{distributività:} dell'unione rispetto alla concatenazione (che non è commutativa):
-				\begin{itemize}
-					\item \textbf{distributività sinistra:} $L(M+N)=LM+LN$
-					\item \textbf{distributività destra:} $(M+N)L=ML+NL$
-				\end{itemize}
-	\item \textbf{idempotenza:} $L+L=L$
-	\item $(L^*)^*=L^*$
-	\item $\emptyset^*=\varepsilon$ infatti $L(\emptyset)=\{\varepsilon\}\cup L(\emptyset)\cup L(\emptyset)\cdot L(\emptyset)\cup...=\{\varepsilon\}\cup \emptyset\cup \emptyset...=\varepsilon$
-	\item $\varepsilon^*=\varepsilon$ infatti $L(\varepsilon^*)=\{\varepsilon\}\cup L(\varepsilon)\cup L(\varepsilon)=\{\varepsilon\}\cup \{\varepsilon\}\cup ...=\{\varepsilon\}=L(\varepsilon)$
-	\item $L^+=L\cdot L^*=L^*\cdot L$ (quindi con almeno un elemento che non sia la stringa vuota)
-	\item $L^*=l^++\varepsilon$
-\end{itemize}
-\begin{example}
+
+
+	\begin{example}
 	Ho $ER=(0+1)^*0^*(01)^*$:
 	\begin{itemize}
 		\item 001 fa parte del linguaggio? Si: $\varepsilon\cdot 0\cdot 01$
@@ -225,10 +296,10 @@ Nel complesso un DFA è rappresentato in maniera concisa con l'enumerazione dei 
 $$A=(Q,\Sigma,\delta,q_0,F)$$
 con $A$ nome del DFA, $Q$ insiem degli stati, $\Sigma$ rappresentante i simboli di input, $\delta$ la sua funzione di transizione, $q_0$ il suo stato iniziale e $F$ l'insieme degli stati accettanti.\\
 Vediamo come decidere se accettare o meno una stringa (sequenza di caratteri) in input mediante un DFA.\\
-Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consultando la funzione di transizione $\delta$, per esempio  $\delta(q_0,a_1)=q_1$ e trovo lo stato in cui il DFA entra dopo aver letto $a_1$. Poi passo a $\delta(q_1,a_2)=q_2$ e così via, $\delta(q_{i-1},a_i)=q_i$ fino a ottenere $q_n$. Se $q_n$ è elemento di $F$ allora $a_1...a_n$ viene accettato, altrimenti viene rifiutato.
+Ho una sequenza in input $a_1\cdotsa_n$. Parto dallo stato iniziale $q_0$, consultando la funzione di transizione $\delta$, per esempio  $\delta(q_0,a_1)=q_1$ e trovo lo stato in cui il DFA entra dopo aver letto $a_1$. Poi passo a $\delta(q_1,a_2)=q_2$ e così via, $\delta(q_{i-1},a_i)=q_i$ fino a ottenere $q_n$. Se $q_n$ è elemento di $F$ allora $a_1\cdotsa_n$ viene accettato, altrimenti viene rifiutato.
 \begin{example}
 	specifico DFA che accetta tutte le strighe binarie in cui compare la sequenza 01:
-	$$L=\{w|w \mbox{ è della forma x01y, con x e y pari a 0 o 1} \}=\{01,11010,100011,...\}$$
+	$$L=\{w|w \mbox{ è della forma x01y, con x e y pari a 0 o 1} \}=\{01,11010,100011,\cdots\}$$
 	o anche:
 	$$L=\{x01y| x,y\in\{0,1\}^* \}$$
 	abbiamo quindi:
@@ -566,7 +637,7 @@ Possiamo ora definire {$\delta$}, delta cappuccio che prende in ingresso uno sta
 \begin{itemize}
 	\item \textbf{caso base:} se $|w|=0$ ovvero se $W=\varepsilon$ si ha:
 	      $$\hat{\delta}(q,\varepsilon)=\{q\}$$
-	\item \textbf{caso passo:} se $|w|>0$, allora $W=xa$, $a\in\Sigma$ e $x\in\Sigma^*$. Posto $\hat{\delta}(q,x)=\{p_1,...,p_k\}$ si ha:
+	\item \textbf{caso passo:} se $|w|>0$, allora $W=xa$, $a\in\Sigma$ e $x\in\Sigma^*$. Posto $\hat{\delta}(q,x)=\{p_1,\cdots,p_k\}$ si ha:
 	      $$\hat{\delta}(q,w)=\cup \delta(p_i,a)$$
 \end{itemize}
 %aggiungere esempio
@@ -934,7 +1005,7 @@ che diventa il seguente DFA:
 	$$\delta_D(\{q_0\},b)=\delta_N(q_1,b)=\emptyset$$
 	$$\delta_D(\{q_1,q_2\},a)=\delta_N(q_1,a)\cup \delta_N(q_2,a)=\{q_1,q_2\}cup \emptyset=\{q_1,q_2\}$$
 	$$\delta_D(\{q_1,q_2\},b)=\delta_N(q_1,b)\cup \delta_N(q_2,b)=\emptyset\cup \{q_1,q_3\}=\{q_1,q_3\}$$
-	$$...$$
+	$$\cdots$$
 	ottengo quindi:
 	\begin{center}
 		\begin{tabular}{c|c|c}
@@ -1014,7 +1085,7 @@ che diventa il seguente DFA:
 	$$\delta_D(\{p\}, a)= ECLOSE (\delta_(p,a))=ECLOSE (\{p\})=ECLOSE (p)=\{p\}$$
 	$$\delta_D(\{p,q\}, a)= ECLOSE (\delta_N(p,a)\cup \delta_N(q,a))=$$
 	$$ECLOSE (\{p\}\cup \{q\})=ECLOSE(P)\cup ECLOSE(q)=\{p\}\cup\{p,q\}=\{p,q\}$$
-	$$...$$
+	$$\cdots$$
 	si hanno quindi le seguenti rinominazioni:
 	\begin{itemize}
 		\item $A=\{p\}$
@@ -1058,14 +1129,14 @@ con: $q\in Q,\,\,\, w\in \Sigma^*\,\,\,e\,\,\,${$\delta$}$(p,w)=q$
 in un NFA si ha:
 \begin{itemize}
 	\item \textbf{caso base:}  {$\delta$}$(q,\varepsilon=\{q\},\,\,\forall q\in Q$
-	\item \textbf{caso passo:} posto $w=ax$ e {$\delta$}$(q,a)=\{p_1,...,p_n$ allora {$\delta$}$(q,w)=\cup${$\delta$}$(p_i, x)0\{r_1,...,r_n\}$.\\
+	\item \textbf{caso passo:} posto $w=ax$ e {$\delta$}$(q,a)=\{p_1,\cdots,p_n$ allora {$\delta$}$(q,w)=\cup${$\delta$}$(p_i, x)0\{r_1,\cdots,r_n\}$.\\
 	      {$\delta$}$(q,a)=p$\\
 	      {$\delta$}$(q,w)=$ {$\delta$}$(q,xa)=$ {$\delta$}$(p,x)=r$
 \end{itemize}
 oppure:
 \begin{itemize}
 	\item \textbf{caso base:}  {$\delta$}$(q,\varepsilon)=\{q\},\,\forall q\in Q$
-	\item \textbf{caso passo:} posto $w=xa$ si ha  {$\delta$}$(q,q)=$ {$\delta$}$(q,xa)=\cup \delta(p,a)$ con  {$\delta$}$(q,x)=\{p_1,...,p_n\}$
+	\item \textbf{caso passo:} posto $w=xa$ si ha  {$\delta$}$(q,q)=$ {$\delta$}$(q,xa)=\cup \delta(p,a)$ con  {$\delta$}$(q,x)=\{p_1,\cdots,p_n\}$
 \end{itemize}
 Se ho un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ con $\delta_N: Q\times\Sigma^*\to 2^{Q_N}$ che accetta un lingiaggio $L$ posso ottenere un DFA $D=(Q_D, \Sigma, \delta_D, q_{0_D}, F_D)$ equivalente con $Q_D=2^{Q_N}$  e $q_{0_D}=\{q_{0_N}\}$ che accetta L.\\
 $\forall S\subseteq Q_N$ e $\forall a\in \Sigma$ si ha:
@@ -1079,7 +1150,7 @@ partiamo con un esempio:
 		gin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 		\node[state,initial] (q_0)   {$q_0$};
 		\node[state] (q_1) [right=of q_0] {$q_1$};
-		\node[state] (q_2) [right=of q_1] {$...$};
+		\node[state] (q_2) [right=of q_1] {$\cdots$};
 		\node[state] (q_3) [right=of q_2] {$q_{n-1}$};
 		\node[state, accepting] (q_4) [right=of q_3] {$q_n$};
 		\path[->]
@@ -1095,9 +1166,9 @@ $$|Q_N|=n+1\to |Q_D|=2^n$$
 Si ha che dato un $\varepsilon$-NFA $E=(Q_E, \Sigma, \delta_E, q_{0_E}, F_E)$ che riconosce $L$ in un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ equivalenti con $Q_N=2^{Q_E}$ stati in $Q_E$ $\varepsilon$-close: \textit{ECLOSE(S)=S} e $q_N=ECLOSE(q_E)$:
 $$F_N\{S\in Q_F,\,\, S\subseteq Q_E | S\cap F_E\neq \emptyset\}$$
 quindi:
-$$\forall a\in \Sigma \mbox{ e } \forall S=\{p_1,...,p_k\}, \forall S\in Q_F \mbox{ e } Q_E$$
-$$\delta_F(S,a) \mbox{ si ottiene }\cup \delta_E(p_i,a)=\{r_1,..., r_n\}$$
-$$\delta_N(S,a)=ECLOSE(\{r_1, ..., r_n\})$$
+$$\forall a\in \Sigma \mbox{ e } \forall S=\{p_1,\cdots,p_k\}, \forall S\in Q_F \mbox{ e } Q_E$$
+$$\delta_F(S,a) \mbox{ si ottiene }\cup \delta_E(p_i,a)=\{r_1,\cdots, r_n\}$$
+$$\delta_N(S,a)=ECLOSE(\{r_1, \cdots, r_n\})$$
 \newpage
 \section{Da espressioni regolari a automi E-NFA}
 \begin{itemize}
@@ -1273,7 +1344,7 @@ $$\delta_N(S,a)=ECLOSE(\{r_1, ..., r_n\})$$
 	\end{center}
 \end{example}
 Vediamo ora l'algoritmo che trasforma DFA in una ER. Questo algoritmo permette di verificare quale linguaggio è accettato o meno dall'automa:\\
-dato DFA $A=(Q,\Sigma, \delta, q_0,F)$ con $Q$ e $F$ stati non finali e $Q$, $F$, $q_0$ che sono i primi stati da eliminare. L'algoritmo procede per eliminazioni successive. Si costruisce quindi l'automa $B$ che ha solo $q_0$ e $F=\{q_1,...,q_k\}$. Scrivo quindi $K$ espressioni regolari considerando solo $q_0$ e il k-esimo stato finale eliminando pian piano gli altri stati. Alla fine ottengo le varie espressioni regolari da unire:
+dato DFA $A=(Q,\Sigma, \delta, q_0,F)$ con $Q$ e $F$ stati non finali e $Q$, $F$, $q_0$ che sono i primi stati da eliminare. L'algoritmo procede per eliminazioni successive. Si costruisce quindi l'automa $B$ che ha solo $q_0$ e $F=\{q_1,\cdots,q_k\}$. Scrivo quindi $K$ espressioni regolari considerando solo $q_0$ e il k-esimo stato finale eliminando pian piano gli altri stati. Alla fine ottengo le varie espressioni regolari da unire:
 $$E=E1+E2+\cdots+Ek$$
 vediamo ora come eliminare uno stato. Partiamo dal seguente automa:
 \begin{center}
@@ -2112,9 +2183,9 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 	\section{Pumping Lemma per i linguaggi regolari}
 	Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.\\
 	Partiamo da un esempio:
-	$$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,...\}$$
+	$$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$$
 	supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).\\
-$0^k$ implica $k+1$ prefissi: $\varepsilon,0,00,000,...,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.\\
+$0^k$ implica $k+1$ prefissi: $\varepsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.\\
 	Formalmente si ha:
 	\begin{theorem}
 		Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
@@ -2124,14 +2195,14 @@ $0^k$ implica $k+1$ prefissi: $\varepsilon,0,00,000,...,0^k$ e quindi $\exists i
 		in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
 	\end{theorem}
 	\begin{proof}
-		essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2...a_n$ con $m\geq n$. Sia:
-		$$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,...a_i)\,\,\forall i=0,1,...,n$$
+		essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2\cdotsa_n$ con $m\geq n$. Sia:
+		$$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,\cdotsa_i)\,\,\forall i=0,1,\cdots,n$$
 		quindi:
-		$$p_0=q_0,p_1,...,p_n\to n+a\,\,stati$$
+		$$p_0=q_0,p_1,\cdots,p_n\to n+a\,\,stati$$
 		allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
-		$$x=a_1a_2...a_n$$
-		$$y=a_{i+1}a_{i+2}...a_j$$
-		$$z=a_{j+1}a_{j+2}...a_m$$
+		$$x=a_1a_2\cdotsa_n$$
+		$$y=a_{i+1}a_{i+2}\cdotsa_j$$
+		$$z=a_{j+1}a_{j+2}\cdotsa_m$$
 		\begin{center}
 			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
 				\node[state, initial] (q_0) {$p_0$};
