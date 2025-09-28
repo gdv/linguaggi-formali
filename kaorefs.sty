@@ -11,6 +11,7 @@
 \ProcessOptions\relax
 
 \let\thmname\relax % Workaround to get rid of an annoying error
+\RequirePackage{subfiles}
 \RequirePackage{varioref}
 \RequirePackage{hyperref}
 \RequirePackage[capitalise,nameinlink,noabbrev]{cleveref}
@@ -163,7 +164,7 @@
 \newcommand{\vreftab}[1]{\hyperref[tab:#1]{\tablename\xspace\vref{tab:#1}}}
 
 \newcommand{\refeqshort}[1]{\hyperref[eq:#1]\eqnameshort\xspace(\ref{eq:#1})}
-\newcommand{\refeq}[1]{\hyperref[eq:#1]\eqname\xspace\ref{eq:#1}}
+%\newcommand{\refeq}[1]{\hyperref[eq:#1]\eqname\xspace\ref{eq:#1}}
 \newcommand{\vrefeq}[1]{\hyperref[eq:#1]\eqname\xspace\vref{eq:#1}}
 
 \newcommand{\refdef}[1]{\hyperref[def:#1]\defname\xspace\ref{def:#1}}

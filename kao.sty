@@ -15,6 +15,7 @@
 \RequirePackage{xstring} % Parse strings
 \RequirePackage{afterpage} % Run commands after specific pages
 \RequirePackage{imakeidx} % For the index; must be loaded before the 'caption' and 'hyperref' packages
+\RequirePackage{subfiles} % must be loaded before the 'varioref' and 'cleveref' packages
 \RequirePackage{varioref} % For the cross-references; must be loaded before the 'hyperref' and 'cleveref' packages
 
 % Define \Ifthispageodd (with a capital 'i') to make kaobook compatible with older KOMAScript versions
@@ -1011,6 +1012,8 @@
 		\xetexorluatexfalse
 	\fi
 \fi
+
+\RequirePackage{mathtools} % Must be loaded before unicode-math
 
 \ifxetexorluatex
 	\RequirePackage{amssymb} % Must be loaded before unicode-math

@@ -1089,7 +1089,7 @@ riprendiamo l'esempio sopra:
 	accettato da un DPDA? No, mostriamo infatti un controesempio:\\
 $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 
-	\begin{exercise}
+	\begin{Exercise}
 		costruire un PDA per $L=\{0^n  n| n\geq 1\}$:
 		CONTROLLARE LINGUAGGIO
 		\begin{center}
@@ -1108,9 +1108,9 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 		Osserviamo anche che L ha la proprietà di prefisso:
 		$$y=0^n1^n\in L,x\neq y$$
 		e $x$ è prefissa di y e quindi x ha un numero di 0 diverso da quelli di 1 e quindi $x\not\in L$
-	\end{exercise}
+	\end{Exercise}
 
-	\begin{exercise}
+	\begin{Exercise}
 		costruire un PDA per $L=\{0^n  n|\,n\geq 0\}$:
 		\begin{center}
 			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
@@ -1126,8 +1126,8 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 			\end{tikzpicture}
 		\end{center}
 		Ora la stringa vuota appartiene al linguaggio. Il linguaggio non ha la proprietà del prefisso. Si può dimostrare che non esiste un DPDA per L.
-	\end{exercise}
-	\begin{exercise}
+	\end{Exercise}
+	\begin{Exercise}
 		considero il linguaggio generato da $B\to (BB)|(B)|()$.\\
 		Il linguaggio ha la proprietà di prefisso perché (BB). Se fosse B -> BB allora non lo avrebbe, perché potremmo costruire le stringhe () e ()().
 		\\Abbiamo quindi il DPDA per stato finale:
@@ -1158,8 +1158,8 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 				edge [loop above] node [align=center] {$),(/\varepsilon$ \\ $\varepsilon,z_0/\varepsilon$} ();
 			\end{tikzpicture}
 		\end{center}
-	\end{exercise}
-	\begin{exercise}
+	\end{Exercise}
+	\begin{Exercise}
 		Si ha $B\to BB|(B)|()$. La stringa vuota non appartiene al linguaggio ma L non ha la proprietà del prefisso (come abbiamo
 		mostrato nell'esercizio precedente). Possiamo quindi realizzare solo un DPDA per stato finale:
 		\begin{center}
@@ -1179,8 +1179,8 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 				(q_3) edge node {$(,z_0/(z_0$} (q_1)  ;
 			\end{tikzpicture}
 		\end{center}
-	\end{exercise}
-	\begin{exercise}
+	\end{Exercise}
+	\begin{Exercise}
 		Si ha $B\to BB|(B)|\varepsilon$ ho un DPDA per stato finale perché L non ha la proprietà del prefisso:
 		\begin{center}
 			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
@@ -1198,8 +1198,8 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 				edge [bend left = 65] node {$\varepsilon,z_0/z_0$} (q_0);
 			\end{tikzpicture}
 		\end{center}
-	\end{exercise}
-	\begin{exercise}
+	\end{Exercise}
+	\begin{Exercise}
 		sia $L=\{q\in\{a,b\}^*| numero\,\,uguale\,\,di\,\,a\,\,e\,\,b\}$ DPDA per stato finale (L non ha la proprietà di prefisso):
 		\begin{center}
 			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
@@ -1213,9 +1213,9 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 				;
 			\end{tikzpicture}
 		\end{center}
-	\end{exercise}
+	\end{Exercise}
 	\newpage
-	\begin{exercise}
+	\begin{Exercise}
 		sia dato il CFL $L=\{a^ncb^n|n\geq 0\}$\\
 		è generato da :
 		$$G=(\{S\},\{a,b,c\},P,S)$$
@@ -1250,8 +1250,8 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 				edge [loop above] node [align=center] {$b,a/\varepsilon$} ();
 			\end{tikzpicture}
 		\end{center}
-	\end{exercise}
-	\begin{exercise}
+	\end{Exercise}
+	\begin{Exercise}
 		realizzare il pda per $L=\{a^nb^mcd^mef^n|n,m\geq 0\}$;
 		si ha quindi:
 		$$a^ncef^n\,\,n>0$$
@@ -1299,7 +1299,7 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 
 			\end{tikzpicture}
 		\end{center}
-	\end{exercise}
+	\end{Exercise}
 	\newpage
 %%% Local Variables:
 %%% mode: LaTeX

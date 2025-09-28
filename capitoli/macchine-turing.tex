@@ -1,7 +1,7 @@
 %\setchapterpreamble[u]{\margintoc}
 	\chapter{Macchine di Turing}
 	Nascono in risposta al problema di Hilbert, che si chiedeva se esiste un algoritmo per dimostrare teoremi. Non ci sono comunque funzioni non calcolabili con le macchine di Turing:
-	$$f:\mathbb{N}\to\{0,1\}\,\,s^{|\mathbb{N}}|>\mathbb{N}$$
+	$f:\mathbb{N}\to\{0,1\}\,\,s^{|\mathbb{N}}|>\mathbb{N}$
 	Siamo interessati a studiare la calcolabilità (computabilità).
 	Esiste un programma che calcola una certa funzione? Se non esiste, $f$ è indecidibile. Se sì, in quanto tempo è calcolabile (complessità computazionale), quante mosse e quante celle del nastro sono necessarie?\\
 	vediamo due esempi:
@@ -9,9 +9,11 @@
 		data una CFG $G=(V,T,P,S)$ stabilire se è ambigua. Questo problema è indecidibile, cioè non esiste nessun algoritmo che dia una risposta.
 	\end{example}
 	\begin{example}
-		Problema "ciao mondo": dato un sorgente di un programma in C/Java/..., i primi undici caratteri
+		Problema "ciao mondo": dato un sorgente di un programma in C/Java/ , i primi undici caratteri
 		stampati dal programma sono "ciao, mondo"?
-		Consideriamo il seguente algoritmo, che prende in input un numero intero N e stampa "ciao mondo" sse $\exists x,y,z\in \mathbb{N}$ tali che $x^n+y^n=z^n$
+		Consideriamo il seguente algoritmo, che prende in input un numero intero N e stampa "ciao mondo" sse
+		$\exists x,y,z\in \mathbb{N}$ tali che
+		$x^n+y^n=z^n$.
 	\end{example}
 	quest'ultimo problema è indecidibile:
 	\begin{proof}
@@ -84,7 +86,7 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 		\end{itemize}
 		inoltre si ha che:
 		$$\Sigma\subseteq \Gamma\,\,\,e\,\,\,\Gamma\cap\Sigma\neq\emptyset$$
-		quindi si ha per esempio questa rappresentazione, per l'input $x_1,...,x_n\in\Sigma^*$:
+		quindi si ha per esempio questa rappresentazione, per l'input $x_1,\ldots ,x_n\in\Sigma^*$:
 		\begin{center}
 		\includegraphics{2025-01-16_15-13.png}
 
@@ -129,8 +131,8 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 			%		\rput[bl](3.44,-2.09){$x_1$}
 			%		\rput[bl](6.62,-2.07){$x_n$}
 			%		\rput[bl](4.3,-2.11){$x_2$}
-			%		\rput[bl](5.04,-2.01){...}
-			%		\rput[bl](5.92,-1.99){...}
+			%		\rput[bl](5.04,-2.01){\ldots }
+			%		\rput[bl](5.92,-1.99){\ldots }
 			%		\rput[bl](7.42,-2.11){B}
 			%		\rput[bl](8.26,-2.11){B}
 			%		\rput[bl](2.74,-2.11){B}
@@ -144,21 +146,21 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 	\newpage
 	Questa era una definizione deterministica, passiamo ora ad una definizione \textit{istantanea}:
 	\begin{definition}
-		suppongo di avere lo stato $q$, il nastro $x_1,...,x_n$ con la testina $x_i$. SI ha:
-		$$ID:\,\,x_1x_2,...qx_ix_{i+1}...x_n$$
+		suppongo di avere lo stato $q$, il nastro $x_1,\ldots ,x_n$ con la testina $x_i$. SI ha:
+		$$ID:\,\,x_1x_2,\ldots qx_ix_{i+1}\ldots x_n$$
 		e suppongo $Q\cap\Gamma=\emptyset$ senza perdere generalità e uso la simbologia dei $\vdash$ introdotta coi PDA. \\
-		Se $\delta(q,x_i)=(p,y,L)$ allora $\vdash\,\, x_1x_2...x_{i-2}px_{i-1}yx_{i+1}...x_n$.\\
+		Se $\delta(q,x_i)=(p,y,L)$ allora $\vdash\,\, x_1x_2\ldots x_{i-2}px_{i-1}yx_{i+1}\ldots x_n$.\\
 		Si hanno dei casi particolari:
 		\begin{itemize}
-			\item se $i=1$ si ha $qx_1x_2...x_n\vdash pByx_2...x_n$
-			\item se $i=n\,\,y=B$ si ha $qx_1x_2...qx_n\vdash x_1x_2...x_{n-2}px_{n-1}$
+			\item se $i=1$ si ha $qx_1x_2\ldots x_n\vdash pByx_2\ldots x_n$
+			\item se $i=n\,\,y=B$ si ha $qx_1x_2\ldots qx_n\vdash x_1x_2\ldots x_{n-2}px_{n-1}$
 		\end{itemize}
 		a destra abbiamo invece:
-		Se $\delta(q,x_i)=(p,y,R)$ allora $\vdash\,\, x_1x_2...x_{i-1}Ypx_{i+1}...x_n$.\\
+		Se $\delta(q,x_i)=(p,y,R)$ allora $\vdash\,\, x_1x_2\ldots x_{i-1}Ypx_{i+1}\ldots x_n$.\\
 		Si hanno dei casi particolari:
 		\begin{itemize}
-			\item se $i=1$ si ha $q_1x_2...x_{n-1}\vdash ypB$
-			\item se $i=n\,\,y=B$ si ha $qx_1x_2...qx_n\vdash px_2...x_n$
+			\item se $i=1$ si ha $q_1x_2\ldots x_{n-1}\vdash ypB$
+			\item se $i=n\,\,y=B$ si ha $qx_1x_2\ldots qx_n\vdash px_2\ldots x_n$
 		\end{itemize}
 	\end{definition}
 	\begin{example}
@@ -267,8 +269,8 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 				%	      \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(4.8,1.81)(4.0,2.61)
 				%	      \psline[linecolor=black, linewidth=0.04](4.0,-0.19)(3.6,-0.19)
 				%	      \rput[bl](6.62,-1.47){$x_n$}
-				%	      \rput[bl](5.04,-1.41){...}
-				%	      \rput[bl](5.92,-1.39){...}
+				%	      \rput[bl](5.04,-1.41){\ldots }
+				%	      \rput[bl](5.92,-1.39){\ldots }
 				%	      \rput[bl](7.42,-1.51){B}
 				%	      \rput[bl](8.26,-1.51){B}
 				%	      \rput[bl](2.74,-1.51){B}
@@ -288,8 +290,8 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 				%	      \psline[linecolor=black, linewidth=0.04, linestyle=dashed, dash=0.17638889cm 0.10583334cm](8.76,-2.99)(9.56,-2.99)
 				%	      \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(4.16,0.59)(4.16,-2.21)
 				%	      \rput[bl](6.58,-2.67){$x_n$}
-				%	      \rput[bl](5.0,-2.61){...}
-				%	      \rput[bl](5.88,-2.59){...}
+				%	      \rput[bl](5.0,-2.61){\ldots }
+				%	      \rput[bl](5.88,-2.59){\ldots }
 				%	      \rput[bl](7.38,-2.71){B}
 				%	      \rput[bl](8.22,-2.71){B}
 				%	      \rput[bl](2.7,-2.71){B}
@@ -328,7 +330,7 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 		% 		\psline[linecolor=black, linewidth=0.04, linestyle=dashed, dash=0.17638889cm 0.10583334cm](4.020098,-0.41)(4.8200984,-0.41)
 		% 		\rput[bl](1.8400983,-0.09){$x_n$}
 		% 		\rput[bl](0.24009827,-0.07){$x_1$}
-		% 		\rput[bl](1.1400982,-0.01){...}
+		% 		\rput[bl](1.1400982,-0.01){\ldots }
 		% 		\rput[bl](2.6400983,-0.13){B}
 		% 		\rput[bl](3.4800982,-0.13){B}
 		% 		\psline[linecolor=black, linewidth=0.04](0.0,0.41)(4.080098,0.39)
@@ -391,11 +393,11 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 	% 			\rput[bl](0.36,0.36){$x_0$}
 	% 			\rput[bl](1.08,0.3){$x_1$}
 	% 			\rput[bl](1.92,0.34){$x_2$}
-	% 			\rput[bl](2.68,0.42){$...$}
+	% 			\rput[bl](2.68,0.42){$\ldots $}
 	% 			\rput[bl](0.34,-0.52){*}
 	% 			\rput[bl](0.98,-0.48){$x_{-1}$}
 	% 			\rput[bl](1.78,-0.5){$x_{-2}$}
-	% 			\rput[bl](2.74,-0.4){...}
+	% 			\rput[bl](2.74,-0.4){\ldots }
 	% 		\end{pspicture}
 	% 	}
 
@@ -425,7 +427,7 @@ $P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere
 	% 	}
 	% \end{center}
 	e si ha:
-	$$\delta(q,a,x_1,x_2,...,x_k)=(p,\gamma_1,\gamma_2,...,\gamma_k)$$
+	$$\delta(q,a,x_1,x_2,\ldots ,x_k)=(p,\gamma_1,\gamma_2,\ldots ,\gamma_k)$$
 	% \begin{example}
 	% 	Legge l'input e lo spinge tutto sul primo stack (sfruttando un simbolo ausiliario di fine input):
 	% 	\begin{center}
@@ -490,7 +492,7 @@ $z_0$. Si riescono ancora a simulare le macchine di Turing
 % 				\rput[bl](1.96,-0.23){x}
 % 				\rput[bl](1.94,-0.71){$z_0$}
 % 				\rput[bl](3.54,0.55){x}
-% 				\rput[bl](3.48,0.19){...}
+% 				\rput[bl](3.48,0.19){\ldots }
 % 				\rput[bl](3.52,-0.33){x}
 % 				\rput[bl](3.48,-0.71){$z_0$}
 % 				\rput[bl](1.96,0.95){$i_2$}
@@ -520,7 +522,7 @@ $z_0$. Si riescono ancora a simulare le macchine di Turing
 % 				\rput[bl](4.4,0.92){rifiuta}
 % 				\rput[bl](1.3,-2.0){$c_1$}
 % 				\rput[bl](2.64,-1.98){$c_2$}
-% 				\rput[bl](3.56,-1.64){...}
+% 				\rput[bl](3.56,-1.64){\ldots }
 % 				\rput[bl](4.5,-1.94){$c_k$}
 % 			\end{pspicture}
 % 		}
@@ -541,9 +543,9 @@ $z_0$. Si riescono ancora a simulare le macchine di Turing
 % 				\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(3.22,0.0)(4.02,0.0)
 % 				\rput[bl](0.34,-0.1){$x_1$}
 % 				\rput[bl](1.18,-0.08){$x_2$}
-% 				\rput[bl](1.98,0.0){...}
+% 				\rput[bl](1.98,0.0){\ldots }
 % 				\rput[bl](2.66,-0.1){$x_k$}
-% 				\rput[bl](4.06,-0.14){$x_1+x_2r+x_3r^2+...$}
+% 				\rput[bl](4.06,-0.14){$x_1+x_2r+x_3r^2+\ldots $}
 % 			\end{pspicture}
 % 		}
 
@@ -583,8 +585,8 @@ $z_0$. Si riescono ancora a simulare le macchine di Turing
 		$w\in\{o,1\}^*$ biiezione tra stringhe e numeri:
 		\begin{center}
 			\begin{tabular}{c c c c c c c}
-				$w_1$         & $w_2$ & $w_3$ & $w_4$ & $w_5$ & $w_6$ & ... \\
-				1             & 2     & 3     & 4     & 5     & 6     & ... \\
+				$w_1$         & $w_2$ & $w_3$ & $w_4$ & $w_5$ & $w_6$ & \ldots  \\
+				1             & 2     & 3     & 4     & 5     & 6     & \ldots  \\
 				$\varepsilon$ & 0     & 1     & 00    & 01    & 10    & ..
 			\end{tabular}
 		\end{center}
@@ -593,11 +595,11 @@ $z_0$. Si riescono ancora a simulare le macchine di Turing
 		Forziamo quindi l'interpretazione delle stringhe mettendoci davanti un 1.
 		Codifichiamo anche una MdT in binario:
 		$$M=(Q,\{0,1\},\Gamma,\delta,q_1,B,\{q_2\})$$
-		$$Q=\{q_1,...,q_r\}$$
-		$$\Gamma=\{x_1,...,x_s\}=\{0,1,B,...\}$$
+		$$Q=\{q_1,\ldots ,q_r\}$$
+		$$\Gamma=\{x_1,\ldots ,x_s\}=\{0,1,B,\ldots \}$$
 		$$direzioni:\,\,L\to D_1\,\,R\to D_2$$
 		$$\underbrace{\delta(q_i,x_j)=(q_k,x_1,D_m}_{0^i10^j10^k10^l10^m}$$
-		$$Cod_111Cod_211Cod_3\\...=Cpd(\delta)$$
+		$$Cod_111Cod_211Cod_3\\\ldots =Cpd(\delta)$$
 	\end{example}
 	\begin{example}
 		sia $M=(\{q_1,q_2,q_3\},\{o,1\}.\{0,1,B\},\delta,q_1,B,q_2)$ con:
@@ -620,12 +622,12 @@ $z_0$. Si riescono ancora a simulare le macchine di Turing
 				       &   &          &          & j        &          &                \\
 				       & 1 & 2        & 3        & 4        & 5        & 6              \\
 				\hline
-				       & 1 & 0        & 1        & 1        & 0        & ... & ...      \\
-				       & 2 & 1        & 1        & 0        & 0        & ... & ...      \\
-				       & 3 & 0        & 0        & 1        & 1        & ... & ...      \\
-				(Mi) i & 4 & 0        & 1        & 0        & 1        & ... & ...      \\
-				       & 5 & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & ... & ...      \\
-				       & 6 & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & ... & $\ddots$
+				       & 1 & 0        & 1        & 1        & 0        & \ldots  & \ldots       \\
+				       & 2 & 1        & 1        & 0        & 0        & \ldots  & \ldots       \\
+				       & 3 & 0        & 0        & 1        & 1        & \ldots  & \ldots       \\
+				(Mi) i & 4 & 0        & 1        & 0        & 1        & \ldots  & \ldots       \\
+				       & 5 & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & \ldots  & \ldots       \\
+				       & 6 & $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & \ldots  & $\ddots$
 			\end{tabular}
 		\end{center}
 		Osserviamo la diagonale della tabella. Fanno parte di Ld solo le stringhe che hanno 0 sulla

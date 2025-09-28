@@ -38,6 +38,9 @@
   frametitlerule=true,
 }
 
+
+
+
 \declaretheoremstyle[
 spaceabove=6pt,
 spacebelow=6pt,
@@ -137,16 +140,15 @@ Refname={Esempio,Esempi},
 numberwithin=chapter,
 ]{example}
 
-\declaretheorem[
-name=Esercizio,
-style=mythmstyle,
-refname={Esercizio,Esercizi},
-Refname={Esercizio,Esercizi},
-numberwithin=chapter,
-]{exercise}
+% \declaretheorem[
+% name=Esercizio,
+% style=mythmstyle,
+% refname={Esercizio,Esercizi},
+% Refname={Esercizio,Esercizi},
+% numberwithin=chapter,
+% ]{exercise}
 
 
-\usepackage{subfiles}
 
 \newcommand{\parte}[1]{\pagelayout{wide}\addpart{#1}\pagelayout{margin}}
 
@@ -177,14 +179,25 @@ numberwithin=chapter,
 % Grammatiche
 \newcommand{\gramm}{\ensuremath{G=\langle V, T, P, S \rangle}\xspace}
 
+% Automi
+\newcommand{\dfa}{\ensuremath{\mathcal{A}=\langle \Sigma, Q, q_{0}, F, \delta \rangle}\xspace}
+
 
 \usepackage{upref}
 \usepackage{siunitx}
 \usepackage{upquote}
-\let\refeq\relax
-\usepackage{mathtools}
-\usepackage{unicode-math}
 
+\usepackage{standalone}
+
+
+
+%\usepackage[lastexercise]{exercise}
+\usepackage[lastexercise,answerdelayed]{exercise}
+\counterwithin{Exercise}{chapter}
+\counterwithin{Answer}{chapter}
+\renewcounter{Exercise}[chapter]
+\renewcommand{\ExerciseHeader}{\noindent\textbf{Esercizio~\ExerciseHeaderNB}.}
+\renewcommand{\AnswerHeader}{\noindent\textbf{Soluzione all'Esercizio~\ExerciseHeaderNB}.}
 
 %%% Local Variables:
 %%% mode: LaTeX
