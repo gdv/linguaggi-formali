@@ -1,3 +1,14 @@
+\chapter{Parser}\label{cha:parser}
+
+Un parser analizza il risultato dell'analizzatore lessicale e costruire l'albero di derivazione che ha prodotto il testo.
+In realtà nulla impedisce di avere solo un parser che agisca sul testo, evitando di avere un analizzatore lessicale
+separato e, sempre più spesso, è quello che viene fatto in pratica, soprattutto per linguaggi relativamente semplici.
+La motivazione principale per distinguere un passo di analisi lessicale è l'efficienza: un lexer sarà basato su
+espressioni regolari (quindi grammatiche di tipo 3), mentre un parser richiede un livello di sofisticazione maggiore.
+Sebbene esistano parser per linguaggi liberi dal contesto, normalmente si preferisce restringere l'attenzione a classi
+di linguaggi intermedi fra liberi dal contesto e regolari, in quanto i linguaggi di programmazione difficilmente
+richiedono tutta la flessibilità introdotta dalle CFG.
+
 \section{Parser Top-down}\label{sec:parser-top-down}
 
 L'idea intuitiva dei \textbf{parser top-down} è estremamente semplice: costruire l'albero di derivazione a partire da un albero $D$ formato dalla
