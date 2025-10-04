@@ -1,0 +1,22 @@
+- name: GitHub Action for LaTeX
+  uses: xu-cheng/latex-action@4.0.0
+
+name: Build LaTeX document
+on: [push]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v4
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v4
+        with:
+          root_file: libro-linguaggi.tex
+          latexmk_use_lualatex: true
+          os: debian
+      - name: Release PDF file
+        uses: @softprops/action-gh-release
+        with:
+          name: PDF
+          path: libro-linguaggi.pdf
