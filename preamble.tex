@@ -7,7 +7,8 @@
 \usepackage[
 	type={CC},
 	modifier={by-sa},
-	version={4.0},
+  version={4.0},
+  lang={Italian}
 ]{doclicense}
 
 
@@ -192,12 +193,12 @@ numberwithin=chapter,
 
 
 %\usepackage[lastexercise]{exercise}
-\usepackage[lastexercise,answerdelayed]{exercise}
+\usepackage[lastexercise]{exercise}
 \counterwithin{Exercise}{chapter}
 \counterwithin{Answer}{chapter}
 \renewcounter{Exercise}[chapter]
-\renewcommand{\ExerciseHeader}{\noindent\textbf{Esercizio~\ExerciseHeaderNB}.}
-\renewcommand{\AnswerHeader}{\noindent\textbf{Soluzione all'Esercizio~\ExerciseHeaderNB}.}
+\renewcommand{\ExerciseHeader}{\noindent\textbf{Esercizio~\ExerciseHeaderNB}.\xspace}
+\renewcommand{\AnswerHeader}{\noindent\textbf{Soluzione all'Esercizio~\ExerciseHeaderNB}.\xspace}
 
 %%% Local Variables:
 %%% mode: LaTeX

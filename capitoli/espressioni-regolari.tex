@@ -225,6 +225,8 @@ Ho $E=(0+1)^*0^*(01)^*$:
 \item 10 è una parola del linguaggio: $1\cdot 0\cdot \epsilon$
 \end{itemize}
 
+
+
 Notare che in realtà $L((0+1)^*)= \Sigma_{B}^*$ e le parti che seguono sono opzionali (la chiusura di Kleene permette di
 avere la stringa vuota).
 Quindi il linguaggio associato all'espressione regolare è $\Sigma_{B}^*$.
@@ -313,6 +315,43 @@ Da $L\subseteq\{0,1\}$
 	$c^*\left(a(a+c)^*b+b(b+c)^*a\right)(a+b+c)^*$
 \end{example}
 
+
+\begin{Exercise}[label=re-crescente]
+Sia $L\subseteq \Sigma_{C}^{*}$ il linguaggio delle parole in cui le cifre compaiono in ordine non decrescente (ad esempio
+\texttt{001112}).
+Descrivere un'espressione regolare associata al linguaggio $L$.
+\end{Exercise}
+
+\begin{Answer}
+Siccome non è richiesto che ogni cifra in $\Sigma_{C}$ sia presente nella parola, un'espressione è $0^{*}1^{*}2^{*}3^{*}4^{*}5^{*}6^{*}7^{*}8^{*}9^{*}$.
+\end{Answer}
+
+
+\begin{Exercise}[label=re-1-101]
+Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente una volta la sottostringa
+\texttt{0110101}).
+Descrivere un'espressione regolare associata al linguaggio $L$.
+\end{Exercise}
+
+\begin{Answer}
+La difficoltà principale dell'esercizio consiste nello scrivere un'espressione regolare corrispondente a tutte le
+stringhe binarie che non contengono \texttt{0110101}.
+Un'espressione di questo tipo è
+\end{Answer}
+
+\begin{Exercise}[label=re-2-101]
+Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente due volte la sottostringa
+\texttt{0110101}).
+Descrivere un'espressione regolare associata al linguaggio $L$.
+\end{Exercise}
+
+\begin{Exercise}[label=re-2-11]
+Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente due volte la sottostringa
+\texttt{11}).
+Descrivere un'espressione regolare associata al linguaggio $L$.
+\end{Exercise}
+
+
 \section{Grammatiche regolari}\label{sec:grammatiche-regolari}
 
 Una grammatica è regolare se ha una delle seguenti due forme.
@@ -325,6 +364,7 @@ $A, \in VB$  e $a\in T$.
 Inoltre, $G$ è detta regolare sinistra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to aB$, dove
 $A, \in VB$  e $a\in T$.
 \end{definition}
+
 
 \section{Diagrammi di transizione}\label{sec:diagrammi-di-transizione}
 
@@ -2314,9 +2354,13 @@ $0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i
 		$L=\{0^n1^m|\, n\geq m\}$ è regolare?\\
 		$w=0^{n-l}0^l1^{m}$ con:
 		$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
-		con $|zy|\leq n\,\,y\neq\epsilon\,\,|y|=l$ e $0<l\leq n$\\
+		con $|zy|\leq n\,\,y\neq\epsilon\,\,|y|=l$ e $0<l\leq n$
 		scelgo l tale che $n-l<m$ quindi non è regolare
 	\end{example}
+
+
+\shipoutAnswer
+
 
 %%% Local Variables:
 %%% mode: LaTeX
