@@ -2,7 +2,7 @@ name: Build LaTeX document
 on:
   push:
     tags:
-      - "libro-*"
+      - "v*"
 
 jobs:
   build_latex:
@@ -13,11 +13,12 @@ jobs:
       - name: GitHub Action for LaTeX
         uses: xu-cheng/latex-action@4.0.0
         with:
-          root_file: "libro-linguaggi.tex"
+          root_file: "*.tex"
+          working_directory: lezioni
           continue_on_error: true
           latexmk_use_lualatex: true      
       - name: Release PDF file
         uses: softprops/action-gh-release@v2
         with:
-          files: "libro-linguaggi.pdf"
+          files: "lezioni/*.pdf"
 
