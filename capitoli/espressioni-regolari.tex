@@ -1752,8 +1752,6 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\zero\uno)\kleene$.
 \end{Exercise}
 
-
-
 \begin{Exercise}\label{exe:er-nfa-2}
 Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\uno(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
@@ -1767,7 +1765,30 @@ Costruire l'\enfa che riconosce il linguaggio associato alla seguente espression
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-nfa-5}
-Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene$.
+Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
+\end{Exercise}
+
+Per gli esercizi che seguono, si suggerisce di usare la soluzione degli \Cref{exe:er-nfa-1}--\ref{exe:er-nfa-5}.
+
+
+\begin{Exercise}\label{exe:er-dfa-1}
+Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\zero\uno)\kleene$.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:er-dfa-2}
+Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\uno(\zero\uno)\kleene)\kleene$.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:er-dfa-3}
+Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)\kleene(\zero\uno)\kleene)\kleene$.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:er-dfa-4}
+Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)(\zero\uno)\kleene)\kleene$.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:er-dfa-5}
+Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
 \end{Exercise}
 
 \section{Chiusura di un Linguaggio regolare}
