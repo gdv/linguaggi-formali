@@ -315,6 +315,12 @@ Da $L\subseteq\{0,1\}$
 	$c^*\left(a(a+c)^*b+b(b+c)^*a\right)(a+b+c)^*$
 \end{example}
 
+\begin{Exercise}[label=0e1-er]
+Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole che contengono almeno un \uno e almeno uno \zero.
+Descrivere un'espressione regolare associata al linguaggio $L$.
+\end{Exercise}
+
+
 
 \begin{Exercise}[label=re-crescente]
 Sia $L\subseteq \Sigma_{C}^{*}$ il linguaggio delle parole in cui le cifre compaiono in ordine non decrescente (ad esempio
@@ -681,6 +687,34 @@ Se leggerà \texttt{1}, andrà nello stato accettante, altrimenti rimane nello s
 		\end{tikzpicture}
 	\end{center}
 \end{example}
+
+\subsection*{Esercizi}
+
+\begin{Exercise}\label{exe:1-dispari-0-dispari}
+Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole che contengono un numero dispari di \zero e un numero
+dispari di \uno.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:101-dfa}
+Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole che contengono la sottostringa \texttt{101}.
+\end{Exercise}
+
+
+\begin{Exercise}\label{exe:no-101-dfa}
+Costruire un DFA che riconosca il linguaggio $L\in\Sigma_{B}$ delle parole che non contengono la sottostringa \texttt{101}.
+\end{Exercise}
+
+\begin{Answer}
+\includestandalone[width=\textwidth]{dfa-no-sottostringa-101}
+\end{Answer}
+
+
+
+\begin{Exercise}\label{exe:1100-dfa}
+Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole in cui tutte le occorrenze di \uno\uno precedono la
+prima occorrenza di \zero\zero (se esiste).
+\end{Exercise}
+
 
 \subsection{Automi non deterministici}
 Un automa a stati finiti non deterministici (\textit{NFA}) può trovarsi in diversi stati contemporaneamente. Come i DFA accettano linguaggi regolari e spesso sono più semplici da trattare rispetto ai DFA.\\
@@ -1280,7 +1314,48 @@ $\forall a\in \Sigma \text{ e } \forall S=\{p_1,\cdots,p_k\}, \forall S\in Q_F \
 $\delta_F(S,a) \text{ si ottiene }\cup \delta_E(p_i,a)=\{r_1,\cdots, r_n\}$
 $\delta_N(S,a)=ECLOSE(\{r_1, \cdots, r_n\})$
 
-\section{Da espressioni regolari a automi E-NFA}
+\begin{Exercise}\label{exe:no-101-er}
+Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole che non contengono la sottostringa \texttt{101}.
+\end{Exercise}
+
+\begin{Answer}
+Una possibilità, che verrà formalizzata in \Cref{sec:da-DFA-a-ER} consiste nel partire dal DFA che riconosce il
+linguaggio e sintetizzare l'espressione regolare a partire dall'automa.
+
+Per ottenere un'ER semplice è invece preferibile ragionare sulla definizione di linguaggio da esprimere.
+Una definizione equivalente è l'insieme delle parole in cui ogni occorrenza del carattere \texttt{1} è seguita da un
+altro \texttt{1}, oppure da \texttt{00}, oppure ancora tale \texttt{1} è uno degli ultimi due caratteri della parola (in
+questo caso, non potrà essere il carattere iniziale di una sottostringa \texttt{101})
+Questa formulazione si presta maggiormente a disegnare un'espressione regolare.
+Infatti, una riscrittura diretta di quanto descritto sopra, tenendo presente che un numero arbitrari di \texttt{0}
+potrebbe precedere il primo \texttt{1} e seguire ogni \texttt{0}, diventa
+$$\texttt{0}^{*}(\texttt{100}\texttt{0}^{*})^{*} (\texttt{10} |\texttt{1} | \epsilon)$$ che può essere ulteriormente
+semplificata in
+$$\texttt{0}^{*}(\texttt{100}\texttt{0}^{*})^{*} \texttt{1}^{*} \texttt{0}^{*}.$$
+\end{Answer}
+
+
+
+\begin{Exercise}\label{exe:no-diff2-er}
+Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole che soddisfano le due seguenti
+condizioni:
+\begin{enumerate}
+\item hanno lo stesso numero di \zero e \uno
+\item in ogni prefisso il numero di \zero e \uno differisce al massimo di $1$.
+\end{enumerate}
+Sono quindi parole del linguaggio $\epsilon$, \zero\uno, \texttt{10}, \texttt{101010}, \texttt{0101}.
+Non sono parole del linguaggio \texttt{1100}.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:3x3}
+Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole con un numero di \zero multiplo di $3$ e
+un numero di \uno multiplo di $3$.
+\end{Exercise}
+
+
+\section{Da DFA a espressioni regolari}
+\label{sec:da-DFA-a-ER}
+
 \begin{itemize}
 	\item \textbf{caso base}:
 	      \begin{enumerate}
@@ -1362,6 +1437,9 @@ $\delta_N(S,a)=ECLOSE(\{r_1, \cdots, r_n\})$
 		            \end{center}
 	      \end{enumerate}
 \end{itemize}
+
+
+
 
 \begin{example}
 	creo E-NFA per
@@ -1666,6 +1744,12 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 	Essendo $p$ sia iniziale che finale si ha:
 	$E=(1+(00+010^*1)(10+110^*1)^*0)^*$
 \end{example}
+
+\section{Da espressioni regolari a ε-NFA}
+\label{sec:da-ER-a-eNFA}
+
+
+
 \section{Chiusura di un Linguaggio regolare}
 Sia $REG$ la classe dei linguaggi regolari (ovvero ogni linguaggio regolare su un alfabeto finito non vuoto). Si ha la seguente proprietà:
 $L,M\in REG\to L\cup M\in REG$
@@ -2099,266 +2183,269 @@ $L,M\in REG$
 $\exists A_L=(Q_L,\Sigma,\delta_L,q_L,F_L)$
 $\exists A_M=(Q_M,\Sigma,\delta_M,q_M,F_M)$
 costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
-\\$\delta$ è $\delta_L$ per $Q_L$ e $\delta$ è $\delta_M$ per $Q_M$
-	per vedere se $q_L\approx q_M$ uso il riempi tabella e se sono equivalenti si ha che $L=M$
-	\begin{example}
-		Sia $A$:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				\node[state, initial, accepting] (q_0) {$a$};
-				\node[state] (q_1) [right=of q_0] {$b$};
-				\path[->]
-				(q_0) edge [bend left = 25] node {1} (q_1)
-				edge [loop above] node {0} ()
-				(q_1) edge [bend left = 25] node {0} (q_0)
-				edge [loop above] node {1} ();
-			\end{tikzpicture}
-		\end{center}
-		e $B$:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-				\node[state, initial, accepting] (q_0) {$c$};
-				\node[state, accepting] (q_1) [right=of q_0] {$d$};
-				\node[state] (q_2) [below =of q_0] {$e$};
-				\path[->]
-				(q_0) edge node {0} (q_1)
-				edge [bend right=25] node {1} (q_2)
-				(q_1) edge node {1} (q_2)
-				edge [loop above] node {0} ()
-				(q_2) edge [bend right =25] node {0} (q_0)
-				edge [loop below] node {1} ();
-			\end{tikzpicture}
-		\end{center}
-		entrambi i linguaggi accettano $(\epsilon+(0+1)^*0)$
-		applico la tabella:
-		\begin{center}
-			\begin{tabular}{c|c|c|c|c|}
-				\hline
-				b & x & / & / & / \\
-				\hline
-				c &   & x & / & / \\
-				\hline
-				d &   & x &   & / \\
-				\hline
-				e & x &   & x & x \\
-				\hline
-				  & a & b & c & d \\
-				\hline
-			\end{tabular}
-		\end{center}
-		e quindi dato che $a\approx c$ si ha che i due linguaggi sono lo stesso linguaggio. \\
-	\end{example}
-	passiamo ora alla \textbf{minimizzazione}, che prende in input un DFA $A$ e restituisce un $DFA$ $A_{min}$ tale che $L(A)=L(A_{min})$ e che $A_{min}$ ha il numero più piccolo possibile di stati per distinguere $L(A)$.\\
-	Procedo così:
-	\begin{enumerate}
-		\item si rimuovono gli stati non raggiungibili
-		\item applico la tabella per scoprire le tabelle di equivalenza, gli stati del nuovo automa sono le classi di equivalenza
-	\end{enumerate}
-	si ha che lo stato iniziale è la classe di equivalenza dello stato finale e gli stati finali sono le classi di equivalenza degli stati finali.\\
-	La minimizzazione si dimostra per assurdo:\\
-	Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)=L(N)\,|Q_N|<|Q_M|$. I due stati iniziali sono indistinguibili. Sia $p\in M\,\,q\in N$ tali $p\approx q\,\, \forall a\in\Sigma$ quindi $\delta p,a)=\delta(q,a)$, Ogni stato $p\in Q_;$è quindi indistinguibile da almeno uno stato di $N$. Avendo però $N$ meno stati si avranno almeno due stati di $M$ indistinguibili dallo stesso di $N$ ma non sono indistinguibili per la tabella. SI ha un assurdo.
-	\begin{example}
-		Si ha il seguente automa:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
-				\node[state, initial] (q_0) {$a$};
-				\node[state] (q_1) [right=of q_0] {$b$};
-				\node[state, accepting] (q_2) [right=of q_1] {$c$};
-				\node[state] (q_3) [right=of q_2] {$d$};
-				\node[state] (q_4) [below=of q_0] {$e$};
-				\node[state, accepting] (q_5) [right=of q_4] {$f$};
-				\node[state] (q_6) [right=of q_5] {$g$};
-				\node[state] (q_7) [right=of q_6] {$h$};
-				\node[state, accepting] (q_8) [below=of q_5] {$i$};
-				\path[->]
-				(q_0) edge node {1} (q_4)
-				edge node {0} (q_1)
-				(q_1) edge node {0} (q_2)
-				edge [bend left =25] node {1} (q_5)
-				(q_2) edge [bend left =25] node {1} (q_7)
-				edge node {0} (q_3)
-				(q_3) edge node {1} (q_7)
-				edge [bend right= 85] node {0} (q_4)
-				(q_4) edge node {0} (q_5)
-				edge [bend left =25] node {1} (q_8)
-				(q_5) edge [bend left = 25] node {0} (q_1)
-				edge node {0} (q_6)
-				(q_6) edge node {1} (q_1)
-				edge node {0} (q_7)
-				(q_7) edge node {0} (q_8)
-				edge [bend left = 25] node {1} (q_2)
-				(q_8) edge [bend left = 25] node {1} (q_4)
-				edge [bend left = 85] node {0} (q_0);
-			\end{tikzpicture}
-		\end{center}
-		faccio la tabella
-		\begin{center}
-			\begin{tabular}{c|c|c|c|c|c|c|c|c|}
-				\hline
-				b &   & / & / & / & / & / & / & / \\
-				\hline
-				c & x & x & / & / & / & / & / & / \\
-				\hline
-				d &   & z & x & / & / & / & / & / \\
-				\hline
-				e & x &   & x & x & / & / & / & / \\
-				\hline
-				f & x & x &   & x & x & / & / & / \\
-				\hline
-				g &   & x & x &   & x & x & / & / \\
-				\hline
-				h & x &   & x & x &   & x & x & / \\
-				\hline
-				i & x & x &   & x & x &   & x & x \\
-				\hline
-				  & a & b & c & d & e & f & g & h \\
-				\hline
-			\end{tabular}
-		\end{center}
-		al caso base segno tutte le caselle degli stati accettanti tranne quelle che incrociano con altri stati accettanti e poi completo il resto della tabella. Ottengo:
-		$a\approx d\approx g$
-		$b\approx e\approx h$
-		$c\approx f\approx i$
+$\delta$ è $\delta_L$ per $Q_L$ e $\delta$ è $\delta_M$ per $Q_M$
+per vedere se $q_L\approx q_M$ uso il riempi tabella e se sono equivalenti si ha che $L=M$
+\begin{example}
+Sia $A$:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+\node[state, initial, accepting] (q_0) {$a$};
+\node[state] (q_1) [right=of q_0] {$b$};
+\path[->]
+(q_0) edge [bend left = 25] node {1} (q_1)
+edge [loop above] node {0} ()
+(q_1) edge [bend left = 25] node {0} (q_0)
+edge [loop above] node {1} ();
+\end{tikzpicture}
+\end{center}
+e $B$:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+\node[state, initial, accepting] (q_0) {$c$};
+\node[state, accepting] (q_1) [right=of q_0] {$d$};
+\node[state] (q_2) [below =of q_0] {$e$};
+\path[->]
+(q_0) edge node {0} (q_1)
+edge [bend right=25] node {1} (q_2)
+(q_1) edge node {1} (q_2)
+edge [loop above] node {0} ()
+(q_2) edge [bend right =25] node {0} (q_0)
+edge [loop below] node {1} ();
+\end{tikzpicture}
+\end{center}
+entrambi i linguaggi accettano $(\epsilon+(0+1)^*0)$
+applico la tabella:
+\begin{center}
+\begin{tabular}{c|c|c|c|c|}
+  \hline
+  b & x & / & / & / \\
+  \hline
+  c &   & x & / & / \\
+  \hline
+  d &   & x &   & / \\
+  \hline
+  e & x &   & x & x \\
+  \hline
+	& a & b & c & d \\
+  \hline
+\end{tabular}
+\end{center}
+e quindi dato che $a\approx c$ si ha che i due linguaggi sono lo stesso linguaggio. \\
+\end{example}
+passiamo ora alla \textbf{minimizzazione}, che prende in input un DFA $A$ e restituisce un $DFA$ $A_{min}$ tale che $L(A)=L(A_{min})$ e che $A_{min}$ ha il numero più piccolo possibile di stati per distinguere $L(A)$.\\
+Procedo così:
+\begin{enumerate}
+\item si rimuovono gli stati non raggiungibili
+\item applico la tabella per scoprire le tabelle di equivalenza, gli stati del nuovo automa sono le classi di equivalenza
+\end{enumerate}
+si ha che lo stato iniziale è la classe di equivalenza dello stato finale e gli stati finali sono le classi di equivalenza degli stati finali.\\
+La minimizzazione si dimostra per assurdo:\\
+Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)=L(N)\,|Q_N|<|Q_M|$. I due stati iniziali sono indistinguibili. Sia $p\in M\,\,q\in N$ tali $p\approx q\,\, \forall a\in\Sigma$ quindi: $\delta p,a)=\delta(q,a)$, Ogni stato $p\in Q_;$è quindi indistinguibile da almeno uno stato di $N$. Avendo però $N$ meno stati si avranno almeno due stati di $M$ indistinguibili dallo stesso di $N$ ma non sono indistinguibili per la tabella. SI ha un assurdo.
+\begin{example}
+Si ha il seguente automa:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
+\node[state, initial] (q_0) {$a$};
+\node[state] (q_1) [right=of q_0] {$b$};
+\node[state, accepting] (q_2) [right=of q_1] {$c$};
+\node[state] (q_3) [right=of q_2] {$d$};
+\node[state] (q_4) [below=of q_0] {$e$};
+\node[state, accepting] (q_5) [right=of q_4] {$f$};
+\node[state] (q_6) [right=of q_5] {$g$};
+\node[state] (q_7) [right=of q_6] {$h$};
+\node[state, accepting] (q_8) [below=of q_5] {$i$};
+\path[->]
+(q_0) edge node {1} (q_4)
+edge node {0} (q_1)
+(q_1) edge node {0} (q_2)
+edge [bend left =25] node {1} (q_5)
+(q_2) edge [bend left =25] node {1} (q_7)
+edge node {0} (q_3)
+(q_3) edge node {1} (q_7)
+edge [bend right= 85] node {0} (q_4)
+(q_4) edge node {0} (q_5)
+edge [bend left =25] node {1} (q_8)
+(q_5) edge [bend left = 25] node {0} (q_1)
+edge node {0} (q_6)
+(q_6) edge node {1} (q_1)
+edge node {0} (q_7)
+(q_7) edge node {0} (q_8)
+edge [bend left = 25] node {1} (q_2)
+(q_8) edge [bend left = 25] node {1} (q_4)
+edge [bend left = 85] node {0} (q_0);
+\end{tikzpicture}
+\end{center}
+faccio la tabella
+\begin{center}
+\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+  \hline
+  b &   & / & / & / & / & / & / & / \\
+  \hline
+  c & x & x & / & / & / & / & / & / \\
+  \hline
+  d &   & z & x & / & / & / & / & / \\
+  \hline
+  e & x &   & x & x & / & / & / & / \\
+  \hline
+  f & x & x &   & x & x & / & / & / \\
+  \hline
+  g &   & x & x &   & x & x & / & / \\
+  \hline
+  h & x &   & x & x &   & x & x & / \\
+  \hline
+  i & x & x &   & x & x &   & x & x \\
+  \hline
+	& a & b & c & d & e & f & g & h \\
+  \hline
+\end{tabular}
+\end{center}
+al caso base segno tutte le caselle degli stati accettanti tranne quelle che incrociano con altri stati accettanti e poi completo il resto della tabella. Ottengo:
+$a\approx d\approx g$
+$b\approx e\approx h$
+$c\approx f\approx i$
 
-		e quindi ottengo, l'automa minimizzato:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
-				\node[state, initial] (q_0) {$\{a,d,g\}$};
-				\node[state] (q_1) [right=of q_0] {$\{b,e,h\}$};
-				\node[state, accepting] (q_2) [below =of q_0] {$\{c,f,i\}$};
-				\path[->]
-				(q_0) edge node {0,1} (q_1)
-				(q_1) edge [bend left =25] node {0,1} (q_2)
-				(q_2) edge [bend left =25] node {1} (q_1)
-				edge node {0} (q_0);
-			\end{tikzpicture}
-		\end{center}
-	\end{example}
-	\begin{example}
-		Sia $A$:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				\node[state, initial, accepting] (q_0) {$a$};
-				\node[state] (q_1) [right=of q_0] {$b$};
-				\path[->]
-				(q_0) edge [bend left = 25] node {1} (q_1)
-				edge [loop above] node {0} ()
-				(q_1) edge [bend left = 25] node {0} (q_0)
-				edge [loop above] node {1} ();
-			\end{tikzpicture}
-		\end{center}
-		e $B$:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-				\node[state, initial, accepting] (q_0) {$c$};
-				\node[state, accepting] (q_1) [right=of q_0] {$d$};
-				\node[state] (q_2) [below =of q_0] {$e$};
-				\path[->]
-				(q_0) edge node {0} (q_1)
-				edge [bend right=25] node {1} (q_2)
-				(q_1) edge node {1} (q_2)
-				edge [loop above] node {0} ()
-				(q_2) edge [bend right =25] node {0} (q_0)
-				edge [loop below] node {1} ();
-			\end{tikzpicture}
-		\end{center}
-		riduco $B$:
-		\begin{center}
-			\begin{tabular}{c|c|c}
-				\hline
-				d &   & / \\
-				\hline
-				e & x & x \\
-				\hline
-				  & c & d \\
-				\hline
-			\end{tabular}
-		\end{center}
-		quindi $c\approx d$. Ottengo quindi:
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				\node[state, initial, accepting] (q_0) {$\{c,d\}$};
-				\node[state] (q_1) [right=of q_0] {$e$};
-				\path[->]
-				(q_0) edge [bend left = 25] node {1} (q_1)
-				edge [loop above] node {0} ()
-				(q_1) edge [bend left = 25] node {0} (q_0)
-				edge [loop above] node {1} ();
-			\end{tikzpicture}
-		\end{center}
-		quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
-	\end{example}
-	La tabella non funziona ovviamente por gli NFA
-	\section{Pumping Lemma per i linguaggi regolari}
-	Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.\\
-	Partiamo da un esempio:
-	$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$
-	supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).\\
+e quindi ottengo, l'automa minimizzato:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
+\node[state, initial] (q_0) {$\{a,d,g\}$};
+\node[state] (q_1) [right=of q_0] {$\{b,e,h\}$};
+\node[state, accepting] (q_2) [below =of q_0] {$\{c,f,i\}$};
+\path[->]
+(q_0) edge node {0,1} (q_1)
+(q_1) edge [bend left =25] node {0,1} (q_2)
+(q_2) edge [bend left =25] node {1} (q_1)
+edge node {0} (q_0);
+\end{tikzpicture}
+\end{center}
+\end{example}
+\begin{example}
+Sia $A$:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+\node[state, initial, accepting] (q_0) {$a$};
+\node[state] (q_1) [right=of q_0] {$b$};
+\path[->]
+(q_0) edge [bend left = 25] node {1} (q_1)
+edge [loop above] node {0} ()
+(q_1) edge [bend left = 25] node {0} (q_0)
+edge [loop above] node {1} ();
+\end{tikzpicture}
+\end{center}
+e $B$:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+\node[state, initial, accepting] (q_0) {$c$};
+\node[state, accepting] (q_1) [right=of q_0] {$d$};
+\node[state] (q_2) [below =of q_0] {$e$};
+\path[->]
+(q_0) edge node {0} (q_1)
+edge [bend right=25] node {1} (q_2)
+(q_1) edge node {1} (q_2)
+edge [loop above] node {0} ()
+(q_2) edge [bend right =25] node {0} (q_0)
+edge [loop below] node {1} ();
+\end{tikzpicture}
+\end{center}
+riduco $B$:
+\begin{center}
+\begin{tabular}{c|c|c}
+  \hline
+  d &   & / \\
+  \hline
+  e & x & x \\
+  \hline
+	& c & d \\
+  \hline
+\end{tabular}
+\end{center}
+quindi $c\approx d$. Ottengo quindi:
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+\node[state, initial, accepting] (q_0) {$\{c,d\}$};
+\node[state] (q_1) [right=of q_0] {$e$};
+\path[->]
+(q_0) edge [bend left = 25] node {1} (q_1)
+edge [loop above] node {0} ()
+(q_1) edge [bend left = 25] node {0} (q_0)
+edge [loop above] node {1} ();
+\end{tikzpicture}
+\end{center}
+quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
+\end{example}
+La tabella non funziona ovviamente por gli NFA
+\section{Pumping Lemma per i linguaggi regolari}
+Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.\\
+Partiamo da un esempio:
+$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$
+supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).\\
 $0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.\\
-	Formalmente si ha:
-	\begin{theorem}
-		Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
-		$y\neq \epsilon$
-		$|xy|\leq n$
-		$\forall k\geq 0\,\,\, zy^kz\in L$
-		in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
-	\end{theorem}
-	\begin{proof}
-		essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2\cdots a_n$ con $m\geq n$. Sia:
-		$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,\cdots a_i)\,\,\forall i=0,1,\cdots,n$
-		quindi:
-		$p_0=q_0,p_1,\cdots,p_n\to n+a\,\,stati$
-		allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
-		$x=a_1a_2\cdots a_n$
-		$y=a_{i+1}a_{i+2}\cdots a_j$
-		$z=a_{j+1}a_{j+2}\cdots a_m$
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-				\node[state, initial] (q_0) {$p_0$};
-				\node[state] (q_1) [right=of q_0] {$p_i$};
-				\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
-				\path[->]
-				(q_0) edge node {x} (q_1)
-				(q_1) edge node {z} (q_2)
-				edge [loop above] node {y} ();
-			\end{tikzpicture}
-		\end{center}
-	\end{proof}
-	\begin{example}
-		mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
-		$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
-		ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?\\
-		suppongo per assurdo di sì, con $n$ costante del pumping lemma.\\
-		$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
-		Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{1^p|\, p\,\,primo\}=\{11,111,11111\}$ è regolare?\\
-		$w=1^p=1^{n-1}11^{p-n}$ con:
-		$x=1^{n-1}\,\,y=1\,\,z=1^{p-n}$
-		per $k=0$ si ha $1^{p-1}$ e $p-1$ non è , quindi non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{0^n1^m|\, n\leq m\}$ è regolare?\\
-		$w=0^{n-l}0^l1^{m}$ con:
-		$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
-		con $|y|=l$ e $0<l\leq n$\\
-		quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
-		$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
-		scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{0^n1^m|\, n\geq m\}$ è regolare?\\
-		$w=0^{n-l}0^l1^{m}$ con:
-		$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
-		con $|zy|\leq n\,\,y\neq\epsilon\,\,|y|=l$ e $0<l\leq n$
-		scelgo l tale che $n-l<m$ quindi non è regolare
-	\end{example}
+Formalmente si ha:
+\begin{theorem}
+Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
+$y\neq \epsilon$
+$|xy|\leq n$
+$\forall k\geq 0\,\,\, zy^kz\in L$
+in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
+\end{theorem}
+\begin{proof}
+essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2\cdots a_n$ con $m\geq n$. Sia:
+$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,\cdots a_i)\,\,\forall i=0,1,\cdots,n$
+quindi:
+$p_0=q_0,p_1,\cdots,p_n\to n+a\,\,stati$
+allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
+$x=a_1a_2\cdots a_n$
+$y=a_{i+1}a_{i+2}\cdots a_j$
+$z=a_{j+1}a_{j+2}\cdots a_m$
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+\node[state, initial] (q_0) {$p_0$};
+\node[state] (q_1) [right=of q_0] {$p_i$};
+\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
+\path[->]
+(q_0) edge node {x} (q_1)
+(q_1) edge node {z} (q_2)
+edge [loop above] node {y} ();
+\end{tikzpicture}
+\end{center}
+\end{proof}
+\begin{example}
+mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
+$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
+ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
+\end{example}
+\begin{example}
+$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?\\
+suppongo per assurdo di sì, con $n$ costante del pumping lemma.\\
+$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
+Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
+\end{example}
+\begin{example}
+$L=\{1^p|\, p\,\,primo\}=\{11,111,11111\}$ è regolare?\\
+$w=1^p=1^{n-1}11^{p-n}$ con:
+$x=1^{n-1}\,\,y=1\,\,z=1^{p-n}$
+per $k=0$ si ha $1^{p-1}$ e $p-1$ non è , quindi non è regolare
+\end{example}
+\begin{example}
+$L=\{0^n1^m|\, n\leq m\}$ è regolare?\\
+$w=0^{n-l}0^l1^{m}$ con:
+$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
+con $|y|=l$ e $0<l\leq n$\\
+quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
+$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
+scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
+\end{example}
+\begin{example}
+$L=\{0^n1^m|\, n\geq m\}$ è regolare?\\
+$w=0^{n-l}0^l1^{m}$ con:
+$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
+con $|zy|\leq n\,\,y\neq\epsilon\,\,|y|=l$ e $0<l\leq n$
+scelgo l tale che $n-l<m$ quindi non è regolare
+\end{example}
 
 
+\newpage
+\section*{Soluzioni degli esercizi}
+\label{sec:soluzioni-regolari}
 \shipoutAnswer
 
 
