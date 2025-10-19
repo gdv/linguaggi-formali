@@ -1,4 +1,4 @@
-name: Build LaTeX document
+name: Compila le slide
 on:
   push:
     tags:
