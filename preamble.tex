@@ -170,6 +170,12 @@ numberwithin=chapter,
 
 \newcommand{\keyword}[1]{\textbf{#1}\marginnote{#1}}
 
+% Simboli alfabeto
+\newcommand{\zero}{\ensuremath{\mathtt{0}}\xspace}
+\newcommand{\uno}{\ensuremath{\mathtt{1}}\xspace}
+\newcommand{\kleene}{\ensuremath{{}^{\ast}}\xspace}
+\xspaceaddexceptions{\zero \uno \kleene}
+
 % Produzioni
 \usepackage{stackrel}
 \newcommand{\sprod}[1]{\ensuremath{\stackrel[#1]{}{\Longrightarrow}}}
@@ -182,6 +188,9 @@ numberwithin=chapter,
 
 % Automi
 \newcommand{\dfa}{\ensuremath{\mathcal{A}=\langle \Sigma, Q, q_{0}, F, \delta \rangle}\xspace}
+\newcommand{\nfa}{\ensuremath{\mathcal{A}=\langle \Sigma, Q, q_{0}, F, \delta \rangle}\xspace}
+\newcommand{\enfa}{ε-NFA\xspace}
+
 
 
 \usepackage{upref}
@@ -193,7 +202,7 @@ numberwithin=chapter,
 
 
 %\usepackage[lastexercise]{exercise}
-\usepackage[lastexercise]{exercise}
+\usepackage[lastexercise,answerdelayed]{exercise}
 \counterwithin{Exercise}{chapter}
 \counterwithin{Answer}{chapter}
 \renewcounter{Exercise}[chapter]
