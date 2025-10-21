@@ -717,10 +717,10 @@ prima occorrenza di \zero\zero (se esiste).
 
 
 \subsection{Automi non deterministici}
-Un automa a stati finiti non deterministici (\textit{NFA}) può trovarsi in diversi stati contemporaneamente. Come i DFA accettano linguaggi regolari e spesso sono più semplici da trattare rispetto ai DFA.\\
+Un automa a stati finiti non deterministici (\textit{NFA}) può trovarsi in diversi stati contemporaneamente. Come i DFA accettano linguaggi regolari e spesso sono più semplici da trattare rispetto ai DFA.
 Un NFA è definito come un DFA ma si ha un diverso tipo di transizione $\delta$, che ha sempre come argomenti uno stato e un simbolo di input ma restituisce zero o più stati.
 \begin{example}
-	Sia $L=\{x01|\,x\in\{o,1\}$ ovvero il linguaggio formato da tutte le stringhe binarie che terminano in 01.\\
+	Sia $L=\{x01|\,x\in\{o,1\}$ ovvero il linguaggio formato da tutte le stringhe binarie che terminano in 01.
 	Avremo il seguente automa determinsitico:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -804,7 +804,7 @@ $L(A)=\{w\in \Sigma^*|\, \hat{\delta}(q_0,q)\cap F\neq \emptyset\}$
 		\end{tikzpicture}
 	\end{center}
 \end{example}
-Troviamo ora un algoritmo che trasformi un NFA in un DFA.\\
+Troviamo ora un algoritmo che trasformi un NFA in un DFA.
 Dal penultimo esempio esempio ricavo:
 \begin{center}
 	\begin{tabular}{c|c|c}
@@ -987,7 +987,7 @@ che diventa il seguente DFA:
 
 \subsubsection{esercizi}
 \begin{example}
-	automa DFA per $w=x010y,\,x,y\in\{0,1\}^*$ :\\
+	automa DFA per $w=x010y,\,x,y\in\{0,1\}^*$ :
 	la stringa più corta è 010
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -1007,7 +1007,7 @@ che diventa il seguente DFA:
 	\end{center}
 \end{example}
 \begin{example}
-	automa DFA per $a^{2k+1}b^{2h},\, h,k\geq 0$ :\\
+	automa DFA per $a^{2k+1}b^{2h},\, h,k\geq 0$ :
 	concatenazione di a dispari e b pari:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -1032,7 +1032,7 @@ che diventa il seguente DFA:
 	\end{center}
 \end{example}
 \begin{example}
-	cerco DFA per stringhe inizianti con a e finenti con b, con occorrenze di b singole o a coppie, nessuna regola per c.\\
+	cerco DFA per stringhe inizianti con a e finenti con b, con occorrenze di b singole o a coppie, nessuna regola per c.
 	per esempio $abbcb$ è nel linguaggio
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -1261,20 +1261,20 @@ con: $q\in Q,\,\,\, w\in \Sigma^*\,\,\,e\,\,\,${$\delta$}$(p,w)=q$
 \begin{itemize}
 	\item
 	      \textbf{caso base:} $w=\epsilon\to |w|=0\to${$\delta$}$(q,\epsilon)=q$
-	      \\
+
 	      \textbf{caso passo:} $|w|\neq0\to w=ax$ con $a\in \Sigma,x\in \Sigma^*$:
 	      {$\delta$}$(q,w)=${$\delta$}$(q,ax)=${$\delta$} $(\delta(q,a),x)$
 	\item
 	      \textbf{caso base:} $w=\epsilon\to |w|=0\to \delta(q,w)=\delta(q,\epsilon)=q$
-	      \\
+
 	      \textbf{caso passo:} $|w|\neq0\to w=xa$ con $a\in \Sigma,x\in \Sigma^*$:
 	      {$\delta$}$(q,w)=${$\delta$}$(q,xa)=${$\delta$} $(\delta(q,x),a)$
 \end{itemize}
 in un NFA si ha:
 \begin{itemize}
 	\item \textbf{caso base:}  {$\delta$}$(q,\epsilon=\{q\},\,\,\forall q\in Q$
-	\item \textbf{caso passo:} posto $w=ax$ e {$\delta$}$(q,a)=\{p_1,\cdots,p_n$ allora {$\delta$}$(q,w)=\cup${$\delta$}$(p_i, x)0\{r_1,\cdots,r_n\}$.\\
-	      {$\delta$}$(q,a)=p$\\
+	\item \textbf{caso passo:} posto $w=ax$ e {$\delta$}$(q,a)=\{p_1,\cdots,p_n$ allora {$\delta$}$(q,w)=\cup${$\delta$}$(p_i, x)0\{r_1,\cdots,r_n\}$.
+	      {$\delta$}$(q,a)=p$
 	      {$\delta$}$(q,w)=$ {$\delta$}$(q,xa)=$ {$\delta$}$(p,x)=r$
 \end{itemize}
 oppure:
@@ -1282,7 +1282,7 @@ oppure:
 	\item \textbf{caso base:}  {$\delta$}$(q,\epsilon)=\{q\},\,\forall q\in Q$
 	\item \textbf{caso passo:} posto $w=xa$ si ha  {$\delta$}$(q,q)=$ {$\delta$}$(q,xa)=\cup \delta(p,a)$ con  {$\delta$}$(q,x)=\{p_1,\cdots,p_n\}$
 \end{itemize}
-Se ho un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ con $\delta_N: Q\times\Sigma^*\to 2^{Q_N}$ che accetta un lingiaggio $L$ posso ottenere un DFA $D=(Q_D, \Sigma, \delta_D, q_{0_D}, F_D)$ equivalente con $Q_D=2^{Q_N}$  e $q_{0_D}=\{q_{0_N}\}$ che accetta L.\\
+Se ho un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ con $\delta_N: Q\times\Sigma^*\to 2^{Q_N}$ che accetta un lingiaggio $L$ posso ottenere un DFA $D=(Q_D, \Sigma, \delta_D, q_{0_D}, F_D)$ equivalente con $Q_D=2^{Q_N}$  e $q_{0_D}=\{q_{0_N}\}$ che accetta L.
 $\forall S\subseteq Q_N$ e $\forall a\in \Sigma$ si ha:
 $F_D=\{S\subseteq Q_N\,|\, S\cap F_n\neq \emptyset\}$
 con $\delta_D(S,a)=\cup \delta_N(p,a)$
@@ -1531,7 +1531,7 @@ un numero di \uno multiplo di $3$.
 		\end{tikzpicture}
 	\end{center}
 \end{example}
-Vediamo ora l'algoritmo che trasforma DFA in una ER. Questo algoritmo permette di verificare quale linguaggio è accettato o meno dall'automa:\\
+Vediamo ora l'algoritmo che trasforma DFA in una ER. Questo algoritmo permette di verificare quale linguaggio è accettato o meno dall'automa:
 dato DFA $A=(Q,\Sigma, \delta, q_0,F)$ con $Q$ e $F$ stati non finali e $Q$, $F$, $q_0$ che sono i primi stati da eliminare. L'algoritmo procede per eliminazioni successive. Si costruisce quindi l'automa $B$ che ha solo $q_0$ e $F=\{q_1,\cdots,q_k\}$. Scrivo quindi $K$ espressioni regolari considerando solo $q_0$ e il k-esimo stato finale eliminando pian piano gli altri stati. Alla fine ottengo le varie espressioni regolari da unire:
 $E=E1+E2+\cdots+Ek$
 vediamo ora come eliminare uno stato. Partiamo dal seguente automa:
@@ -1612,7 +1612,7 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 			(q_2) edge  node {0,1} (q_3);
 		\end{tikzpicture}
 	\end{center}
-	questo automa accetta le stringhe binarie con un uno in penultima o terzultima posizione.\\
+	questo automa accetta le stringhe binarie con un uno in penultima o terzultima posizione.
 	Rietichetto con le ER:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -1768,7 +1768,7 @@ Costruire l'\enfa che riconosce il linguaggio associato alla seguente espression
 Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
 \end{Exercise}
 
-Per gli esercizi che seguono, si suggerisce di usare la soluzione degli \Cref{exe:er-nfa-1}--\ref{exe:er-nfa-5}.
+Per gli esercizi che seguono, si suggerisce di usare la soluzione degli Esercizi~\ref{exe:er-nfa-1}--\ref{exe:er-nfa-5}.
 
 
 \begin{Exercise}\label{exe:er-dfa-1}
@@ -1790,6 +1790,108 @@ Costruire il dfa che riconosce il linguaggio associato alla seguente espressione
 \begin{Exercise}\label{exe:er-dfa-5}
 Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
 \end{Exercise}
+
+\section{Pumping Lemma per i linguaggi regolari}
+Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.
+Partiamo da un esempio:
+$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$
+supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).
+$0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.
+Formalmente si ha:
+\begin{theorem}
+Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
+$y\neq \epsilon$
+$|xy|\leq n$
+$\forall k\geq 0\,\,\, zy^kz\in L$
+in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
+\end{theorem}
+\begin{proof}
+essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2\cdots a_n$ con $m\geq n$. Sia:
+$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,\cdots a_i)\,\,\forall i=0,1,\cdots,n$
+quindi:
+$p_0=q_0,p_1,\cdots,p_n\to n+a\,\,stati$
+allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
+$x=a_1a_2\cdots a_n$
+$y=a_{i+1}a_{i+2}\cdots a_j$
+$z=a_{j+1}a_{j+2}\cdots a_m$
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+\node[state, initial] (q_0) {$p_0$};
+\node[state] (q_1) [right=of q_0] {$p_i$};
+\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
+\path[->]
+(q_0) edge node {x} (q_1)
+(q_1) edge node {z} (q_2)
+edge [loop above] node {y} ();
+\end{tikzpicture}
+\end{center}
+\end{proof}
+\begin{example}
+mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
+$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
+ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
+\end{example}
+\begin{example}
+$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?
+suppongo per assurdo di sì, con $n$ costante del pumping lemma.
+$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
+Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
+\end{example}
+\begin{example}
+$L=\{0^n1^m|\, n\leq m\}$ è regolare?
+$w=0^{n-l}0^l1^{m}$ con:
+$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
+con $|y|=l$ e $0<l\leq n$
+quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
+$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
+scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
+\end{example}
+
+
+\begin{Exercise}\label{exe:pump-parentesi}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole in cui ogni prefisso contiene un numero di \zero che è
+maggiore o uguale al numero di \uno non è regolare.
+\end{Exercise}
+
+Il linguaggio dell'Esercizio~\ref{exe:pump-parentesi} è anche chiamato il linguaggio delle parentesi bilanciate (dove
+\zero è una parentesi aperta e \uno una parentesi chiusa).
+
+
+\begin{Exercise}\label{exe:pump-tanti-1}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\leq m$
+non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-palindrome}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome
+non è regolare.
+\end{Exercise}
+
+
+
+\begin{Exercise}\label{exe:pump-primi}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole $\zero^{n}$ con $n$ numero primo
+non è regolare.
+\end{Exercise}
+
+\begin{Answer}
+Prendiamo la parola $\zero^{n}$ con $n$ numero primo sufficientemente grande, e consideriamo la suddivisione generica
+$xyz$ con $x=\zero^{i}$, $y=\zero^{l}$, $z=\zero^{n-l-i}$.
+L'espansione $xy^{n-l}z$ è la parola $\zero^{i}\zero^{l(n-l)}\zero^{n-l-i} = \zero^{(n-l)(l+1)}$ quindi la sua lunghezza
+non è un numero primo.
+\end{Answer}
+
+
+\begin{Exercise}\label{exe:pump-regolare}
+Spiegare perchè non è possibile applicare il pumping lemma per dimostrare che il linguaggio  $(\zero\uno)\kleene$ non è
+regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-tanti-0}
+Spiegare perchè non è possibile applicare il pumping lemma per dimostrare che il linguaggio delle parole nella forma
+$\zero^n\uno^m$ con $n\geq m$ non è regolare.
+\end{Exercise}
+
 
 \section{Chiusura di un Linguaggio regolare}
 Sia $REG$ la classe dei linguaggi regolari (ovvero ogni linguaggio regolare su un alfabeto finito non vuoto). Si ha la seguente proprietà:
@@ -1825,21 +1927,21 @@ $\text{se L è regolare su }\Sigma\to \text{L è regolare su }\Gamma$
 inoltre:
 $\text{se L è REG su }\Sigma_1, \text{ M è REG su }\Sigma_2, \text{ allora } L\cup M \text{ è REG su }\Sigma_1\cup\Sigma_2$
 \begin{theorem}
-	Si ha che:\\
-	Se L e M sono linguaggi regolari allora LM, ovvero la concatenazione è regolare.\\
+	Si ha che:
+	Se L e M sono linguaggi regolari allora LM, ovvero la concatenazione è regolare.
 	Se L è un linguaggio regolare allora $L^*$ è regolare
 \end{theorem}
 \begin{theorem}
 	se $L\in REG$ su $\Sigma$ allora $\overline{L}=\Sigma^*-L\in REG$
 \end{theorem}
 \begin{proof}
-	se $L\in REG$ allora $\exists$ DFA $A=(Q, \Sigma, \delta, q_0, F)$ tale che $L(A)=L$. Costruisco $B=(Q,\Sigma, \delta,q_0, Q-F),\,	 L(B)=\overline{L}$.\\
+	se $L\in REG$ allora $\exists$ DFA $A=(Q, \Sigma, \delta, q_0, F)$ tale che $L(A)=L$. Costruisco $B=(Q,\Sigma, \delta,q_0, Q-F),\,	 L(B)=\overline{L}$.
 \end{proof}
 si osserva che:
 $L\in REG\,\,su\,\, \Sigma\,\,e\,\, \Sigma\subseteq \Gamma$
 inoltre:
 $\overline{L}=\Sigma^*-L\,\,oppure\,\, \overline{L}=\Gamma^*-L$
-\textit{Se ho un espressione regolare per L e voglio ottenere un'espressione regolare per }$\overline{L}$\textit{ devo ottenere un }$\epsilon-NFA$\textit{ che devo convertire in DFA. A quel punto complemento con F e ottengo un'espressione regolare per }$\overline{L}$.\\
+\textit{Se ho un espressione regolare per L e voglio ottenere un'espressione regolare per }$\overline{L}$\textit{ devo ottenere un }$\epsilon-NFA$\textit{ che devo convertire in DFA. A quel punto complemento con F e ottengo un'espressione regolare per }$\overline{L}$.
 Passiamo ora all'intersezione:
 \begin{theorem}
 	se $L$ e $M$ sono regolari allora la loro intersezione è regolare
@@ -1880,7 +1982,7 @@ $\delta(p,q),a)=(\delta_L(p,a),\delta_M(q,a))$
 $A_L=(Q_L,\Sigma,\delta_L,q_{OL},F_L)$
 $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 \begin{example}
-	Siano:\\
+	Siano:
 	$A_L$, stringhe binarie con almeno uno zero:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -1924,7 +2026,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 \end{example}
 
 \begin{example}
-	Siano:\\
+	Siano:
 	$A$, stringhe contenenti $a$ e $b$ contenenti almeno una $b$:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -1979,7 +2081,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 \end{example}
 
 \begin{example}
-	si hanno due linguaggi $L(A)$ e $L(B)$ tali per cui la loro intersezione non è vuota.\\
+	si hanno due linguaggi $L(A)$ e $L(B)$ tali per cui la loro intersezione non è vuota.
 	Sia $A$:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -2143,8 +2245,8 @@ diamo una definizione ricorsiva dell'equivalenza tra stati:
 	\item \textbf{caso base:} se $p\in F$ e $q\not\in F$ o viceversa si ha che gli stati sono distinguibili
 	\item \textbf{caso passo:} se per $a\in \Sigma$ gli stati $r=\delta(p,a)$ e $s=\delta(q,a)$ sono distinguibili allora anche $p$ e $q$ lo sono
 \end{itemize}
-quindi se un certo arco w porta due stati a due diversi di cui uno è accettante essi sono distinti.\\
-Esiste anche un algoritmo detto \textbf{riempi-tabella}:\\
+quindi se un certo arco w porta due stati a due diversi di cui uno è accettante essi sono distinti.
+Esiste anche un algoritmo detto \textbf{riempi-tabella}:
 partiamo dalla seguente tabella
 \begin{center}
 	\begin{tabular}{c|c|c|c|c|c|c|c|}
@@ -2271,16 +2373,16 @@ applico la tabella:
   \hline
 \end{tabular}
 \end{center}
-e quindi dato che $a\approx c$ si ha che i due linguaggi sono lo stesso linguaggio. \\
+e quindi dato che $a\approx c$ si ha che i due linguaggi sono lo stesso linguaggio.
 \end{example}
-passiamo ora alla \textbf{minimizzazione}, che prende in input un DFA $A$ e restituisce un $DFA$ $A_{min}$ tale che $L(A)=L(A_{min})$ e che $A_{min}$ ha il numero più piccolo possibile di stati per distinguere $L(A)$.\\
+passiamo ora alla \textbf{minimizzazione}, che prende in input un DFA $A$ e restituisce un $DFA$ $A_{min}$ tale che $L(A)=L(A_{min})$ e che $A_{min}$ ha il numero più piccolo possibile di stati per distinguere $L(A)$.
 Procedo così:
 \begin{enumerate}
 \item si rimuovono gli stati non raggiungibili
 \item applico la tabella per scoprire le tabelle di equivalenza, gli stati del nuovo automa sono le classi di equivalenza
 \end{enumerate}
-si ha che lo stato iniziale è la classe di equivalenza dello stato finale e gli stati finali sono le classi di equivalenza degli stati finali.\\
-La minimizzazione si dimostra per assurdo:\\
+si ha che lo stato iniziale è la classe di equivalenza dello stato finale e gli stati finali sono le classi di equivalenza degli stati finali.
+La minimizzazione si dimostra per assurdo:
 Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)=L(N)\,|Q_N|<|Q_M|$. I due stati iniziali sono indistinguibili. Sia $p\in M\,\,q\in N$ tali $p\approx q\,\, \forall a\in\Sigma$ quindi: $\delta p,a)=\delta(q,a)$, Ogni stato $p\in Q_;$è quindi indistinguibile da almeno uno stato di $N$. Avendo però $N$ meno stati si avranno almeno due stati di $M$ indistinguibili dallo stesso di $N$ ma non sono indistinguibili per la tabella. SI ha un assurdo.
 \begin{example}
 Si ha il seguente automa:
@@ -2413,75 +2515,8 @@ edge [loop above] node {1} ();
 \end{center}
 quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
 \end{example}
-La tabella non funziona ovviamente por gli NFA
-\section{Pumping Lemma per i linguaggi regolari}
-Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.\\
-Partiamo da un esempio:
-$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$
-supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).\\
-$0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.\\
-Formalmente si ha:
-\begin{theorem}
-Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
-$y\neq \epsilon$
-$|xy|\leq n$
-$\forall k\geq 0\,\,\, zy^kz\in L$
-in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
-\end{theorem}
-\begin{proof}
-essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2\cdots a_n$ con $m\geq n$. Sia:
-$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,\cdots a_i)\,\,\forall i=0,1,\cdots,n$
-quindi:
-$p_0=q_0,p_1,\cdots,p_n\to n+a\,\,stati$
-allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
-$x=a_1a_2\cdots a_n$
-$y=a_{i+1}a_{i+2}\cdots a_j$
-$z=a_{j+1}a_{j+2}\cdots a_m$
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-\node[state, initial] (q_0) {$p_0$};
-\node[state] (q_1) [right=of q_0] {$p_i$};
-\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
-\path[->]
-(q_0) edge node {x} (q_1)
-(q_1) edge node {z} (q_2)
-edge [loop above] node {y} ();
-\end{tikzpicture}
-\end{center}
-\end{proof}
-\begin{example}
-mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
-$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
-ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
-\end{example}
-\begin{example}
-$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?\\
-suppongo per assurdo di sì, con $n$ costante del pumping lemma.\\
-$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
-Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
-\end{example}
-\begin{example}
-$L=\{1^p|\, p\,\,primo\}=\{11,111,11111\}$ è regolare?\\
-$w=1^p=1^{n-1}11^{p-n}$ con:
-$x=1^{n-1}\,\,y=1\,\,z=1^{p-n}$
-per $k=0$ si ha $1^{p-1}$ e $p-1$ non è , quindi non è regolare
-\end{example}
-\begin{example}
-$L=\{0^n1^m|\, n\leq m\}$ è regolare?\\
-$w=0^{n-l}0^l1^{m}$ con:
-$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
-con $|y|=l$ e $0<l\leq n$\\
-quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
-$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
-scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
-\end{example}
-\begin{example}
-$L=\{0^n1^m|\, n\geq m\}$ è regolare?\\
-$w=0^{n-l}0^l1^{m}$ con:
-$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
-con $|zy|\leq n\,\,y\neq\epsilon\,\,|y|=l$ e $0<l\leq n$
-scelgo l tale che $n-l<m$ quindi non è regolare
-\end{example}
+La tabella non funziona ovviamente per gli NFA
+
 
 
 \newpage
