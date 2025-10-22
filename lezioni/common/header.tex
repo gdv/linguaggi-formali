@@ -1,0 +1,108 @@
+\documentclass[12pt,aspectratio=169,professionalfont,serif]{beamer}
+\usepackage[osf,p]{newpxtext}
+\usepackage{newpxmath}
+\usepackage{fontawesome5}
+
+\usepackage{fancyvrb}
+\fvset{%frame=single,
+commandchars=\\\{\},
+%framesep=1mm,
+fontfamily=helvetica,
+fontsize=\normalsize
+}
+%\usepackage[bitstream-charter]{mathdesign}
+\usepackage{listings}
+\lstset{commentstyle=\color{orange}, keywordstyle=\color{yellow} }
+
+
+\usetheme{Boadilla}
+\useoutertheme{split}
+\usecolortheme{albatross}
+
+
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamertemplate{navigation symbols}{}
+%\beamerdefaultoverlayspecification{<+->}
+
+
+\setbeamercolor*{structure}{fg=green!60!black,bg=black}
+\setbeamercolor*{normal text}{fg=green!60!black,bg=black}
+\setbeamercolor{palette primary}{use={structure,normal text},fg=green,bg=structure.bg}
+\setbeamercolor{palette secondary}{use={structure,normal text},fg=structure.fg,bg=structure.bg}
+\setbeamercolor{palette tertiary}{use={structure,normal text},fg=structure.fg,bg=structure.bg}
+\setbeamercolor{palette quaternary}{use={structure,normal text},fg=white,bg=green!30!black}
+\setbeamercolor{palette sidebar quaternary}{use={structure,normal text},fg=white,bg=green!30!black}
+\setbeamercolor{title in head/foot}{use={structure,normal text},fg=white,bg=green!30!black}
+
+\setbeamercolor*{example text}{use={structure},fg=green!60!black}
+\setbeamercolor*{block body}{use={structure},bg=structure.bg}
+\setbeamercolor*{block body alerted}{use={structure},bg=structure.bg}
+\setbeamercolor*{block body example}{use={structure},bg=structure.bg}
+\setbeamercolor*{block title}{parent=structure,bg=structure.bg}
+\setbeamercolor*{block title alerted}{use={structure,alerted text},fg=alerted text.fg,bg=structure.bg}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{items}[square]
+\setbeamercolor{item projected}{fg=white}
+\setbeamercolor*{normal text}{use={structure},fg=white!90!blue,bg=structure.bg}
+\setbeamercolor*{separation line}{}
+\setbeamercolor*{fine separation line}{}
+\setbeamercolor{alerted text}{use={structure},fg=structure.fg}
+
+\usepackage[italian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{pgf}
+\usepackage{verbatim}
+\usepackage{inconsolata}
+\usepackage{listings}
+\lstset{language=C, frame=single,
+	basicstyle=\ttfamily,
+	numbers=left, numberstyle=\tiny\color{gray},
+	numbersep=5pt, fancyvrb=true
+}
+
+\usepackage[noend]{algorithm2e}
+\usepackage{pgf}
+\usepackage{tikz}
+\usepackage{graphicx}
+\usetikzlibrary{%
+	arrows,
+	arrows.meta,
+	positioning,
+	calc,
+	backgrounds,
+	chains,
+	matrix,
+	patterns,
+	automata,
+	fit,
+	graphs,
+	decorations,
+	decorations.pathmorphing,
+	decorations.pathreplacing,
+	decorations.markings,
+}
+
+\usepgflibrary{shapes,shapes.geometric}
+
+
+\usepackage{url}
+
+
+\usepackage{xmpmulti}
+\usepackage{transparent}
+\graphicspath{{img/}}
+
+\newcommand{\simplebox}[1]{
+      \begin{tikzpicture}
+              \node[text centered, rectangle, draw=black, thick, text width=\linewidth,align=center, rounded corners, minimum height=1em] (C) {#1};
+      \end{tikzpicture}
+}
+%
+% In questo file si mettono i comandi utili solo per questo insegnamento.
+%
+\author{Gianluca Della Vedova}
+\title{Linguaggi e Computabilità}
+\institute{Univ. Milano--Bicocca\\
+	\texttt{https://www.unimib.it/gianluca-della-vedova}}
+\date{\today}
+
