@@ -1893,6 +1893,48 @@ $\zero^n\uno^m$ con $n\geq m$ non è regolare.
 \end{Exercise}
 
 
+\begin{Exercise}\label{exe:pump-palindromi-pari}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome di lunghezza pari
+non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-palindromi-dispari}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome di lunghezza dispari
+non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-palindromi}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome
+non è regolare.
+\end{Exercise}
+
+
+
+\begin{Exercise}\label{exe:pump-copie}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $ww$ con $w\in\Sigma_{B}\kleene$, determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-011+}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero\uno^{n}$ con $n > 2$, determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-1l0k1n}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-1l0k1n}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, tale che $l=k$ oppure $k=n$,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
 \section{Chiusura di un Linguaggio regolare}
 Sia $REG$ la classe dei linguaggi regolari (ovvero ogni linguaggio regolare su un alfabeto finito non vuoto). Si ha la seguente proprietà:
 $L,M\in REG\to L\cup M\in REG$
@@ -2183,6 +2225,14 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	\end{center}
 	non si raggiungono stati finali quindi $L(A\cap B)=\emptyset$
 \end{example}
+
+
+\begin{Exercise}\label{exe:pump-tanti-0}
+Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\geq m$
+non è regolare.
+\end{Exercise}
+
+
 \section{Minimizzazione}
 definiamo la \textbf{relazione di equivalenza tra stati}:
 \begin{definition}

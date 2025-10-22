@@ -13,7 +13,6 @@ jobs:
       - name: GitHub Action for LaTeX
         uses: xu-cheng/latex-action@4.0.0
         with:
-          os: debian
           root_file: "*.tex"
           working_directory: lezioni
           continue_on_error: true
