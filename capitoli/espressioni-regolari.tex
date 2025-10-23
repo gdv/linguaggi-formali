@@ -2232,11 +2232,20 @@ Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\
 non è regolare.
 \end{Exercise}
 
+\section{Problemi di decisione per linguaggi regolari}
+\label{sec:problemi-decisione-ER}
+
+Verificare se un'espressione regolare rappresenta il linguaggio vuoto.
+
+Da questo, verificare se due espressioni regolari rappresentano lo stesso linguaggio.
+
+Verificare se un'espressione regolare rappresenta $\Sigma\kleene$.
+
 
 \section{Minimizzazione}
 definiamo la \textbf{relazione di equivalenza tra stati}:
 \begin{definition}
-	Sia $A$ un $DFA$, $A=()Q,\Sigma,\delta,q_0,F)$. Siano:
+	Sia $A$ un $DFA$, $A=\dfa$. Siano:
 	$p,q\in Q\to p\approx q\text{ vale se } \forall w \in \Sigma^*\,\,\, \stackrel{\wedge}{\delta}(p,w)\in F\longleftrightarrow \stackrel{\wedge}{\delta}(q,w)\in F$
 	inoltre $p$ e $q$ sono distinguibili se $p\not\approx q$ ovvero:
 	$\exists w\in \Sigma^*\text{ tale che:} $
