@@ -1935,6 +1935,30 @@ regolare.
 In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
+
+\begin{Exercise}\label{exe:pump-0square}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^{k}$, tale che $k$ sia un quadrato,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-01square}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $k+l$ sia un quadrato,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-0prodotto2primi}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^{k}$, tale che $k$ sia il prodotto di
+esattamente due numeri primi,
+determinare se è regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+
+
 \section{Chiusura di un Linguaggio regolare}
 Sia $REG$ la classe dei linguaggi regolari (ovvero ogni linguaggio regolare su un alfabeto finito non vuoto). Si ha la seguente proprietà:
 $L,M\in REG\to L\cup M\in REG$
@@ -2230,6 +2254,52 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 \begin{Exercise}\label{exe:pump-tanti-0}
 Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\geq m$
 non è regolare.
+\end{Exercise}
+
+
+\begin{Exercise}\label{exe:pump-01multiplo}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l$ è un multiplo di $k$,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+
+\begin{Exercise}\label{exe:pump-01entrodoppio}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le 2k$,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+\begin{Exercise}\label{exe:pump-01entrodoppio2}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le \lfloor
+\frac{k}{2} \rfloor$,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+
+\begin{Exercise}\label{exe:pump-01absdiff}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $|l - k| \le 2$,
+determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+
+\begin{Exercise}\label{exe:pump-noncopie}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $w_{1}w_{2}$ con $w_{1}\neq w_{2}$, determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+\end{Exercise}
+
+
+\begin{Exercise}\label{exe:pump-noncopiecon1}
+Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $w_{1}1w_{2}$ con $w_{1}\neq w_{2}$, determinare se è
+regolare.
+In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \section{Problemi di decisione per linguaggi regolari}
