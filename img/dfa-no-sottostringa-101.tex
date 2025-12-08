@@ -1,0 +1,24 @@
+\documentclass[border=10pt]{standalone}
+\usepackage{pgfplots}
+\usepackage{forest}
+\usepackage{import}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,graphs,positioning}
+
+\begin{document}
+\usetikzlibrary{automata,positioning}
+\begin{tikzpicture}[shorten >=1pt,node distance=2cm,initial text=,auto]
+			\node[state,initial, accepting] (0)   {$\epsilon$};
+			\node[state, accepting] (1) [right=of 0] {1};
+			\node[state, accepting] (10) [right=of 1] {10};
+			\node[state] (101) [right=of 10] {101};
+			\path[->]
+			(0)   edge              node {1} (1)
+			      edge [loop below] node {0} ()
+			(1)   edge              node {0} (10)
+			      edge [loop below] node {1} ()
+		    (10)  edge              node {1} (101)
+				  edge [bend right] node [above] {0} (0)
+			(101) edge [loop below] node {0,1} ();
+\end{tikzpicture}
+\end{document}

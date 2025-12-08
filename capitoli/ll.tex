@@ -1,4 +1,39 @@
-\section{Parser LL}
+\section{Tabella di parsing}
+\label{sec:parser-sll}
+
+In questa sezione vedremo un metodo deterministico per il parsing top-down, in grado di costruire sempre lo stesso
+albero di derivazione.
+Mentre la discesa ricorsiva potrebbe, nel caso peggiore, generare un numero esponenziale di alberi parziali, un parsing
+deterministico non ammette più di una possibile estensione ad ogni passo.
+L'efficienza pratica della discesa ricorsiva è dovuta al fatto che ogni produzione il cui membro destro inizia con un
+terminale $c$ può essere applicata solo se il carattere attuale dell'input è uguale a $c$: ciò permette di non applicare
+alcune produzioni.
+
+Il fatto di considerare solo parsing deterministici ha una conseguenza importante: non saremo più in grado di analizzare
+una generica grammatica libera dal contesto, ma solo un insieme ristretto.
+Ad esempio, non potremo gestire grammatiche ambigue.
+
+Iniziamo con un caso particolarmente ristretto: tutte le produzioni hanno un membro destro che inizia con un terminale.
+Se permettiamo di espandere solo produzioni il cui membro sinistro inizia con il simbolo attuale dell'input, limitiamo
+fortemente l'insieme delle possibili scelte, riducendo i tempi di calcolo.
+
+Se desideriamo aumentare ulteriormente l'efficienza del parsing, possiamo calcolare una tabella, chiamata
+\keyword{tabella di parsing}, che associa ad ogni coppia variable-terminale le produzioni che hanno tale variabile come
+membro destro e il cui membro sinistro inizia con il terminale.
+
+Notiamo che la tabella di parsing è sufficiente per determinare tutto il parsing, perchè l'algoritmo semplicemente
+guarderà il carattere attuale dell'input per determinare quali produzioni siano applicabili.
+Possiamo restringere ulteriormente l'insieme delle grammatiche che siamo in grado di gestire, richiedendo che nessuna
+cella della tabella di parsing contenga più di una produzione: ciò corrisponde alle grammatiche \keyword{SLL(1)}, anche
+dette grammatiche LL(1) semplici, dove la prima L indica che il parser produrrà un'albero di derivazione sinistro
+(leftmost), mentre L(1) indica che il parser potrà vedere un carattere a destra di quello attuale.
+
+\section{Parser LL(1)}
+\label{sec:parser-ll}
+
+Procediamo gradualmente verso la rimozione dei principali vincoli, iniziamo non permettendo $\varepsilon$-produzioni.
+Ciò implica che ogni variabile produce solo stringhe non vuote.
+
 
 %%% Local Variables:
 %%% mode: LaTeX

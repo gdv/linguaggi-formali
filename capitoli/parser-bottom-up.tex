@@ -1,0 +1,34 @@
+\section{Parser Bottom-up}
+\label{sec:parser-bottom-up}
+
+I parser bottom-up, contrariamente a quelli top-down, costruiscono l'albero di parsing dalle foglie verso la radice,
+individuando ad ogni passo una derivazione.
+Riprendiamo l'~\Cref{exa:parse-espressioni}, il primo passo parte da
+
+\includestandalone[width=18em]{parse-01-61}
+
+per poi individuare che una porzione del testo è la parte destra di una produzione (in questo caso $A\to N \mathtt{+} N $) e
+determina il genitore comune a tutti i simboli della porzione di testo.
+
+\includestandalone[width=18em]{parse-01-62}
+
+Siccome i parser bottom-up partono dal testo, devono anche tenere traccia della porzione di testo letta fino a quel
+momento, \textit{inclusa la parte che non è nella produzione trovata}.
+Più precisamente, ad ogni passo viene memorizzata la forma sentenziale corrispondente al testo letto e parzialmente
+processato dai passi di parsing eseguiti in precedenza.
+La coppia formata dalla  porzione di forma sentenziale che corrisponde al membro destro della produzione e dalla produzione  viene
+chiamata \keyword{maniglia}, mentre la sola porzione di forma sentenziale viene chiamata \keyword{segmento} della maniglia.
+Identificare la maniglia è l'operazione fondamentale che viene fatta da ogni parser bottom-up.
+Esattamente come per i parser top-down, anche in questo caso possiamo commettere degli errori quando indentifichiamo la
+maniglia: (1) la presenza di $\epsilon$-produzioni causa dei loop infiniti, perchè non ho limiti sul numero di
+$\epsilon$ produzioni che possiamo aggiungere senza modificare la forma sentenziale attuale, e perchè potrei avere più
+produzioni compatibili con il segmento o, ancora, segmenti compatibili ma sovrapposti.
+
+
+
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-master: "../libro-linguaggi"
+%%% TeX-engine: luatex
+%%% End:

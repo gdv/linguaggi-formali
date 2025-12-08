@@ -40,8 +40,6 @@
 }
 
 
-
-
 \declaretheoremstyle[
 spaceabove=6pt,
 spacebelow=6pt,
@@ -166,6 +164,8 @@ numberwithin=chapter,
 \makenomenclature
 
 % Tikz
+\usepackage{forest}
+\usetikzlibrary{calc}
 \usetikzlibrary{automata,positioning}
 
 \newcommand{\keyword}[1]{\textbf{#1}\marginnote{#1}}
@@ -173,6 +173,7 @@ numberwithin=chapter,
 % Simboli alfabeto
 \newcommand{\zero}{\ensuremath{\mathtt{0}}\xspace}
 \newcommand{\uno}{\ensuremath{\mathtt{1}}\xspace}
+\newcommand{\due}{\ensuremath{\mathtt{2}}\xspace}
 \newcommand{\kleene}{\ensuremath{{}^{\ast}}\xspace}
 \xspaceaddexceptions{\zero \uno \kleene}
 
@@ -190,7 +191,11 @@ numberwithin=chapter,
 \newcommand{\dfa}{\ensuremath{\mathcal{A}=\langle \Sigma, Q, q_{0}, F, \delta \rangle}\xspace}
 \newcommand{\nfa}{\ensuremath{\mathcal{A}=\langle \Sigma, Q, q_{0}, F, \delta \rangle}\xspace}
 \newcommand{\enfa}{ε-NFA\xspace}
+\newcommand{\pda}{\ensuremath{\mathcal{A}=\langle \Sigma, \Gamma, Z_{0}, Q, q_{0}, F, \delta \rangle}\xspace}
+\newcommand{\mdt}{\ensuremath{\mathcal{M}=\langle Q, q_{0}, F, \Gamma, \delta \rangle}\xspace}
 
+% Parser
+\newcommand{\idp}[4]{\begin{tabular}{r|l}\midrule{}#1&#2\\\midrule{}#3&#4\\\midrule\end{tabular}}
 
 
 \usepackage{upref}

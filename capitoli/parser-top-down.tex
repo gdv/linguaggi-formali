@@ -1,5 +1,7 @@
 \chapter{Parser}\label{cha:parser}
 
+
+
 Un parser analizza il risultato dell'analizzatore lessicale e costruire l'albero di derivazione che ha prodotto il testo.
 In realtà nulla impedisce di avere solo un parser che agisca sul testo, evitando di avere un analizzatore lessicale
 separato e, sempre più spesso, è quello che viene fatto in pratica, soprattutto per linguaggi relativamente semplici.
@@ -9,9 +11,34 @@ Sebbene esistano parser per linguaggi liberi dal contesto, normalmente si prefer
 di linguaggi intermedi fra liberi dal contesto e regolari, in quanto i linguaggi di programmazione difficilmente
 richiedono tutta la flessibilità introdotta dalle CFG.
 
+
+L'obiettivo principale di ogni parser è rispondere a due domande fortemente collegate fra loro:
+\begin{enumerate}
+\item Dato un testo $T$, determinare se $T$ è una parola del linguaggio generato dalla grammatica $G$;
+\item Data una parola del linguaggio generato dalla grammatica $G$, determinare un suo albero di derivazione.
+\end{enumerate}
+
+Queste domande partono dal presupposto che la grammatica $G$ sia nota.
+Un problema diverso, che non viene affrontato in questo capitolo, è disegnare una grammatica in grado di generare un
+linguaggio complesso quale, ad esempio, il linguaggio formato da tutte le possibili espressioni JSON~\cite{ECMA:JSON} o tutti i possibili
+programmi scritti in C~\cite{gustedt:modern-c}.
+
+Inoltre spesso non è sufficiente avere \emph{una} grammatica, ma è necessario ottenere una grammatica che permetta di
+avere un parser efficiente e veloce.
+Questo capitolo è dedicato ad affrontare queste ultime richieste.
+Spesso, ma non sempre, l'efficienza è ottenuta grazie alla ricerca di una grammatica semplice: ciò porta ad indagare se
+sia effettivamente necessario utilizzare una CFG.
+Mentre le limitazioni delle ER sono state ampiamente discusse in precedenza, ci si potrebbe chiedere se una classe di
+linguaggi \emph{intermedi}, che includono le ER ma sono strettamente inclusi nelle CFG, non sia adeguata in pratica.
+In effetti quasi tutti i parser decidono di limitare l'insieme dei linguaggi riconoscibili, in cambio di una maggiore efficienza.
+
+
+
+
 \section{Parser Top-down}\label{sec:parser-top-down}
 
-L'idea intuitiva dei \textbf{parser top-down} è estremamente semplice: costruire l'albero di derivazione a partire da un albero $D$ formato dalla
+L'idea intuitiva dei \textbf{parser top-down} è estremamente semplice: costruire l'albero di derivazione (anche detto
+\keyword{albero di parsing}) a partire da un albero $D$ formato dalla
 sola radice ed estendere l'albero con l'espansione di una produzione alla volta, finchè non si ottiene esattamente il
 testo $T$.
 
@@ -22,6 +49,43 @@ complesse, erano necessarie per effettuare il parsing in tempi ragionevoli.
 Negli ultimi anni si vede invece una tendenza verso i parser top-down, in quanto gli algoritmi utilizzati sono semplici,
 sia da descrivere che da implementare, sebbene non abbiano le stesse garanzie di efficienza di alcuni parser bottom-up.
 
+Consideriamo l'esempio della grammatica che genera espressioni aritmetiche.
+Quindi un esempio di stringa del linguaggio generato sarà \verb/([]){}/.
+La grammatica che utilizzeremo sarà
+\begin{example}\label{exa:parse-espressioni}
+Sia $G=(V,T,O,E)$, con $V=\{S,P, A, D, M, N\}$, $T=\left\{ 0-9, +, -, *, /, (,)\right\}$ e le seguenti regole:
+\begin{enumerate}
+\item $S\to  P | A | D | M | N$
+\item $N\to \mathtt{0}|\mathtt{1}|\mathtt{2}|\mathtt{3}|\mathtt{4}|\mathtt{5}|\mathtt{6}|\mathtt{7}|\mathtt{8}|\mathtt{9}$
+\item $P\to S \mathtt{*} S | N \mathtt{*} S | S \mathtt{*} N | N \mathtt{*} N $
+\item $Q\to S \mathtt{/} S| N \mathtt{/} S| S \mathtt{/} N| N \mathtt{/} N$
+\item $A\to \mathtt{(}S \mathtt{+} S)\mathtt{} |\mathtt{(}N \mathtt{+} S)\mathtt{} |\mathtt{(}S \mathtt{+} N)\mathtt{} |\mathtt{(}N \mathtt{+} N)\mathtt{}$
+\item $A\to S \mathtt{+} S | N \mathtt{+} S |S \mathtt{+} N |N \mathtt{+} N $
+\item $D\to \mathtt{(}S \mathtt{-} S)\mathtt{} |\mathtt{(}N \mathtt{-} S)\mathtt{} |\mathtt{(}S \mathtt{-} N)\mathtt{} |\mathtt{(}N \mathtt{-} N)\mathtt{}$
+\item $D\to S \mathtt{-} S | N \mathtt{-} S |S \mathtt{-} N |N \mathtt{-} N $.
+\end{enumerate}
+\end{example}
+
+Supponiamo di volere ottenere l'albero di parsing della stringa \verb;2*(7+8)+4;.
+Inizialmente l'albero consiste nella sola radice $S$.
+
+\includestandalone[width=18em]{parse-01-01}
+
+Il passo successivo è capire quale sia la prima produzione da applicare.
+
+\includestandalone[width=18em]{parse-01-02}
+
+Il passo successivo cercherà di espandere l'albero, individuando una produzione da applicare ad una delle foglie
+dell'albero attuale.
+
+\includestandalone[width=18em]{parse-01-03}
+
+Continuando ad identificare produzioni da applicare alle foglie, il processo continua finchè non viene prodotto l'albero intero.
+
+\includestandalone[width=18em]{parse-01-99}
+
+Nelle prossime sezioni inizieremo ad esplorare alcune tecniche di parsing top-down, partendo da strategie
+\textit{direzionali}, che cercano di generare il testo da sinistra verso destra.
 
 
 %%% Local Variables:
