@@ -307,3 +307,4 @@ TSWLatexianTemp*
 /capitoli/*.pdf
 /lezioni/*.pdf
 
+.aider*

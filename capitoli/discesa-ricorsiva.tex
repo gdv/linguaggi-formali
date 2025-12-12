@@ -104,10 +104,10 @@ Per rimuovere anche la ricorsione indiretta a sinistra dobbiamo ordinare le vari
 $\langle A_{1}, \ldots, A_{n}$ e garantire che con ci siano produzioni $A_{i} \to A_{j}\alpha$ con $j<i$.
 Ogni produzione nella forma $A_{i} \to A_{j}\alpha$ con $j<i$ viene sostituita dalle produzioni
 \begin{gather}
-A_{j} \to \alpha_{1}\alpha| \cdots | \alpha_{m}\alpha
+A_{i} \to \alpha_{1}\alpha| \cdots | \alpha_{m}\alpha
 \end{gather}
 
-dove $A_{i} \to \alpha_{1}| \cdots | \alpha_{m}$ sono le produzioni che hanno $A_{i}$ come membro sinistro.
+dove $A_{j} \to \alpha_{1}| \cdots | \alpha_{m}$ sono le produzioni che hanno $A_{j}$ come membro sinistro.
 È obbligatorio procedere a queste sostituzioni dopo avere eliminato tutte le produzione ricorsive dirette a sinistra per
 per valori di $j$ crescenti, altrimenti potremmo introdurre nuove produzioni nella forma $A_{k} \to A_{h}\alpha$ con $h<k$.
 
