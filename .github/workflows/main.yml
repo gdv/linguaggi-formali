@@ -15,6 +15,7 @@ jobs:
         with:
           root_file: "libro-linguaggi.tex"
           continue_on_error: true
+          pre_compile: "cd img && latexmk *.tex && cd .."
           latexmk_use_lualatex: true      
       - name: Release PDF file
         uses: softprops/action-gh-release@v2
