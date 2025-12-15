@@ -8,6 +8,8 @@ jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
+      - name: Install Liberation Mono font
+        run: apt install fonts-liberation
       - name: Set up Git repository
         uses: actions/checkout@v4
       - name: GitHub Action for LaTeX
