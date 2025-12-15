@@ -33,6 +33,35 @@ dette grammatiche LL(1) semplici, dove la prima L indica che il parser produrrà
 
 Procediamo gradualmente verso la rimozione dei principali vincoli, iniziamo non permettendo $\varepsilon$-produzioni.
 Ciò implica che ogni variabile produce solo stringhe non vuote.
+Per costruire la tabella di parsing, per ogni variabile $A$ costruiamo l'insieme $\First(A)$ che contiene i terminali
+$c$ tali che $A \eprod{} t\alpha$, ovvero i terminali che iniziano una forma sentenziale che può essere prodotta a partire
+da $A$.
+Una volta costruiti tutti gli insiemi $\First(\cdot)$, possiamo costruire la tabella di parsing $TP$ con
+l'\Cref{alg:costruzione-tabella-parsing-da-first}, dove assumiamo di conoscere $\First(\alpha)$ per ogni forma
+sentenziale $\alpha$.
+Ciò non è una vera limitazione, in quanto dobbiamo solo considerare il primo simbolo di $\alpha$: se si tratta di una
+variabile $A$, sarà memorizzata nella tabella $\First{A}$.
+Altrimenti il primo simbolo di $\alpha$ è un terminale $c$ e in questo caso possiamo imporre $\First(c) = \{c\}$.
+Inoltre la tabella $TP$ deve contenere solo il membro destro della produzione, in quanto il membro sinistro è la
+variabile $A$.
+
+
+
+\begin{algorithm}[tb!]
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\caption{Costruzione della tabella di parsing $TP$}
+\label{alg:costruzione-tabella-parsing-da-first}
+\ForEach{$A\in V, c\in T$}{$TP[A,c]=\emptyset$}
+\ForEach{produzione $A\to \alpha V$}{%
+  \eIf{$\alpha$ inizia con il terminale $c$}{%
+    Aggiungiamo $\alpha$ all'insieme $TP[A,c]$
+  }{\ForEach{$c\in\First(\alpha)$}{%
+      Aggiungiamo $\alpha$ all'insieme $TP[A,c]$
+    }
+  }
+  }
+\Return $TP$
+\end{algorithm}
 
 
 

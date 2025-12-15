@@ -2,15 +2,6 @@
 
 Le \emph{Parsing Expression Grammars} (PEG) sono un modello formale per descrivere linguaggi di programmazione, introdotto da Bryan Ford nel 2004. A differenza delle grammatiche libere da contesto (CFG), le PEG sono \emph{deterministiche} e non ambigue per costruzione, perché definiscono un parser ricorsivo discendente con backtracking limitato.
 
-\subsection{Definizione formale}
-
-Una PEG è una quadrupla \( G = (V_N, V_T, R, e_S) \) dove:
-\begin{itemize}
-    \item \( V_N \) è un insieme finito di simboli non terminali,
-    \item \( V_T \) è un insieme finito di simboli terminali,
-    \item \( R \) è una funzione che associa a ogni non terminale \( A \in V_N \) un'espressione di parsing \( e_A \),
-    \item \( e_S \) è l'espressione di parsing associata al simbolo iniziale.
-\end{itemize}
 
 Le espressioni di parsing sono costruite a partire da terminali, non terminali e i seguenti operatori (elencati in ordine di precedenza decrescente):
 
@@ -29,19 +20,6 @@ Le espressioni di parsing sono costruite a partire da terminali, non terminali e
 La differenza più importante tra PEG e CFG risiede nella semantica dell'operatore di scelta. Nelle CFG l'operatore \( | \) è commutativo: le due alternative sono interscambiabili e la grammatica genera tutte le stringhe che soddisfano almeno una delle due. Nelle PEG l'operatore \( / \) è \emph{ordinato}: viene tentata prima l'espressione di sinistra e, solo se essa fallisce, si passa a valutare quella di destra. Questo ordine elimina le ambiguità, perché per ogni input viene selezionata al più una alternativa.
 
 Un'altra differenza è l'assenza del concetto di ricorsione sinistra immediata o indiretta: un parser PEG che tentasse di espandere una regola \( A \leftarrow A \, a \) entrerebbe in un ciclo infinito, poiché proverebbe indefinitamente a riconoscere \( A \) senza mai consumare caratteri. Per questo motivo le PEG richiedono che le definizioni siano \emph{ricorsive a destra} o che si usino predicati per descrivere pattern left‑recursive.
-
-\subsection{Esempio}
-
-Consideriamo il classico problema del ``dangling‑else''. La seguente PEG riconosce istruzioni condizionali annidate associando ogni \texttt{else} al più interno \texttt{if} non ancora chiuso:
-
-\begin{verbatim}
-Stmt     ← IfStmt / "x"
-IfStmt   ← "if" C "then" Stmt ElsePart
-ElsePart ← "else" Stmt / ε
-C        ← "c"
-\end{verbatim}
-
-Data la stringa \texttt{if c then if c then x else x}, il parser PEG produrrà l'albero di parsing corrispondente all'associazione \texttt{else} con il secondo \texttt{if}, perché la scelta ordinata in \texttt{ElsePart} tenta prima la presenza di \texttt{else} e, solo se fallisce, accetta \( \varepsilon \).
 
 \subsection{Vantaggi e limiti}
 
