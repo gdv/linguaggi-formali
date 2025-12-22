@@ -45,12 +45,20 @@ Altrimenti il primo simbolo di $\alpha$ è un terminale $c$ e in questo caso pos
 Inoltre la tabella $TP$ deve contenere solo il membro destro della produzione, in quanto il membro sinistro è la
 variabile $A$.
 
+L'\Cref{alg:costruzione-tabella-parsing-da-first} è un esempio di algoritmo che costruisce il risultato per
+  accumulazione (cioè aggiungendo qualcosa, senza mai togliere) e prosegue finchè non si raggiunge un punto fisso,
+  ovvero un valore del risultato per cui non vengono più effettuate aggiunte.
+La terminazione di questa procedura deriva dal fatto che ad ogni iterazione (tranne l'ultima) deve necessariamente
+essere aggiunto almeno un elemento al risultato, e il risultato è un sottoinsieme di un insieme finito.
+In questo caso, ogni $TP[\cdot]$ è un sottoinsieme di tutte le produzioni della grammatica.
+
 
 
 \begin{algorithm}[tb!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-\caption{Costruzione della tabella di parsing $TP$}
+\caption{Costruzione della tabella di parsing $TP$ in assenza di \epsprod}
 \label{alg:costruzione-tabella-parsing-da-first}
+\tcp{$c$ è un terminale, $A$ è una variabile}
 \ForEach{$A\in V, c\in T$}{$TP[A,c]=\emptyset$}
 \ForEach{produzione $A\to \alpha V$}{%
   \eIf{$\alpha$ inizia con il terminale $c$}{%
@@ -63,6 +71,98 @@ variabile $A$.
 \Return $TP$
 \end{algorithm}
 
+
+Rimane da descrivere come costruire gli insiemi $\First$.
+Assumiamo inizialmente di non avere $\varepsilon$-produzioni: ciò implica che $\First(A)$ sarà uguale all'unione di
+$\First(\alpha_{i})$ per tutte i membri destri delle produzioni che hanno $A$ come membro sinistro.
+In altre parole, se $A\to \alpha_{1},\ldots, \alpha_{n}$ sono tutte le produzioni che hanno $A$ come membro sinistro,
+allora $\First(A) = \bigcup_{i} \First(\alpha_{i})$.
+Notiamo però che ogni $\alpha_{i}$ è una forma sentenziale, pertanto dobbiamo capire come calcolare $\First(\alpha_{i})$.
+Siccome supponiamo di non avere \epsprod, per ogni forma sentenziale $\alpha_{i}$ è sufficente considerare la sua prima
+variabile o il suo primo terminale.
+Quindi, se $\alpha_{i}=x\beta_{i}$ con $x\in V\cup T$, allora $\First(\alpha_{i}) = \First(x)$, arrivando
+all'\Cref{alg:costruzione-first-no-eps-produzioni}, dove $\First$ viene costruito incrementalmente, finchè non si arriva
+ad un punto fisso.
+
+
+\begin{algorithm}[tb!]
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\caption{Costruzione di $\First$ in assenza di \epsprod}
+\label{alg:costruzione-first-no-eps-produzioni}
+\tcp{$c$ è un terminale, $A$ è una variabile, $\alpha$ è una forma sentenziale}
+$\First[\varepsilon]=\{\varepsilon\}$\;
+\ForEach{$c\in T$}{$\First[c]=\{c\}$}
+\ForEach{$A\in V$}{$\First[A]=\emptyset$}
+$m\gets$ vero\;
+\While{$m$}{%
+    $m \gets $ falso\;
+    \ForEach{produzione $A\to c\alpha$}{%
+      \If{$\First[c] \not\subseteq \First[A]$}{
+        Aggiungiamo $\First[c]$ all'insieme $\First[A]$\;
+        $m\gets$ vero\;
+        }
+      }
+    }
+\Return $\First$
+\end{algorithm}
+
+Purtroppo non possiamo escludere la presenza di \epsprod.
+In particolare, consideriamo cosa succede se vogliamo calcolare $\First(A\alpha)$, dove $A$ è una variabile e $\alpha$
+un forma sentenziale, quanto $A\eprod{} \varepsilon$.
+In questo caso $\First(A\alpha)$ include non solo $\First(A)$, ma anche $\First(\alpha)$, perchè se
+$A\eprod{} \varepsilon$ allora il primo carattere generato da $A\alpha$ potrebbe essere il primo carattere generato da $\alpha$.
+Non possiamo però dire che $\First(A\alpha) = \First(A) \cup \First(\alpha)$, perchè non possiamo escludere che anche
+$\alpha \eprod{} \varepsilon$.
+Per questo motivo introduciamo $\Follow(A)$ che è l'insieme dei terminali che seguono immediatamente la derivazione di $A$.
+
+\begin{algorithm}[tb!]
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\caption{Costruzione di $\Follow$}
+\label{alg:costruzione-follow}
+\tcp{$A, B$ sono variabili, $\alpha, \beta$ sono forme sentenziali}
+\ForEach{$A\in V$}{$\Follow[A]=\emptyset$}
+$m\gets$ vero\;
+\While{$m$}{%
+    $m \gets $ falso\;
+    \ForEach{produzione $A\to \alpha B\beta$}{%
+      \If{$\First[\beta] \not\subseteq \Follow[B]$}{
+        Aggiungiamo $\First[\beta]$ all'insieme $\Follow[B]$\;
+        $m\gets$ vero\;
+        }
+        \If{$\beta \eprod{} \varepsilon$ e $\Follow[A] \not\subseteq \Follow[B]$}{%
+          Aggiungiamo $\Follow[A]$ all'insieme $\Follow[B]$\;
+          $m\gets$ vero\;
+        }
+      }
+    }
+\Return $\Follow$
+\end{algorithm}
+
+Dobbiamo adesso aggiornare la procedura per calcolare la tabella $TP$, dove ogni produzione $A\to \alpha$ viene
+considerata e, se $\alpha$ non inizia con un terminale, allora aggiungiamo $\alpha$ all'insieme $TP[A,c]$ per ogni
+terminale $c\in \First(\alpha)$ (esattamente come in \Cref{alg:costruzione-tabella-parsing-da-first}) e per ogni
+terminale in $\Follow(A)$, se $\alpha$ può produrre la stringa vuota $\varepsilon$.
+Queste operazioni vengono riassunte con i terminali nell'insieme $\First(\alpha\Follow(A))$: infatti se $\alpha$ non può
+generare la stringa vuota, allora $\First(\alpha\Follow(A)) = \First(\alpha)$.
+
+
+
+\begin{algorithm}[tb!]
+\SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
+\caption{Costruzione della tabella di parsing $TP$}
+\label{alg:costruzione-tabella-parsing-da-first-follow}
+\tcp{$c$ è un terminale, $A$ è una variabile}
+\ForEach{$A\in V, c\in T$}{$TP[A,c]=\emptyset$}
+\ForEach{produzione $A\to \alpha$}{%
+  \eIf{$\alpha$ inizia con il terminale $c$}{%
+    Aggiungiamo $\alpha$ all'insieme $TP[A,c]$
+  }{\ForEach{$c\in\First(\alpha\Follow(A))$}{%
+      Aggiungiamo $\alpha$ all'insieme $TP[A,c]$
+    }
+  }
+  }
+\Return $TP$
+\end{algorithm}
 
 
 %%% Local Variables:
