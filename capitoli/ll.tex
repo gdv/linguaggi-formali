@@ -5,7 +5,7 @@ In questa sezione vedremo un metodo deterministico per il parsing top-down, in g
 albero di derivazione.
 Mentre la discesa ricorsiva potrebbe, nel caso peggiore, generare un numero esponenziale di alberi parziali, un parsing
 deterministico non ammette più di una possibile estensione ad ogni passo.
-L'efficienza pratica della discesa ricorsiva è dovuta al fatto che ogni produzione il cui membro destro inizia con un
+L'efficienza pratica della discesa ricorsiva è dovuta al fatto che ogni produzione il cui corpo inizia con un
 terminale $c$ può essere applicata solo se il carattere attuale dell'input è uguale a $c$: ciò permette di non applicare
 alcune produzioni.
 
@@ -14,12 +14,12 @@ una generica grammatica libera dal contesto, ma solo un insieme ristretto.
 Ad esempio, non potremo gestire grammatiche ambigue.
 
 Iniziamo con un caso particolarmente ristretto: tutte le produzioni hanno un membro destro che inizia con un terminale.
-Se permettiamo di espandere solo produzioni il cui membro sinistro inizia con il simbolo attuale dell'input, limitiamo
+Se permettiamo di espandere solo produzioni la cui testa inizia con il simbolo attuale dell'input, limitiamo
 fortemente l'insieme delle possibili scelte, riducendo i tempi di calcolo.
 
 Se desideriamo aumentare ulteriormente l'efficienza del parsing, possiamo calcolare una tabella, chiamata
 \keyword{tabella di parsing}, che associa ad ogni coppia variable-terminale le produzioni che hanno tale variabile come
-membro destro e il cui membro sinistro inizia con il terminale.
+testa e il cui corporation's inizia con il terminale.
 
 Notiamo che la tabella di parsing è sufficiente per determinare tutto il parsing, perchè l'algoritmo semplicemente
 guarderà il carattere attuale dell'input per determinare quali produzioni siano applicabili.
@@ -42,7 +42,7 @@ sentenziale $\alpha$.
 Ciò non è una vera limitazione, in quanto dobbiamo solo considerare il primo simbolo di $\alpha$: se si tratta di una
 variabile $A$, sarà memorizzata nella tabella $\First{A}$.
 Altrimenti il primo simbolo di $\alpha$ è un terminale $c$ e in questo caso possiamo imporre $\First(c) = \{c\}$.
-Inoltre la tabella $TP$ deve contenere solo il membro destro della produzione, in quanto il membro sinistro è la
+Inoltre la tabella $TP$ deve contenere solo il membro destro della produzione, in quanto la testa è la
 variabile $A$.
 
 L'\Cref{alg:costruzione-tabella-parsing-da-first} è un esempio di algoritmo che costruisce il risultato per
@@ -74,8 +74,8 @@ In questo caso, ogni $TP[\cdot]$ è un sottoinsieme di tutte le produzioni della
 
 Rimane da descrivere come costruire gli insiemi $\First$.
 Assumiamo inizialmente di non avere $\varepsilon$-produzioni: ciò implica che $\First(A)$ sarà uguale all'unione di
-$\First(\alpha_{i})$ per tutte i membri destri delle produzioni che hanno $A$ come membro sinistro.
-In altre parole, se $A\to \alpha_{1},\ldots, \alpha_{n}$ sono tutte le produzioni che hanno $A$ come membro sinistro,
+$\First(\alpha_{i})$ per tutte i membri destri delle produzioni che hanno $A$ come testa.
+In altre parole, se $A\to \alpha_{1},\ldots, \alpha_{n}$ sono tutte le produzioni che hanno $A$ come testa,
 allora $\First(A) = \bigcup_{i} \First(\alpha_{i})$.
 Notiamo però che ogni $\alpha_{i}$ è una forma sentenziale, pertanto dobbiamo capire come calcolare $\First(\alpha_{i})$.
 Siccome supponiamo di non avere \epsprod, per ogni forma sentenziale $\alpha_{i}$ è sufficente considerare la sua prima

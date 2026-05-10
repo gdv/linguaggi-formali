@@ -3,6 +3,7 @@
 \setmainlanguage{italian}
 \usepackage[english=british]{csquotes}	% English quotes
 
+
 % Creative commons license
 \usepackage[
 	type={CC},
@@ -179,7 +180,7 @@ numberwithin=chapter,
 \newcommand{\uno}{\ensuremath{\mathtt{1}}\xspace}
 \newcommand{\due}{\ensuremath{\mathtt{2}}\xspace}
 \newcommand{\kleene}{\ensuremath{{}^{\ast}}\xspace}
-\xspaceaddexceptions{\zero \uno \kleene}
+\xspaceaddexceptions{\zero \uno \due \kleene}
 
 % Produzioni
 \usepackage{stackrel}
@@ -211,6 +212,9 @@ numberwithin=chapter,
 
 \usepackage{standalone}
 
+% Commenti
+\newcommand{\gdv}[1]{\todo[backgroundcolor=yellow]{\textbf{GDV} #1}}
+\newcommand{\lepo}[1]{\todo[backgroundcolor=orange]{\textbf{AL} #1}}
 
 
 %\usepackage[lastexercise]{exercise}

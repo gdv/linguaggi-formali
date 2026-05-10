@@ -23,14 +23,17 @@ Un problema diverso, che non viene affrontato in questo capitolo, è disegnare u
 linguaggio complesso quale, ad esempio, il linguaggio formato da tutte le possibili espressioni JSON~\cite{ECMA:JSON} o tutti i possibili
 programmi scritti in C~\cite{gustedt:modern-c}.
 
-Inoltre spesso non è sufficiente avere \emph{una} grammatica, ma è necessario ottenere una grammatica che permetta di
+Inoltre spesso non è sufficiente avere \emph{una} grammatica qualsiasi, ma è necessario ottenere una grammatica che permetta di
 avere un parser efficiente e veloce.
 Questo capitolo è dedicato ad affrontare queste ultime richieste.
-Spesso, ma non sempre, l'efficienza è ottenuta grazie alla ricerca di una grammatica semplice: ciò porta ad indagare se
-sia effettivamente necessario utilizzare una CFG.
-Mentre le limitazioni delle ER sono state ampiamente discusse in precedenza, ci si potrebbe chiedere se una classe di
-linguaggi \emph{intermedi}, che includono le ER ma sono strettamente inclusi nelle CFG, non sia adeguata in pratica.
-In effetti quasi tutti i parser decidono di limitare l'insieme dei linguaggi riconoscibili, in cambio di una maggiore efficienza.
+
+Ci sono due direzioni che permettono di ottenere tale efficienza: (1) algoritmi veloci che gestiscono ogni grammatica
+CFG, e (2) restringere l'insieme delle grammatiche che possono essere utilizzate.
+Quest'ultima possibilità ci porta a considerare classi di grammatiche che non appartengono alla gerarchia di Chomsky:
+per questo motivo si parla di linguaggi (o grammatiche) \emph{intermedi}, che includono i linguaggi regolari  ma sono
+strettamente inclusi nei linguaggi liberi da contesto.
+Quasi tutti i parser utilizzati in pratica decidono di seguire questo approccio, limitando l'insieme dei linguaggi che
+sono in grado di gesti, in cambio di una maggiore efficienza e semplicità.
 
 
 
@@ -53,13 +56,13 @@ Consideriamo l'esempio della grammatica che genera espressioni aritmetiche.
 Quindi un esempio di stringa del linguaggio generato sarà \verb/([]){}/.
 La grammatica che utilizzeremo sarà
 \begin{example}\label{exa:parse-espressioni}
-Sia $G=(V,T,O,E)$, con $V=\{S,P, A, D, M, N\}$, $T=\left\{ 0-9, +, -, *, /, (,)\right\}$ e le seguenti regole:
+Sia \gramm, con $V=\{S,P, A, D, M, N\}$, $T=\left\{ 0-9, +, -, *, /, (,)\right\}$ e le seguenti regole:
 \begin{enumerate}
-\item $S\to  P | A | D | M | N$
+\item $S\to  | A | D | M | P | N$
 \item $N\to \mathtt{0}|\mathtt{1}|\mathtt{2}|\mathtt{3}|\mathtt{4}|\mathtt{5}|\mathtt{6}|\mathtt{7}|\mathtt{8}|\mathtt{9}$
 \item $P\to S \mathtt{*} S | N \mathtt{*} S | S \mathtt{*} N | N \mathtt{*} N $
 \item $Q\to S \mathtt{/} S| N \mathtt{/} S| S \mathtt{/} N| N \mathtt{/} N$
-\item $A\to \mathtt{(}S \mathtt{+} S)\mathtt{} |\mathtt{(}N \mathtt{+} S)\mathtt{} |\mathtt{(}S \mathtt{+} N)\mathtt{} |\mathtt{(}N \mathtt{+} N)\mathtt{}$
+\item $A\to \mathtt{(}S \mathtt{+} N)\mathtt{} |\mathtt{(}S \mathtt{+} S)\mathtt{} |\mathtt{(}N \mathtt{+} S)\mathtt{} |\mathtt{(}N \mathtt{+} N)\mathtt{}$
 \item $A\to S \mathtt{+} S | N \mathtt{+} S |S \mathtt{+} N |N \mathtt{+} N $
 \item $D\to \mathtt{(}S \mathtt{-} S)\mathtt{} |\mathtt{(}N \mathtt{-} S)\mathtt{} |\mathtt{(}S \mathtt{-} N)\mathtt{} |\mathtt{(}N \mathtt{-} N)\mathtt{}$
 \item $D\to S \mathtt{-} S | N \mathtt{-} S |S \mathtt{-} N |N \mathtt{-} N $.
@@ -71,16 +74,22 @@ Inizialmente l'albero consiste nella sola radice $S$.
 
 \includestandalone[width=18em]{parse-01-01}
 
-Il passo successivo è capire quale sia la prima produzione da applicare.
+Il passo successivo è applicare la prima produzione possibile.
+Ciò consiste nel considerare la foglia più a sinistra etichettata da una variabile: in questo caso abbiamo una sola
+foglia ed è etichettata $S$.
+Consideriamo in sequenza tutte le produzioni con testa $S$: in questo caso $S\to A$.
+Estendiamo l'albero, introducendo come figli del nodo etichettato $S$ tutti i simboli del corpo della produzione: in
+questo caso si introduce una foglia etichettata $A$.
 
 \includestandalone[width=18em]{parse-01-02}
 
-Il passo successivo cercherà di espandere l'albero, individuando una produzione da applicare ad una delle foglie
-dell'albero attuale.
+Il passo successivo cercherà di espandere l'albero, ancora una volta introducendo figli della foglia più a sinistra che,
+in questo caso, è etichettata $A$ e considerando la produzione $A\to \mathtt{(}S \mathtt{+} N)$.
 
 \includestandalone[width=18em]{parse-01-03}
 
-Continuando ad identificare produzioni da applicare alle foglie, il processo continua finchè non viene prodotto l'albero intero.
+Continuando ad identificare produzioni da applicare alle foglie, il processo continua finchè non viene prodotto l'albero
+intero.\gdv{Completare esempio}
 
 \includestandalone[width=18em]{parse-01-99}
 

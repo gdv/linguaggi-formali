@@ -1,6 +1,6 @@
 \section{Parser depth-first}\label{sec:parser-DFS}
 
-I parser a depth-first ricostruiscono una visita depth-first dell'albero di derivazione.
+I parser depth-first ricostruiscono una visita in profondità dell'albero di derivazione.
 Un classico meccanismo di backtracking permette di gestire i casi in cui la possibile derivazione non è possibile.
 Consideriamo la seguente grammatica che genera tutte le stringhe su alfabeto $\Sigma_{B}$ che hanno stesso numero di
 \zero e di \uno, presa da~\cite{grune-book}.
@@ -22,19 +22,19 @@ ancora da elaborare.
 
 Ad ogni iterazione andremo a sostituire la variabile più a sinistra della forma sentenziale con la parte destra di una
 produzione che forma la nostra \keyword{predizione}: infatti non possiamo essere sicuri di avere individuato la
-predizione corretta.
-Consideriamo adesso la predizione da sinistra verso destra: per ogni terminale controlliamo che sia identico al
+regola di produzione: corretta.
+Consideriamo adesso la regola di produzione: da sinistra verso destra: per ogni terminale controlliamo che sia identico al
 corrispondente carattere della string in input.
-Se ciò non è vero, dobbiamo rifiutare la predizione e passare ad un'altra produzione.
+Se ciò non è vero, dobbiamo rifiutare la regola di produzione e passare ad un'altra produzione.
 Per ogni variabile della predizione dobbiamo fare una nuova predizione: siccome le variabili vengono analizzate da
 sinistra a destra, il risultato finale sarà una derivazione sinistra.
 
 In ogni momento terremo traccia di quattro componenti che formano la \keyword{descrizione istantanea} del parsing:
 \begin{enumerate}
-\item la porzione in input elaborato
-\item la porzione di input ancora da elaborare
-\item l'analisi, ovvero la pila di produzioni ricostruite, corrispondente alla porzione di albero di derivazione elaborato
-\item la predizione, ovvero la porzione di forma sentenziale ancora da confermare.
+\item la porzione in input elaborata;
+\item la porzione di input ancora da elaborare;
+\item l'analisi, ovvero la pila di produzioni ricostruite, corrispondente alla porzione di albero di derivazione elaborato;
+\item la predizione\lepo{il termine predizione è usato con un significato diverso da quello usato precedentemente}, ovvero la porzione di forma sentenziale ancora da confermare.
 \end{enumerate}
 
 \idp{input elaborato}{input rimanente}{analisi}{predizione}
@@ -42,29 +42,31 @@ In ogni momento terremo traccia di quattro componenti che formano la \keyword{de
 \section{Problemi con i parser depth-first}
 \label{sec:no-ricorsione-sinistra}
 
-Tutti i parser depth-first non possono gestire grammatice ricorsive a sinistra o produzioni che hanno come membro destro
+I parser depth-first non possono gestire grammatice ricorsive a sinistra o produzioni che hanno come membro destro
 $\varepsilon$ ($\varepsilon$-produzioni).
 Formalmente una grammatica libera da contesto è \keyword{ricorsiva a sinistra} se $A\eprod{} A\alpha$ per una variable
-$A$ e una forma sentenziale $\beta$.
-Talvolta si distingue fra ricorsione diretta a sinistra se esiste una produzione $A\sprod{} A\alpha$ e ricorsione
-indiretta a sinistra se sono necessarie almeno due produzioni per ottenere una forma sentenziale $A\alpha$.
+$A$ e una forma sentenziale $\alpha$.
+Talvolta si distingue fra ricorsione diretta a sinistra se esiste una passo di derivazione $A\sprod{} A\alpha$ e ricorsione
+indiretta a sinistra se sono necessarie almeno due produzioni per ottenere una forma sentenziale $A\alpha$.\lepo{Dire
+  perchè si fa questa trasformazione}
 
-Iniziamo con l'eliminazione di tutte le $\varepsilon$-produzioni nella forma $A\to \varepsilon$ e siano
+Iniziamo con l'eliminazione di tutte le $\varepsilon$-produzioni nella forma $A\to \varepsilon$\lepo{Non cambia il
+  linguaggio generato?} e siano
 $A\to \alpha_{1} | \cdots | \alpha_{n}$ tutte le altre produzioni che hanno $A$ come membro sinistro.
-Sostituiamo tutte le produzioni che hanno $A$ come membro sinistro  con
+Sostituiamo tutte le produzioni che hanno $A$ come testa  con
 
 \begin{gather}
 A\to \alpha_{1} | \cdots | \alpha_{n},
 \end{gather}
 
-mentre ogni produzione nella forma $B\to \alpha A\beta$ dove $A$ compare all'interno del membro destro viene sostituita
+mentre ogni produzione nella forma $B\to \alpha A\beta$ dove $A$ compare all'interno del corpo viene sostituita
 con la produzione
 \begin{gather}
 B\to \alpha A_{1}\beta | \alpha \beta
-\end{gather}
+\end{gather}\lepo{e $A_{1}$?}
 
-Le nuove produzioni non cambiano il linguaggio generato e rendono esplicite le sequenze di produzioni che possono
-generare $\varepsilon$: infatti quello che possiamo dimostrare è che la lunghezza di tutte le produzioni estese
+Le nuove produzioni non cambiano il linguaggio generato e rendono esplicite le derivazioni che possono
+generare $\varepsilon$: infatti quello che possiamo dimostrare è che la lunghezza di tutte le derivazioni in zero o più passi
 $A\eprod{} \varepsilon$ diminuisce.
 Pertanto applicando ripetutamente le trasformazioni descritte in precedenza arriviamo ad una grammatica in cui la parola
 vuota può essere prodotta solo da un'applicazione diretta di una $\varepsilon$-produzione: la loro rimozione completa il
@@ -79,7 +81,7 @@ che coinvolgono $A$.
 
 
 Le ricorsioni a sinistra sono problematiche perchè cerchiamo di ricostruire un albero di derivazione sinistra: in questo
-caso, una volta che la sequenza di produzioni corrispondenti a $A\eprod{} A\alpha$ viene generata, ci troveremmo a
+caso, una volta che la derivazione corrispondente a $A\eprod{} A\alpha$ viene generata, ci troveremmo a
 ripeterla un numero infinito di volte.
 Per questo motivo dobbiamo preprocessare la grammatica \gramm per evitare che sia ricorsiva a sinistra.
 Fortunatamente possiamo trasformare una grammatica ricorsiva a sinistra in una ricorsiva a destra seguendo un
@@ -88,7 +90,7 @@ Siano $A\eprod{} A\alpha_{1}| \cdots | A\alpha_{n}|\beta_{1}| \cdots | \beta_{m}
 che hanno la variabile $A$ come membro sinistro, dove nessuna delle $\alpha_{i}$ è uguale a $\varepsilon$: le forme
 sentenziali risultanti che non hanno la variable $A$ all'inizio sono nella forma
 $\beta_{i}\alpha_{k_{1}}\cdots \alpha_{k_{l}}$, con $l\ge 0$.
-Un insieme di produzioni che porta alle stesse forme sentenziali è:
+Un insieme di produzioni che porta alle stesse forme sentenziali è:\lepo{serve un esempio}
 
 \begin{gather}
 I \to \beta_{1}| \cdots | \beta_{m}\\
@@ -100,21 +102,21 @@ A \to IC | I,
 dove $I$, $F$, $C$ sono rispettivamente l'inizio, la fine e il corpo della forma sentenziale.
 Notiamo che la produzione che ha $C$ come membro sinistro è ricorsiva a destra e che le produzioni indicate eliminano la
 ricorsione diretta a sinistra, ma non possono escludere una ricorsione indiretta a sinistra.
-Per rimuovere anche la ricorsione indiretta a sinistra dobbiamo ordinare le variabili in modo che abbiano la forma
-$\langle A_{1}, \ldots, A_{n}$ e garantire che con ci siano produzioni $A_{i} \to A_{j}\alpha$ con $j<i$.
+Per rimuovere anche la ricorsione indiretta a sinistra dobbiamo ordinare le variabili, ottenendo
+$\langle A_{1}, \ldots, A_{n}\rangle$ e garantire che non ci siano produzioni $A_{i} \to A_{j}\alpha$ con $j<i$.
 Ogni produzione nella forma $A_{i} \to A_{j}\alpha$ con $j<i$ viene sostituita dalle produzioni
 \begin{gather}
 A_{i} \to \alpha_{1}\alpha| \cdots | \alpha_{m}\alpha
 \end{gather}
 
 dove $A_{j} \to \alpha_{1}| \cdots | \alpha_{m}$ sono le produzioni che hanno $A_{j}$ come membro sinistro.
-È obbligatorio procedere a queste sostituzioni dopo avere eliminato tutte le produzione ricorsive dirette a sinistra per
+È obbligatorio procedere a queste sostituzioni dopo avere eliminato tutte le produzioni ricorsive dirette a sinistra per
 per valori di $j$ crescenti, altrimenti potremmo introdurre nuove produzioni nella forma $A_{k} \to A_{h}\alpha$ con $h<k$.
 
 \section{Parser a discesa ricorsiva}\label{sec:recursive-descent}
 
 I parser a discesa ricorsiva sono una possibile implementazione dei parser depth-first.
-In particolare viene disegnato un parser a discesa ricorsiva specifico per la grammatica che si vuole considerare,
+In particolare viene realizzato un parser a discesa ricorsiva specifico per la grammatica che si vuole considerare,
 mentre i parser depth-first prevedono la possibilità di avere un'implementazione generica che riceve in ingresso anche
 la grammatica.
 
@@ -122,13 +124,13 @@ I parser a discesa ricorsiva sono
 particolarmente semplici da implementare, in quanto seguono fedelmente la grammatica.
 Infatti, prevedono una procedura per ogni variabile e chiamano ricorsivamente ogni possibile espansione della variabile,
 verificando la presenza degli eventuali terminali della produzione.
-L'idea fondamentae è considerare la regola $S\to  \uno B | \zero A$ come una procedura che ha successo se (1) trova un
+L'idea fondamentale è considerare la regola $S\to  \uno B | \zero A$ come una procedura che ha successo se (1) trova un
 \uno e la procedura $B$ ha successo, oppure (2) trova un \zero e la procedura $A$ ha successo.
 
 \begin{algorithm}[bt!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}
-\If{trova \zero e ProceduraB()}{\Return vero}
-\If{trova \uno e ProceduraA()}{\Return vero}
+\If{trova \uno e ProceduraB()}{\Return vero}
+\If{trova \zero e ProceduraA()}{\Return vero}
 \Return falso
 \caption{Procedura per la produzione $S\to  \uno B | \zero A$}
 \label{alg:recursive-descent-example-01}

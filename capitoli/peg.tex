@@ -1,41 +1,95 @@
 \section{Parsing Expression Grammars}
 
-Le \emph{Parsing Expression Grammars} (PEG) sono un modello formale per descrivere linguaggi di programmazione, introdotto da Bryan Ford nel 2004. A differenza delle grammatiche libere da contesto (CFG), le PEG sono \emph{deterministiche} e non ambigue per costruzione, perché definiscono un parser ricorsivo discendente con backtracking limitato.
+Le \emph{Parsing Expression Grammars} (PEG) sono un modello formale per descrivere procedure di parsing.
+Sebbene contengano nel nome il termine grammatica, non sono grammatiche, perchè non sono un meccanismo di generazione di
+parole.
+In particolare, una PEG definisce un parser a discesa ricorsiva (\Cref{sec:recursive-descent}), pertanto si tratta di
+procedure \emph{deterministiche} e non ambigue per costruzione.
+Al tempo stesso, la \textbf{sintassi} con cui viene definita una PEG è una leggera generalizzazione di EBNF usata per
+definire una grammatica.
+Per rendere più esplicito il fatto che si tratta di un sistema di riconoscimento e non di una grammatica, useremo il
+simbolo $\gets$ invece di $\to$ nella formulazione delle regole.
 
 
-Le espressioni di parsing sono costruite a partire da terminali, non terminali e i seguenti operatori (elencati in ordine di precedenza decrescente):
+Le principali innovazioni introdotte dalle PEG, rispetto alle grammatiche tradizionali o alle regex sono le seguenti:
 
 \begin{enumerate}
-    \item \textbf{Sequenza:} \( e_1 \, e_2 \) --- riconosce \( e_1 \) seguito da \( e_2 \).
     \item \textbf{Scelta ordinata:} \( e_1 / e_2 \) --- prova prima \( e_1 \); se ha successo, restituisce il suo risultato, altrimenti prova \( e_2 \).
-    \item \textbf{Zero‑or‑one:} \( e? \) --- riconosce \( e \) una volta oppure fallisce senza consumare input (equivalente a \( e / \varepsilon \)).
-    \item \textbf{One‑or‑more:} \( e+ \) --- riconosce \( e \) una o più volte consecutivamente.
-    \item \textbf{Zero‑or‑more:} \( e* \) --- riconosce \( e \) zero o più volte consecutivamente.
     \item \textbf{And‑predicate:} \( \&e \) --- verifica che \( e \) sia riconoscibile a partire dalla posizione corrente, senza consumare input.
     \item \textbf{Not‑predicate:} \( !e \) --- verifica che \( e \) \emph{non} sia riconoscibile a partire dalla posizione corrente, senza consumare input.
 \end{enumerate}
 
-\subsection{Confronto con le CFG}
 
-La differenza più importante tra PEG e CFG risiede nella semantica dell'operatore di scelta. Nelle CFG l'operatore \( | \) è commutativo: le due alternative sono interscambiabili e la grammatica genera tutte le stringhe che soddisfano almeno una delle due. Nelle PEG l'operatore \( / \) è \emph{ordinato}: viene tentata prima l'espressione di sinistra e, solo se essa fallisce, si passa a valutare quella di destra. Questo ordine elimina le ambiguità, perché per ogni input viene selezionata al più una alternativa.
+La differenza più importante tra PEG e CFG risiede nella semantica dell'operatore di scelta. Nelle CFG l'operatore
+\( | \) è commutativo: le due alternative sono interscambiabili e la grammatica genera tutte le stringhe che soddisfano
+almeno una delle due scelte.
+Nelle PEG l'operatore \( / \) è \emph{ordinato}: viene tentata prima l'espressione di sinistra e, solo se essa fallisce,
+si passa a valutare quella di destra.
+Tale ordine ordine elimina le ambiguità, perché per ogni input viene selezionata al più una alternativa.
 
-Un'altra differenza è l'assenza del concetto di ricorsione sinistra immediata o indiretta: un parser PEG che tentasse di espandere una regola \( A \leftarrow A \, a \) entrerebbe in un ciclo infinito, poiché proverebbe indefinitamente a riconoscere \( A \) senza mai consumare caratteri. Per questo motivo le PEG richiedono che le definizioni siano \emph{ricorsive a destra} o che si usino predicati per descrivere pattern left‑recursive.
+Inoltre non è possibile ricostruire alberi di derivazione che presentano ricorsione sinistra, sia immediata che indiretta.
 
-\subsection{Vantaggi e limiti}
+Un altro aspetto peculiare delle PEG è fornito dalla regola $A \gets \zero / \zero\uno$ con input \zero\uno.
+In questo caso la priorità viene data alla prima scelta, pertanto l'albero di derivazione presenta l'arco $A \gets \zero$
+e la scelta \zero\uno non viene mai seguita.
+In altre parole, la regola $A \gets \zero / \zero\uno$ è equivalente alla regola $A \gets \zero$.
+Si noti che la regola $A \gets \zero\uno / \zero$ ha un comportamento diverso dalla regola $A \gets \zero / \zero\uno$.
+Infatti, quando l'input è $\zero\uno$, la regola $A \to \zero\uno / \zero$ porterebbe ad avere l'arco $A \gets \zero\uno$.
 
-I principali vantaggi delle PEG sono:
-\begin{itemize}
-    \item \textbf{Determinismo:} ogni stringa ha al più un albero di parsing.
-    \item \textbf{Espressività:} i predicati \( \& \) e \( ! \) permettono di descrivere contesti che non sono linguaggi liberi (ad esempio \( a^n b^n c^n \), seppure con backtracking limitato).
-    \item \textbf{Integrazione diretta con l'implementazione:} una PEG può essere tradotta quasi meccanicamente in un parser ricorsivo discendente con backtracking.
-\end{itemize}
+L'operatore $\&$ permette di scrivere con facilità un riconoscitore per costrutti che sarebbero più complessi
+utilizzando solo CFG.
+Prendiamo ad esempio la regola $P \gets (P) / [P] / \varepsilon$ che corrisponde a tutte le espressioni di parentesi tonde
+e quadre nidificate.
+La regola $F\to ( \& P$ riconosce le stringhe che soddisfano la forma $P$ e iniziano con una parentesi tonda aperta.
 
-I limiti includono:
-\begin{itemize}
-    \item \textbf{Difficoltà con la ricorsione sinistra:} occorre riscrivere le regole o usare estensioni (ad esempio memoizzazione).
-    \item \textbf{Backtracking potenzialmente esponenziale:} in grammatiche con molte alternative sovrapposte il tempo di parsing può crescere esponenzialmente con la lunghezza dell'input (problema mitigato dalla memoizzazione, come nel packrat parsing).
-    \item \textbf{Non equivalenza alle CFG:} esistono linguaggi liberi che non possono essere descritti da alcuna PEG e viceversa.
-\end{itemize}
+
+\begin{example}\label{exa:peg-no-cfg}
+PEG che riconosce il linguaggio $\zero^{n}\uno^{n}\due^{n}$.
+\begin{enumerate}
+\item $S \gets \&(A !\uno)\ \zero\kleene B !.$
+\item $A \gets (\zero A \uno)?$
+\item $B \gets (\uno B \due)?$
+\end{enumerate}
+\end{example}
+
+
+Infine analizziamo l'insieme di regole dell'\Cref{exa:peg-no-cfg}.
+Le regole 2 e 3 sono tipiche delle CFG e riconoscono rispettivamente i linguaggi $\zero^{n}\uno^{n}$ e
+$\uno^{n}\due^{n}$, con $n\ge 0$.
+Analizziamo adesso la seconda parte della regola 1, ovvero $\zero\kleene B !.$: questa riconosce le stringhe nella forma
+$\zero^{m}\uno^{n}\due^{n}$, con $n,m \ge 0$, in quanto $\zero\kleene$ consiste in un numero arbitratio di $\zero$,
+mentre la forma $!.$ è equivalente alla fine della stringa di input ($!$ è la negazione e il punto $.$ è qualsiasi carattere).
+La prima parte della regola 1 è $\&(A !\uno)$ che, per effetto dell'operatore $\&$ viene eseguita senza spostare la
+posizione del carattere attuale (ovvero, non consuma input) e riconosce le stringhe $\uno^{n}\due^{n}$, con $n\ge 0$, che
+non sono seguite dal carattere $\uno$.
+L'operatore $\&$ porta a riconoscere solo le stringhe che soddisfano entrambe le parti della regola: per questo motivo
+viene chiamato operatore \textsf{and}.
+Quindi possiamo chiederci quali stringhe $\zero^{m}\uno^{n}\due^{n}$ sono riconosciute anche dalla prima parte della
+regola: devono iniziare con la stringa $\zero^{n}\uno^{n}$ e non possono iniziare con il prefisso $\zero^{n}\uno^{n+1}$.
+Combinando queste due parti si ottiene che le stringhe riconosciute sono tutte e sole le stringhe nella forma
+$\zero^{n}\uno^{n}\due^{n}$ con $n\ge 0$, che sappiamo non essere libero da contesto \Cref{exa:0n1n2n-no-cfg}.
+
+La conseguenza finale è che PEG permettono di riconoscere una classe di  linguaggi che non è confrontabile con i
+linguaggi liberi dal contesto.
+Al tempo stesso le PEG portano sempre ad avere un parser a discesa ricorsiva che, sebbene  potenzialmente possa
+richiedere tempo esponenziale, è estremamente efficiente in pratica: questa classe di parser viene chiamata \keyword{packrat parser}.
+
+Un packrat parser prevede di costruire, la tabella $T[e,i]$ dove $e$ è una porzione di espressione che appare nelle
+regole della PEG, $i$ è una posizione della stringa $I$ in  input, e $T[e,i]$ è la lunghezza della sottostringa di $I$
+che inizia in posizione $i$ che viene riconosciuta dalla sottoepressione $e$.
+In altre parole, se la sottoespressione $e$ riconosce la stringa $I[i:j]$ allora $T[e,i] = j-i+1$.
+Un elemento fondamentale di questa strategia di parsing è che i valori della tabella $T$ vengono letti, invece di essere
+calcolati nuovamente, quando sono già disponibili perchè calcolati in precedenza.
+Vediamo ad esempio cosa succede con l'insieme di regole dell'\Cref{exa:peg-no-cfg} con input \zero\zero\uno\uno\due\due.
+Il primo passo è individuare le sottoespressioni possibili delle regole: sono $S$,
+$A !\uno$, $!\uno$, $\zero\kleene$, $\zero$, $B !.$,
+$A$, $(\zero A \uno)?$, $A$, $(\zero A \uno)$, \uno,
+$B$, $(\uno B \due)?$, $\uno B \due$, $B$.
+
+Il parsing cerca di calcolare il valore $T[S,1]$: ciò richiede di calcolare $T[A !\uno, 1]$.
+Rappresentiamo questa situazione con la Local.
+
+
 
 %%% Local Variables:
 %%% mode: LaTeX

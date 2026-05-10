@@ -47,7 +47,7 @@ Sia $E$ un'espressione regolare. Il linguaggio $L(E)$ associato a $E$ è definit
 \item Se $E=E_1 \cup E_2$, allora $L(E) = \{w\in \Sigma^{*} : w\in L(E_{1}) \vee  w\in L(E_{2})\}$;
 \item Se $E=E_1E_2$, allora $L(E) = \{ w_{1}w_{2} : w\in L(E_1) L(E_2) \}$;
 \item Se $E = E_1^{*}$, allora $L(E) = \{\epsilon\} \cup L(E_1) \bigcup_{k=1}^{*} \{w_1 \cdots w_{k}: w_{1}, \ldots, w_{k}\in L(E) \}$.
-\item Se $E = (E_1)$, allora $L(((E)) = L(E)$.
+\item Se $E = (E_1)$, allora $L((E)) = L(E)$.
 \end{enumerate}
 \end{definition}
 
@@ -56,6 +56,7 @@ Notiamo che un'espressione regolare non è una grammatica, ma una sintassi minim
 Se consideriamo due espressioni regolari identiche quando hanno lo stesso linguaggio associato, possiamo dare alcune proprietà delle operazioni.
 
 \begin{proposition}\label{prop:regex-associative-commutative}
+Valgono le seguenti proprietà delle operazioni su espressioni regolari:
 \begin{itemize}
 \item
 L'unione è commutativa ($E_1 \cup E_2 = E_2 \cup E_1$), associativa $E_1 \cup (E_2 \cup E_3) = (E_1 \cup E_2) \cup E_3$
@@ -103,71 +104,71 @@ L'espressione $E\{0,0\}$ è equivalente a $\epsilon$, $E\{0,m\}$ (con $m>0$) è 
 
 % le regex sono usate per la ricerca di un pattern in un testo o negli analizzatori lessicali. Una regex denota il linguaggio e non la grammatica. Si hanno le seguenti operazioni tra due linguaggi $L$ e $M$:
 % \begin{itemize}
-% 	\item \textbf{unione:} dati $L,\, M\in \Sigma^*$, l'unione $L\cup M$ è l'insieme delle stringhe che si trovano in entrambi i linguaggi o solo in uno dei due
-% 				\begin{example}
-% 					$$L=\{001,10,111\}$$
-% 					$$M=\{\epsilon,001\}$$
-% 					$$L\cup M=\{\epsilon,01,10,111,\epsilon\}$$
-% 				\end{example}
-% 				si ha che:
-% 				$$L\cup M=M\cup L$$
-% 	\item \textbf{concatenazione:} dati $L,\, M\in \Sigma^*$, la concatenazione $L\cdot M$ (o $LM$) è lisieme di tutte le stringhe ottenibili concatenandone una di $L$ a una di $M$
-% 				\begin{example}
-% 					$$L=\{001,10,111\}$$
-% 					$$M=\{\epsilon,001\}$$
-% 					$$L\cdot M=\{001,001001,10,\cdots\}$$
-% 				\end{example}
-% 				si ha che:
-% 				$$L\cdot M\neq M\cdot L$$
-% 	\item si definiscono:
-% 				\begin{itemize}
-% 					\item $L\cdot L=L^2$, $L\cdot L\cdot L=L^3$ etc\cdots
-% 					\item $L^1=L$
-% 					\item $L^0=\{\epsilon\}$
-% 				\end{itemize}
-% 	\item \textbf{chiusura di Kleene:} dato $L\subseteq \Sigma^*$ si ha che la chiusura di Kleen di $L$ è:
-% 				$$L^*=\underset{i\geq 0}{\cup}L^i$$
-% 				ricordando che $l^0=\epsilon$
-% 				\begin{example}
-% 					Sia $L=\{0,11\}$, si ha:
-% 					$$L^0=\epsilon$$
-% 					$$L^1=L=\{0,11\}$$
-% 					$$L^2=L\cdot L=\{00,011,110,1111\}$$
-% 					$$L^3=L\cdot L\cdot L=L^2\cdot L=\{000,0110,1100,11110,0011,01111,11011,111111\}$$
-% 				\end{example}
-% 				vediamo dei casi particolari:
-% 				\begin{itemize}
-% 					\item $L=\{0^n|\,n\geq 0\}$ implica $|L|=\infty$ e quindi, essendo $L^i=L,\, i\geq 1$ e quindi $|L^i|=\infty$, $|L^*|=\infty$. Si ha quindi:
-% 								$$L^*=L^0\cup L^1\cup \cdots \cup L^i=L$$
-% 					\item $L=\emptyset$ implica $L^0=\{\epsilon\}$, $L^2=L\cdot L=\emptyset$ e così via per ogni concatenazione di $L$. Si ha quindi:
-% 								$$L^*=L^0=\{\epsilon\}$$
-% 					\item $L=\{\epsilon\}$ implica $L^0=\{\epsilon\}=L=L^1=L^2=\cdots$, si ha quindi:
-% 								$$L^*=\{\epsilon\}=L$$
-% 				\end{itemize}
-% 				L'insieme vuoto e l'insieme contenente la stringa vuota hanno le uniche chiusure di kleene finite
+%   \item \textbf{unione:} dati $L,\, M\in \Sigma^*$, l'unione $L\cup M$ è l'insieme delle stringhe che si trovano in entrambi i linguaggi o solo in uno dei due
+%               \begin{example}
+%                   $$L=\{001,10,111\}$$
+%                   $$M=\{\epsilon,001\}$$
+%                   $$L\cup M=\{\epsilon,01,10,111,\epsilon\}$$
+%               \end{example}
+%               si ha che:
+%               $$L\cup M=M\cup L$$
+%   \item \textbf{concatenazione:} dati $L,\, M\in \Sigma^*$, la concatenazione $L\cdot M$ (o $LM$) è lisieme di tutte le stringhe ottenibili concatenandone una di $L$ a una di $M$
+%               \begin{example}
+%                   $$L=\{001,10,111\}$$
+%                   $$M=\{\epsilon,001\}$$
+%                   $$L\cdot M=\{001,001001,10,\cdots\}$$
+%               \end{example}
+%               si ha che:
+%               $$L\cdot M\neq M\cdot L$$
+%   \item si definiscono:
+%               \begin{itemize}
+%                   \item $L\cdot L=L^2$, $L\cdot L\cdot L=L^3$ etc\cdots
+%                   \item $L^1=L$
+%                   \item $L^0=\{\epsilon\}$
+%               \end{itemize}
+%   \item \textbf{chiusura di Kleene:} dato $L\subseteq \Sigma^*$ si ha che la chiusura di Kleen di $L$ è:
+%               $$L^*=\underset{i\geq 0}{\cup}L^i$$
+%               ricordando che $l^0=\epsilon$
+%               \begin{example}
+%                   Sia $L=\{0,11\}$, si ha:
+%                   $$L^0=\epsilon$$
+%                   $$L^1=L=\{0,11\}$$
+%                   $$L^2=L\cdot L=\{00,011,110,1111\}$$
+%                   $$L^3=L\cdot L\cdot L=L^2\cdot L=\{000,0110,1100,11110,0011,01111,11011,111111\}$$
+%               \end{example}
+%               vediamo dei casi particolari:
+%               \begin{itemize}
+%                   \item $L=\{0^n|\,n\geq 0\}$ implica $|L|=\infty$ e quindi, essendo $L^i=L,\, i\geq 1$ e quindi $|L^i|=\infty$, $|L^*|=\infty$. Si ha quindi:
+%                               $$L^*=L^0\cup L^1\cup \cdots \cup L^i=L$$
+%                   \item $L=\emptyset$ implica $L^0=\{\epsilon\}$, $L^2=L\cdot L=\emptyset$ e così via per ogni concatenazione di $L$. Si ha quindi:
+%                               $$L^*=L^0=\{\epsilon\}$$
+%                   \item $L=\{\epsilon\}$ implica $L^0=\{\epsilon\}=L=L^1=L^2=\cdots$, si ha quindi:
+%                               $$L^*=\{\epsilon\}=L$$
+%               \end{itemize}
+%               L'insieme vuoto e l'insieme contenente la stringa vuota hanno le uniche chiusure di kleene finite
 % \end{itemize}
 % \begin{definition}
-% 	Si riporta la definizione ricorsiva di un'espressione regolare:
-% 	\begin{itemize}
-% 		\item \textbf{casi base:} si hanno tre casi base:
-% 					\begin{enumerate}
-% 						\item $\epsilon$ e $\emptyset$ sono espressioni regolari
-% 						\item se $a\in \Sigma$, con $a$ che è un'esprssione regolare, $L(a)=\{a\}$
-% 						\item le variabili che rappresentano linguaggi regolari sono espressioni regolari, $L(L)=L$
-% 					\end{enumerate}
-% 		\item \textbf{casi passo:} si hanno i 4 casi passo:
-% 					\begin{enumerate}
-% 						\item \textbf{unione:} se $E$ e $F$ sono espressioni regolari allora anche $E+F=E\cup F$ è un'espressione regolare e si ha:
-% 									$$L(E+F)=L(E)\cup L(F)$$
-% 						\item \textbf{concatenazione:} se $E$ e $F$ sono espressioni regolari allora anche $EF=E\cdot F$ è un'espressione regolare e si ha:
-% 									$$L(EF)=L(E)\cdot L(F)$$
-% 						\item \textbf{chiusura:} se $E$ è un'espressione regolare allora $E^*$ è un'espressione regolare e si ha:
-% 									$$L(E^*)=(L(E))^*$$
-% 						\item \textbf{parentesi:} se $E$è un'espressione regolare allora $(E)$ è un'espressione regolare e si ha:
-% 									$$L((E))=L(E)$$
-% 					\end{enumerate}
-% 	\end{itemize}
-% 	\newpage
+%   Si riporta la definizione ricorsiva di un'espressione regolare:
+%   \begin{itemize}
+%       \item \textbf{casi base:} si hanno tre casi base:
+%                   \begin{enumerate}
+%                       \item $\epsilon$ e $\emptyset$ sono espressioni regolari
+%                       \item se $a\in \Sigma$, con $a$ che è un'esprssione regolare, $L(a)=\{a\}$
+%                       \item le variabili che rappresentano linguaggi regolari sono espressioni regolari, $L(L)=L$
+%                   \end{enumerate}
+%       \item \textbf{casi passo:} si hanno i 4 casi passo:
+%                   \begin{enumerate}
+%                       \item \textbf{unione:} se $E$ e $F$ sono espressioni regolari allora anche $E+F=E\cup F$ è un'espressione regolare e si ha:
+%                                   $$L(E+F)=L(E)\cup L(F)$$
+%                       \item \textbf{concatenazione:} se $E$ e $F$ sono espressioni regolari allora anche $EF=E\cdot F$ è un'espressione regolare e si ha:
+%                                   $$L(EF)=L(E)\cdot L(F)$$
+%                       \item \textbf{chiusura:} se $E$ è un'espressione regolare allora $E^*$ è un'espressione regolare e si ha:
+%                                   $$L(E^*)=(L(E))^*$$
+%                       \item \textbf{parentesi:} se $E$è un'espressione regolare allora $(E)$ è un'espressione regolare e si ha:
+%                                   $$L((E))=L(E)$$
+%                   \end{enumerate}
+%   \end{itemize}
+%   \newpage
 
 L'idea di estendere un modello con nuove operazioni che non ne aumentano il potere espressivo semplifica notevolmente lo
 studio di tale potere espressivo.
@@ -503,71 +504,71 @@ Se leggerà \texttt{1}, andrà nello stato accettante, altrimenti rimane nello s
 	\textbf{Si ha che} $q_E$ \textbf{è lo stato pozzo dove vanno le stringhe venute male}
 	\begin{itemize}
 		\item $n,m\geq 0$:
-		      \begin{center}
-			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				      \node[state,initial, accepting] (q_0)   {$q_0$};
-				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-				      \node[state] (q_E) [right=of q_1] {$q_E$};
-				      \path[->]
-				      (q_0) edge  node {1} (q_1)
-				      edge [loop below] node {0} ()
-				      (q_1) edge  node  {} (q_E)
-				      edge [loop below] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
-			      \end{tikzpicture}
-		      \end{center}
-		      ovvero posso non generare nulla e uscire subito con $q_0$, generare solo un 1 e passare a $q_1$ e uscire oppure generare 0 e 1 a piacere con l'ultimo stato o generare 0 a piacere dal primo e 1 a piacere dal secondo.
+			  \begin{center}
+				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+					  \node[state,initial, accepting] (q_0)   {$q_0$};
+					  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+					  \node[state] (q_E) [right=of q_1] {$q_E$};
+					  \path[->]
+					  (q_0) edge  node {1} (q_1)
+					  edge [loop below] node {0} ()
+					  (q_1) edge  node  {} (q_E)
+					  edge [loop below] node {1} ()
+					  (q_E) edge [loop below] node {0,1} ();
+				  \end{tikzpicture}
+			  \end{center}
+			  ovvero posso non generare nulla e uscire subito con $q_0$, generare solo un 1 e passare a $q_1$ e uscire oppure generare 0 e 1 a piacere con l'ultimo stato o generare 0 a piacere dal primo e 1 a piacere dal secondo.
 		\item $n\geq 0 \,\,m>0$:
-		      \begin{center}
-			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				      \node[state,initial] (q_0)   {$q_0$};
-				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-				      \node[state] (q_E) [right=of q_1] {$q_E$};
-				      \path[->]
-				      (q_0) edge  node {1} (q_1)
-				      edge [loop below] node {0} ()
-				      (q_1) edge  node  {} (q_E)
-				      edge [loop below] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
-			      \end{tikzpicture}
-		      \end{center}
-		      ovvero come l'esempio sopra solo che non posso uscire in $q_0$ in quanto almeno un 1 deve essere per forza generato
+			  \begin{center}
+				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+					  \node[state,initial] (q_0)   {$q_0$};
+					  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+					  \node[state] (q_E) [right=of q_1] {$q_E$};
+					  \path[->]
+					  (q_0) edge  node {1} (q_1)
+					  edge [loop below] node {0} ()
+					  (q_1) edge  node  {} (q_E)
+					  edge [loop below] node {1} ()
+					  (q_E) edge [loop below] node {0,1} ();
+				  \end{tikzpicture}
+			  \end{center}
+			  ovvero come l'esempio sopra solo che non posso uscire in $q_0$ in quanto almeno un 1 deve essere per forza generato
 		\item $n> 0\,\, m\geq 0$:
-		      \begin{center}
-			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				      \node[state,initial] (q_0)   {$q_0$};
-				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-				      \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
-				      \node[state] (q_E) [right=of q_2] {$q_E$};
-				      \path[->]
-				      (q_0) edge  node {0} (q_1)
-				      edge [bend right] node {1} (q_E)
-				      (q_1) edge  node {1} (q_2)
-				      edge [loop above] node {0} ()
-				      (q_2) edge node {0} (q_E)
-				      edge [loop above] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
-			      \end{tikzpicture}
-		      \end{center}
-		      \textit{CHIARIRE}
+			  \begin{center}
+				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+					  \node[state,initial] (q_0)   {$q_0$};
+					  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+					  \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
+					  \node[state] (q_E) [right=of q_2] {$q_E$};
+					  \path[->]
+					  (q_0) edge  node {0} (q_1)
+					  edge [bend right] node {1} (q_E)
+					  (q_1) edge  node {1} (q_2)
+					  edge [loop above] node {0} ()
+					  (q_2) edge node {0} (q_E)
+					  edge [loop above] node {1} ()
+					  (q_E) edge [loop below] node {0,1} ();
+				  \end{tikzpicture}
+			  \end{center}
+			  \textit{CHIARIRE}
 		\item $n,m>0$:
-		      \begin{center}
-			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				      \node[state,initial] (q_0)   {$q_0$};
-				      \node[state] (q_1) [right=of q_0] {$q_1$};
-				      \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
-				      \node[state] (q_E) [right=of q_2] {$q_E$};
-				      \path[->]
-				      (q_0) edge  node {0} (q_1)
-				      edge [bend right] node {1} (q_E)
-				      (q_1) edge  node {1} (q_2)
-				      edge [loop above] node {0} ()
-				      (q_2) edge node {0} (q_E)
-				      edge [loop above] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
-			      \end{tikzpicture}
-		      \end{center}
-		      \textit{CHIARIRE}
+			  \begin{center}
+				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+					  \node[state,initial] (q_0)   {$q_0$};
+					  \node[state] (q_1) [right=of q_0] {$q_1$};
+					  \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
+					  \node[state] (q_E) [right=of q_2] {$q_E$};
+					  \path[->]
+					  (q_0) edge  node {0} (q_1)
+					  edge [bend right] node {1} (q_E)
+					  (q_1) edge  node {1} (q_2)
+					  edge [loop above] node {0} ()
+					  (q_2) edge node {0} (q_E)
+					  edge [loop above] node {1} ()
+					  (q_E) edge [loop below] node {0,1} ();
+				  \end{tikzpicture}
+			  \end{center}
+			  \textit{CHIARIRE}
 	\end{itemize}
 \end{example}
 
@@ -780,9 +781,9 @@ $\delta:Q\times F\to 2^Q$
 Possiamo ora definire {$\delta$}, delta cappuccio che prende in ingresso uno stato e l'intera stringa $w$. Definisco ricorsivamente:
 \begin{itemize}
 	\item \textbf{caso base:} se $|w|=0$ ovvero se $W=\epsilon$ si ha:
-	      $\hat{\delta}(q,\epsilon)=\{q\}$
+		  $\hat{\delta}(q,\epsilon)=\{q\}$
 	\item \textbf{caso passo:} se $|w|>0$, allora $W=xa$, $a\in\Sigma$ e $x\in\Sigma^*$. Posto $\hat{\delta}(q,x)=\{p_1,\cdots,p_k\}$ si ha:
-	      $\hat{\delta}(q,w)=\cup \delta(p_i,a)$
+		  $\hat{\delta}(q,w)=\cup \delta(p_i,a)$
 \end{itemize}
 %aggiungere esempio
 Per il linguaggio $L$ accettato dall'automa si ha:
@@ -808,7 +809,7 @@ Troviamo ora un algoritmo che trasformi un NFA in un DFA.
 Dal penultimo esempio esempio ricavo:
 \begin{center}
 	\begin{tabular}{c|c|c}
-		                     & 0             & 1             \\
+							 & 0             & 1             \\
 		\hline
 		$\emptyset$          & $\emptyset$   & $\emptyset$   \\
 		\hline
@@ -845,7 +846,7 @@ ovvero:
 che è il DFA che si era anche prima ottenuto. Si hanno però dei sottoinsiemi mai raggiungibili. Si ha quindi:
 \begin{center}
 	\begin{tabular}{c|c|c}
-		                 & 0             & 1             \\
+						 & 0             & 1             \\
 		\hline
 		$\to\,\{q_0\}$   & $\{q_0,q_1\}$ & $\{q_0\}$     \\
 		\hline
@@ -879,9 +880,9 @@ con:
 	\item $Q_D=2^{Q_N}$ (quindi se $Q_N=n$ si ha $|Q_D|=2^n$)
 	\item $F_D=\{S\subseteq Q_n|\, S\cap F_N\neq \emptyset\}$
 	\item $\forall S\subseteq Q_N$ e $ \forall a \in\Sigma$:
-	      $\delta_D(S,a)=\cup \delta_n(p,a)$
-	      per esempio:
-	      $\delta_D(\{q_0,q_1,q_2\},0)=\delta_N(q_0,0)\cup \delta_N(q_1,0) \cup\delta_N(q_2,0) $
+		  $\delta_D(S,a)=\cup \delta_n(p,a)$
+		  per esempio:
+		  $\delta_D(\{q_0,q_1,q_2\},0)=\delta_N(q_0,0)\cup \delta_N(q_1,0) \cup\delta_N(q_2,0) $
 \end{itemize}
 Si definisce l'$\epsilon-NFA$, l'automa astati finiti non deterministici con $\epsilon$ transizioni. Con la transizione $\epsilon$ posso saltare i nodi, ovvero avanza senza aggiungere caratteri
 \begin{example}
@@ -916,7 +917,7 @@ si ha inoltre che:
 mettendo in tabella l'esempio precedente si ha:
 \begin{center}
 	\begin{tabular}{c|c|c|c}
-		                        & a                 & b             & c           \\
+								& a                 & b             & c           \\
 		\hline
 		$*\to\,\{q_0,q_1,q_2\}$ & $\{q_0,q_1,q_2\}$ & $\{q_1,q_2\}$ & $\{q_2\}$   \\
 		\hline
@@ -937,15 +938,15 @@ riscrivendo:
 ovvero:
 $\delta_D(\{q_0,q_1,q_2\},a)=E\,CLOSE(\delta_N(q_0,a)\cup \delta_N(q_1,a)\cup \delta_N(q_2,a))$
 $=E\,CLOSE(\{q_0\} \cup \emptyset\cup \emptyset)=E\,CLOSE(\{q_0\})$
-$=E\,CLOSE	(q_0)=\{q_0,q_1,q_2\}$
+$=E\,CLOSE  (q_0)=\{q_0,q_1,q_2\}$
 e
 $\delta_D(\{q_0,q_1,q_2\},B)=E\,CLOSE(\delta_N(q_0,b)\cup \delta_N(q_1,b)\cup \delta_N(q_2,b))$
 $=E\,CLOSE(\emptyset \cup \{q_1\}\cup \emptyset)=E\,CLOSE(\{q_1\})$
-$=E\,CLOSE	(q_1)=\{q_1,q_2\}$
+$=E\,CLOSE  (q_1)=\{q_1,q_2\}$
 e
 $\delta_D(\{q_0,q_1,q_2\},c)=E\,CLOSE(\delta_N(q_0,c)\cup \delta_N(q_1,c)\cup \delta_N(q_2,c))$
 $=E\,CLOSE(\emptyset \cup \emptyset\cup \{q_2\})=E\,CLOSE(\{q_1\})$
-$=E\,CLOSE	(q_2)=\{q_2\}$
+$=E\,CLOSE  (q_2)=\{q_2\}$
 
 si ottiene quindi il seguente NFA:
 \begin{center}
@@ -1216,7 +1217,7 @@ che diventa il seguente DFA:
 	si ottiene quindi:
 	\begin{center}
 		\begin{tabular}{c|c|c|c}
-			             & a           & b           & c           \\
+						 & a           & b           & c           \\
 			\hline
 			$to\,\{p\}$  & $\{p\}$     & $\{p,q\}$   & $\{p,q,r\}$ \\
 			\hline
@@ -1260,22 +1261,22 @@ torniamo a dare bene qualche definizione per {$\delta$} in un DFA:
 con: $q\in Q,\,\,\, w\in \Sigma^*\,\,\,e\,\,\,${$\delta$}$(p,w)=q$
 \begin{itemize}
 	\item
-	      \textbf{caso base:} $w=\epsilon\to |w|=0\to${$\delta$}$(q,\epsilon)=q$
+		  \textbf{caso base:} $w=\epsilon\to |w|=0\to${$\delta$}$(q,\epsilon)=q$
 
-	      \textbf{caso passo:} $|w|\neq0\to w=ax$ con $a\in \Sigma,x\in \Sigma^*$:
-	      {$\delta$}$(q,w)=${$\delta$}$(q,ax)=${$\delta$} $(\delta(q,a),x)$
+		  \textbf{caso passo:} $|w|\neq0\to w=ax$ con $a\in \Sigma,x\in \Sigma^*$:
+		  {$\delta$}$(q,w)=${$\delta$}$(q,ax)=${$\delta$} $(\delta(q,a),x)$
 	\item
-	      \textbf{caso base:} $w=\epsilon\to |w|=0\to \delta(q,w)=\delta(q,\epsilon)=q$
+		  \textbf{caso base:} $w=\epsilon\to |w|=0\to \delta(q,w)=\delta(q,\epsilon)=q$
 
-	      \textbf{caso passo:} $|w|\neq0\to w=xa$ con $a\in \Sigma,x\in \Sigma^*$:
-	      {$\delta$}$(q,w)=${$\delta$}$(q,xa)=${$\delta$} $(\delta(q,x),a)$
+		  \textbf{caso passo:} $|w|\neq0\to w=xa$ con $a\in \Sigma,x\in \Sigma^*$:
+		  {$\delta$}$(q,w)=${$\delta$}$(q,xa)=${$\delta$} $(\delta(q,x),a)$
 \end{itemize}
 in un NFA si ha:
 \begin{itemize}
 	\item \textbf{caso base:}  {$\delta$}$(q,\epsilon=\{q\},\,\,\forall q\in Q$
 	\item \textbf{caso passo:} posto $w=ax$ e {$\delta$}$(q,a)=\{p_1,\cdots,p_n$ allora {$\delta$}$(q,w)=\cup${$\delta$}$(p_i, x)0\{r_1,\cdots,r_n\}$.
-	      {$\delta$}$(q,a)=p$
-	      {$\delta$}$(q,w)=$ {$\delta$}$(q,xa)=$ {$\delta$}$(p,x)=r$
+		  {$\delta$}$(q,a)=p$
+		  {$\delta$}$(q,w)=$ {$\delta$}$(q,xa)=$ {$\delta$}$(p,x)=r$
 \end{itemize}
 oppure:
 \begin{itemize}
@@ -1353,90 +1354,123 @@ un numero di \uno multiplo di $3$.
 \end{Exercise}
 
 
-\section{Da DFA a espressioni regolari}
+\section{Da espressioni regolari a DFA}
 \label{sec:da-DFA-a-ER}
 
-\begin{itemize}
-	\item \textbf{caso base}:
-	      \begin{enumerate}
-		      \item se $R=\epsilon$ ovvero $L(R)=\{\epsilon\}$ allora:
-		            \begin{center}
-			            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				            \node[state,initial] (q_0)   {$q_0$};
-				            \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-				            \path[->]
-				            (q_0) edge node {$\epsilon$} (q_1);
-			            \end{tikzpicture}
-		            \end{center}
-		      \item se $R=\emptyset$ ovvero $L(R)=\emptyset$ allora:
-		            \begin{center}
-			            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				            \node[state,initial] (q_0)   {$q_0$};
-				            \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; ;
-			            \end{tikzpicture}
-		            \end{center}
-		      \item se $R=a$ ovvero $L(R)=\{a\}$ allora:
-		            \begin{center}
-			            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				            \node[state,initial] (q_0)   {$q_0$};
-				            \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-				            \path[->]
-				            (q_0) edge node {a} (q_1);
-			            \end{tikzpicture}
-		            \end{center}
-	      \end{enumerate}
-	\item \textbf{caso passo:}
-	      \begin{enumerate}
-		      \item se $R=S+T$ quindi $L(R)=L(S)+L(T)$ allora:
-		            \begin{center}
-			            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				            \node[state,initial] (q_0)   {$q_0$};
-				            \node[state] (q_1) [above right =of q_0] {$q_1$};
-				            \node[state] (q_2) [below right =of q_0] {$q_2$};
-				            \node[draw=none,fill=none] (Q_E) [right = of q_1] {$S$};
-				            \node[draw=none,fill=none] (Q_F) [right = of q_2] {$S$};
-				            \node[state] (q_3) [right=of Q_E] {$q_3$};
-				            \node[state] (q_4) [right=of Q_F] {$q_4$};
-				            \node[state, accepting] (q_5) [below right =of q_3] {$q_5$};
-				            \path[->]
-				            (q_0) edge node {$\epsilon$} (q_1)
-				            (q_0) edge node {$\epsilon$} (q_2)
-				            (q_3) edge node {$\epsilon$} (q_5)
-				            (q_4) edge node {$\epsilon$} (q_5);
-			            \end{tikzpicture}
-		            \end{center}
-		      \item se $R=ST$ quindi $L(R)=L(S)L(T)$:
-		            \begin{center}
-			            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				            \node[state,initial] (q_0)   {$q_0$};
-				            \node[draw=none,fill=none] (Q_E) [right = of q_0] {$S$};
-				            \node[state] (q_1) [ right =of Q_E] {$q_1$};
-				            \node[state] (q_2) [right =of q_1] {$q_2$};
-				            \node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
-				            \node[state] (q_3) [right=of Q_F] {$q_3$};
-				            \node[draw=none,fill=none] (Q_G) [right = of q_3] {};
-				            \path[->]
-				            (q_1) edge node {$\epsilon$} (q_2)
-				            (q_3) edge node {} (Q_G);
-			            \end{tikzpicture}
-		            \end{center}
-		      \item se $R=S^*$ quindi $L(R)=(L(S))^*$:
-		            \begin{center}
-			            \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				            \node[state,initial] (q_0)   {$q_0$};
-				            \node[state] (q_1) [ right =of Q_E] {$q_1$};
-				            \node[draw=none,fill=none] (Q_F) [right = of q_1] {$S$};
-				            \node[state] (q_2) [right =of Q_F] {$q_2$};
-				            \node[state] (q_3) [right=of q_2] {$q_3$};
-				            \path[->]
-				            (q_0) edge node {$\epsilon$} (q_1)
-				            (q_2) edge [bend right = 35]  node {$\epsilon$} (q_1)
-				            (q_0) edge [bend right = 25] node  {$\epsilon$} (q_3)
-				            (q_2) edge node {$\epsilon$} (q_3);
-			            \end{tikzpicture}
-		            \end{center}
-	      \end{enumerate}
-\end{itemize}
+In questa sezione descriveremo una procedura che, partendo da un'esprssione regolare $R$, costruisce un $\epsilon$-NFA \nfa che
+riconosce esattamente il linguaggio rappresentato da $R$.
+La costruzione segue la definizione di espressione regolare.
+Di conseguenza analizziamo prima i casi base: quelli in cui $E$ non contiene nessuna operazione.
+
+\begin{enumerate}
+\item se $R=\epsilon$, allora $L(R)=\{\epsilon\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
+	  quello accettante $q_{1}$.
+	  Inoltre esiste una $\epsilon$-transizione da $q_{0}$ a $q_{1}$.
+	  In altre parole, $\delta(q_{0},\epsilon) = q_{1}$.
+	  \begin{center}
+	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	  \node[state,initial] (q_0)   {$q_0$};
+	  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+	  \path[->]
+	  (q_0) edge node {$\epsilon$} (q_1);
+	  \end{tikzpicture}
+	  \end{center}
+\item se $R=\emptyset$, allora $L(R)=\emptyset$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e quello accettante $q_{1}$.
+	  Non ci sono transizioni.
+	  In altre parole, $\delta(q_{0},\cdot)$ non è mai definita.
+	  \begin{center}
+	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	  \node[state,initial] (q_0)   {$q_0$};
+	  \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; ;
+	  \end{tikzpicture}
+	  \end{center}
+\item se $R=a$, dove $a$ è un carattere, allora  $L(R)=\{a\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
+	  quello accettante $q_{1}$.
+	  Inoltre esiste una transizione etichettata  $a$ da $q_{0}$ a $q_{1}$.
+	  In altre parole, $\delta(q_{0},a) = q_{1}$.
+	  \begin{center}
+	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	  \node[state,initial] (q_0)   {$q_0$};
+	  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+	  \path[->]
+	  (q_0) edge node {a} (q_1);
+	  \end{tikzpicture}
+	  \end{center}
+\end{enumerate}
+
+In tutti i casi base, è immediato notare che il linguaggio accettato dall'automa corrisponde sempre a $L(R)$.
+Passiamo adesso a considerare cosa accade quando l'espressione regolare $R$ corrisponda ad applicare un'operazione a due
+espressioni regolari $S$ e $T$.
+Per ipotesi induttiva, assumiamo di avere già costruito un automa
+$\mathcal A_{S} = \langle \Sigma, Q_{S}, q_{0,S}, F_{s}, \delta_{S}$ che riconosce il linguaggio $L(S)$ rappresentato da
+$S$ e un automa
+$\mathcal A_{T} = \langle \Sigma, Q_{T}, q_{0,T}, F_{T}, \delta_{T}$ che riconosce il linguaggio $L(S)$ rappresentato da
+$S$.
+Inoltre costruiremo sempre un automa con un solo stato finale.
+Sempre per ipotesi induttiva possiamo denotare con $q_{f,S}$ e  $q_{f,T}$ rispettivamente lo stato finale di
+$\mathcal A_{S}$ e  $\mathcal A_{T}$.
+In tutti i casi andremo a costruire un automa \nfa che accetta esattamente $L(R)$, partendo dall'automa che è l'unione
+di $\mathcal_{S}$ e  $\mathcal_{T}$, ovvero $Q$ è l'unione disgiunta di $Q_{S}$ e $Q_{T}$ e, per ogni stato $q\in Q$ e
+ogni carattere $c\in \Sigma \cup \{epsilon\}$, $\delta(q,c) = \delta_{S}(q,c)$ se $q\in Q_{S}$ e  $\delta(q,c) = \delta_{T}(q,c)$ se $q\in Q_{T}$.
+
+
+Se $R=S+T$, allora $L(R)=L(S)+L(T)$.
+Intuitivamente, dobbiamo scegliere se la parola in input appartiene a $L(S)$ oppure a $L(T)$.
+Per realizzare questa scelta, lo stato iniziale $q_{0}$ di $\mathcal A$ ha due $\epsilon$-transizioni: una verso
+$q_{0,S}$ e una verso $q_{0,T}$.
+Inoltre aggiungiamo a $Q$ un nuovo stato $q_{R}$ che sarà l'unico stato finale, e due  $\epsilon$-transizioni: una da
+$q_{S}$ a $q_{R}$ e una da $q_{0,T}$ a  a $q_{R}$.
+Notiamo che l'automa descritto accetta il linguaggio $L(S) \cup L(T)$ e ha un solo stato finale.
+
+	  \begin{center}
+	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	  \node[state,initial] (q_0)   {$q_0$};
+	  \node[state] (q_1) [above right =of q_0] {$q_{0,S}$};
+	  \node[state] (q_2) [below right =of q_0] {$q_{0,T}$};
+	  \node[draw=none,fill=none] (Q_E) [right = of q_1] {$S$};
+	  \node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
+	  \node[state] (q_3) [right=of Q_E] {$q_S$};
+	  \node[state] (q_4) [right=of Q_F] {$q_T#$};
+	  \node[state, accepting] (q_5) [below right =of q_3] {$q_R$};
+	  \path[->]
+	  (q_0) edge node {$\epsilon$} (q_1)
+	  (q_0) edge node {$\epsilon$} (q_2)
+	  (q_3) edge node {$\epsilon$} (q_5)
+	  (q_4) edge node {$\epsilon$} (q_5);
+	  \end{tikzpicture}
+	  \end{center}
+
+se $R=ST$ quindi $L(R)=L(S)L(T)$:
+	  \begin{center}
+	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	  \node[state,initial] (q_0)   {$q_0$};
+	  \node[draw=none,fill=none] (Q_E) [right = of q_0] {$S$};
+	  \node[state] (q_1) [ right =of Q_E] {$q_1$};
+	  \node[state] (q_2) [right =of q_1] {$q_2$};
+	  \node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
+	  \node[state] (q_3) [right=of Q_F] {$q_3$};
+	  \node[draw=none,fill=none] (Q_G) [right = of q_3] {};
+	  \path[->]
+	  (q_1) edge node {$\epsilon$} (q_2)
+	  (q_3) edge node {} (Q_G);
+	  \end{tikzpicture}
+	  \end{center}
+
+se $R=S^*$ quindi $L(R)=(L(S))^*$:
+	  \begin{center}
+	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+	  \node[state,initial] (q_0)   {$q_0$};
+	  \node[state] (q_1) [ right =of Q_E] {$q_1$};
+	  \node[draw=none,fill=none] (Q_F) [right = of q_1] {$S$};
+	  \node[state] (q_2) [right =of Q_F] {$q_2$};
+	  \node[state] (q_3) [right=of q_2] {$q_3$};
+	  \path[->]
+	  (q_0) edge node {$\epsilon$} (q_1)
+	  (q_2) edge [bend right = 35]  node {$\epsilon$} (q_1)
+	  (q_0) edge [bend right = 25] node  {$\epsilon$} (q_3)
+	  (q_2) edge node {$\epsilon$} (q_3);
+	  \end{tikzpicture}
+	  \end{center}
 
 
 
@@ -1572,29 +1606,29 @@ ed elimino $s$:
 quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 \begin{itemize}
 	\item se $q_0\neq q_1$:
-	      \begin{center}
-		      \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-			      \node[state, initial] (q_0)   {$q_1$};
-			      \node[state, accepting] (q_1) [right=of q_1] {$q_k$};
-			      \path[->]
-			      (q_0) edge [bend left =25]node {$S$} (q_1)
-			      (q_1) edge [bend left =25]node {$T$} (q_0)
-			      (q_0)   edge [loop above] node {$R$} ()
-			      (q_1)   edge [loop above] node {$U$} ();
-		      \end{tikzpicture}
-	      \end{center}
-	      rappresenta:
-	      $E_i=(R+SU^{*}T)^{*}SU^{*}$
+		  \begin{center}
+			  \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+				  \node[state, initial] (q_0)   {$q_1$};
+				  \node[state, accepting] (q_1) [right=of q_1] {$q_k$};
+				  \path[->]
+				  (q_0) edge [bend left =25]node {$S$} (q_1)
+				  (q_1) edge [bend left =25]node {$T$} (q_0)
+				  (q_0)   edge [loop above] node {$R$} ()
+				  (q_1)   edge [loop above] node {$U$} ();
+			  \end{tikzpicture}
+		  \end{center}
+		  rappresenta:
+		  $E_i=(R+SU^{*}T)^{*}SU^{*}$
 	\item se $q_0=q$:
-	      \begin{center}
-		      \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-			      \node[state, initial, accepting] (q_0)   {$q_1$};
-			      \path[->]
-			      (q_0)   edge [loop above] node {$R$} ();
-		      \end{tikzpicture}
-	      \end{center}
-	      rappresenta:
-	      $E_i=R^{*}$
+		  \begin{center}
+			  \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+				  \node[state, initial, accepting] (q_0)   {$q_1$};
+				  \path[->]
+				  (q_0)   edge [loop above] node {$R$} ();
+			  \end{tikzpicture}
+		  \end{center}
+		  rappresenta:
+		  $E_i=R^{*}$
 \end{itemize}
 
 \begin{example}
@@ -1792,6 +1826,64 @@ Costruire il dfa che riconosce il linguaggio associato alla seguente espressione
 \end{Exercise}
 
 \section{Pumping Lemma per i linguaggi regolari}
+\label{sec:pumping-lemma-RE}
+
+Il pumping lemma (e lemma dell'espansione) esplicita una proprietà dei linguaggi regolari: ogni parola sufficientemente
+lunga può essere espansa, ovvero esiste una sua sottostringa che può essere ripetuta un numero arbitrario di volte,
+ottenendo sempre una nuova parola del linguaggio.
+
+\begin{lemma}[Lemma dell'espansione]\label{lem:pumping-lemma}
+Sia $L$ un linguaggio regolare.
+Allora esiste una costante $p$, detta costante di espansione, tale che per ogni parola $w\in L$ con $|w|\le p$, la parola $w$ può
+essere decomposta come $w=xyz$ con $|xy|\le p$, $y\ne \epsilon$, e $xy^{i}z$ è una parola del linguaggio $L$ per ogni intero $i\ge 0$.
+
+Notiamo immediatamente che questo lemma non permette di trarre conclusioni se il linguaggio $L$ non
+è regolare.
+In particolare, anche se $L$ non è regolare, potremmo avere una decomposizione $xyz$ di una parola tale che $xy^{i}z$
+è sempre una parola di $L$.
+\end{lemma}
+
+\begin{proof}
+Siccome $L$ è un linguaggio regolare, allora esiste un \dfa che accetta esattamente $L$.
+Sia $p$ il numero di stati $|Q|$ e sia $w$ una parola del linguaggio $L$ con lunghezza maggiore di $p$.
+Sia $r_{0}, \ldots , r_{|w|}$ la sequenza di stati di $A$ attraversati quando viene letto l'input $w$, ovvero
+$r_{i} = \hat{\delta}(q_{0}, w[:i])$.
+Siccome $|w|>p$, allora esistono $i,j$ tali che $r_{i}=r_{j}$ e $i<j$.
+Allora definiamo $x$, $y$, $z$ rispettivamente come la sottostringa di $w$ che precede l'ingresso in $r_{i}$, che va da
+$r_{i}$ a $r_{j}$, che segue $r_{j}$ --- formalmente $x= w[:i]$, $y= w[i+1:j]$,  $z= w[j+1:]$.
+È immediato notare che $xyz=w$ e $y\ne \epsilon$, perchè $j>i$.
+Dalla definizione \gdv{TODO} di transizione estesa, $\hat{\delta}(q_{0}, w) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])$.
+Siccome $r_{i}=r_{j}$,  $\hat{\delta}(r_{i}, w[i+1:j]) = r_{i}$,
+$\hat{\delta}(q_{0}, xy^{i}z) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])=\hat{\delta}(\hat{\delta}(q_{0}, w[:i]),  w[j+1:])$
+per ogni intero $i\ge 0$.
+Siccome $w\in L$, allora $\hat{\delta}(q_{0}, xyz)\in F$: ciò implica che $\hat{\delta}(q_{0}, xy^{i}z)\in F$ per ogni intero $i>0$,
+completando la dimostrazione.
+\end{proof}
+
+\begin{center}
+\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+\node[state, initial] (q_0) {$p_0$};
+\node[state] (q_1) [right=of q_0] {$p_i$};
+\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
+\path[->]
+(q_0) edge node {x} (q_1)
+(q_1) edge node {z} (q_2)
+edge [loop above] node {y} ();
+\end{tikzpicture}
+\end{center}
+
+Una particolarità del lemma dell'espansione è che utilizziamo la contronominale,\sidenote{La contronominale di
+$p\Rightarrow q$ è $\lnot q \Rightarrow \lnot p$} quindi mostreremo che non vale la tesi
+del \Cref{lem:pumping-lemma} e, come conseguenza, avremo dimostrato che il linguaggio $L$ non è regolare.
+Riscriviamo quindi il \Cref{lem:pumping-lemma} come la sua contronominale.
+
+\begin{lemma}[Lemma dell'espansione --- contronominale]\label{lem:pumping-lemma-2}
+Sia $L$ un linguaggio.
+Se per ogni costante $p$ esiste una parola $w\in L$ con $|w|\le p$, tale che per ogni decomposizione di $w$ come $xyz$, con
+$|xy|\le p$, $y\ne \epsilon$, esiste un intero $i\ge 0$ tale che $xy^{i}z\notin L$, allora $L$ non è regolare.
+\end{lemma}
+
+
 Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.
 Partiamo da un esempio:
 $L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$
@@ -1805,27 +1897,9 @@ $|xy|\leq n$
 $\forall k\geq 0\,\,\, zy^kz\in L$
 in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
 \end{theorem}
-\begin{proof}
-essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2\cdots a_n$ con $m\geq n$. Sia:
-$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,\cdots a_i)\,\,\forall i=0,1,\cdots,n$
-quindi:
-$p_0=q_0,p_1,\cdots,p_n\to n+a\,\,stati$
-allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
-$x=a_1a_2\cdots a_n$
-$y=a_{i+1}a_{i+2}\cdots a_j$
-$z=a_{j+1}a_{j+2}\cdots a_m$
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-\node[state, initial] (q_0) {$p_0$};
-\node[state] (q_1) [right=of q_0] {$p_i$};
-\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
-\path[->]
-(q_0) edge node {x} (q_1)
-(q_1) edge node {z} (q_2)
-edge [loop above] node {y} ();
-\end{tikzpicture}
-\end{center}
-\end{proof}
+
+
+
 \begin{example}
 mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
 $xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
@@ -1965,28 +2039,28 @@ $L,M\in REG\to L\cup M\in REG$
 si può dimostrare in due maniere:
 \begin{itemize}
 	\item \textbf{con le espressioni regolari:}
-	      $L,M\in REG \to \exists R, S \text{ ER tali che } L(R)=L \text { e } L(S)=M$
-	      $L\cup M=L(R+S) \text{ e quindi appartenente a } REG$
+		  $L,M\in REG \to \exists R, S \text{ ER tali che } L(R)=L \text { e } L(S)=M$
+		  $L\cup M=L(R+S) \text{ e quindi appartenente a } REG$
 	\item \textbf{con gli automi:}
-	      $\text{se }L,M\in REG\to \exists \epsilon-NFA \text{ che con L e M va dallo stato iniziale a quello finale}$:
-	      \begin{center}
-		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-			      \node[state,initial] (q_0)   {$q_0$};
-			      \node[state] (q_1) [above right =of q_0] {$q_1$};
-			      \node[state] (q_2) [below right =of q_0] {$q_2$};
-			      \node[draw=none,fill=none] (Q_E) [right = of q_1] {$L$};
-			      \node[draw=none,fill=none] (Q_F) [right = of q_2] {$M$};
-			      \node[state] (q_3) [right=of Q_E] {$q_3$};
-			      \node[state] (q_4) [right=of Q_F] {$q_4$};
-			      \node[state, accepting] (q_5) [below right =of q_3] {$q_5$};
-			      \path[->]
-			      (q_0) edge node {$\epsilon$} (q_1)
-			      (q_0) edge node {$\epsilon$} (q_2)
-			      (q_3) edge node {$\epsilon$} (q_5)
-			      (q_4) edge node {$\epsilon$} (q_5);
-		      \end{tikzpicture}
-	      \end{center}
-	      accetta $L\cup M$ che quindi è $REG$
+		  $\text{se }L,M\in REG\to \exists \epsilon-NFA \text{ che con L e M va dallo stato iniziale a quello finale}$:
+		  \begin{center}
+			  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+				  \node[state,initial] (q_0)   {$q_0$};
+				  \node[state] (q_1) [above right =of q_0] {$q_1$};
+				  \node[state] (q_2) [below right =of q_0] {$q_2$};
+				  \node[draw=none,fill=none] (Q_E) [right = of q_1] {$L$};
+				  \node[draw=none,fill=none] (Q_F) [right = of q_2] {$M$};
+				  \node[state] (q_3) [right=of Q_E] {$q_3$};
+				  \node[state] (q_4) [right=of Q_F] {$q_4$};
+				  \node[state, accepting] (q_5) [below right =of q_3] {$q_5$};
+				  \path[->]
+				  (q_0) edge node {$\epsilon$} (q_1)
+				  (q_0) edge node {$\epsilon$} (q_2)
+				  (q_3) edge node {$\epsilon$} (q_5)
+				  (q_4) edge node {$\epsilon$} (q_5);
+			  \end{tikzpicture}
+		  \end{center}
+		  accetta $L\cup M$ che quindi è $REG$
 \end{itemize}
 Inoltre siano due i due alfabeti $\Sigma\subseteq\Gamma$, si ha che:
 $\text{se L è regolare su }\Sigma\to \text{L è regolare su }\Gamma$
@@ -2001,7 +2075,7 @@ $\text{se L è REG su }\Sigma_1, \text{ M è REG su }\Sigma_2, \text{ allora } L
 	se $L\in REG$ su $\Sigma$ allora $\overline{L}=\Sigma^*-L\in REG$
 \end{theorem}
 \begin{proof}
-	se $L\in REG$ allora $\exists$ DFA $A=(Q, \Sigma, \delta, q_0, F)$ tale che $L(A)=L$. Costruisco $B=(Q,\Sigma, \delta,q_0, Q-F),\,	 L(B)=\overline{L}$.
+	se $L\in REG$ allora $\exists$ DFA $A=(Q, \Sigma, \delta, q_0, F)$ tale che $L(A)=L$. Costruisco $B=(Q,\Sigma, \delta,q_0, Q-F),\,   L(B)=\overline{L}$.
 \end{proof}
 si osserva che:
 $L\in REG\,\,su\,\, \Sigma\,\,e\,\, \Sigma\subseteq \Gamma$
@@ -2019,25 +2093,25 @@ Passiamo ora all'intersezione:
 		TIKZ
 		%\psscalebox{1.0 1.0} % Change this value to rescale the drawing.
 		%{
-		%	\begin{pspicture}(0,-1.6)(9.75,1.6)
-		%		\psframe[linecolor=black, linewidth=0.04, dimen=outer](2.0,0.4)(0.0,-0.4)
-		%		\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(2.0,0.4)(3.6,1.2)
-		%		\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(2.0,-0.4)(3.6,-1.2)
-		%		\psframe[linecolor=black, linewidth=0.04, dimen=outer](5.2,1.6)(3.6,0.8)
-		%		\psframe[linecolor=black, linewidth=0.04, dimen=outer](5.2,-0.8)(3.6,-1.6)
-		%		\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.2,1.2)(6.8,0.0)
-		%		\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.2,-1.2)(6.8,0.0)
-		%		\psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(7.52,0.0)(8.72,0.0)
-		%		\rput[bl](0.54,-0.08){$w\in\Sigma^*$}
-		%		\rput[bl](4.24,1.08){$A_L$}
-		%		\rput[bl](4.14,-1.32){$A_M$}
-		%		\rput[bl](6.94,-0.1){$\wedge$}
-		%		\rput[bl](5.74,0.84){$\frac{accetta}{rifiuta}$}
-		%		\rput[bl](5.98,-1.14){$\frac{accetta}{rifiuta}$}
-		%		\rput[bl](8.82,-0.24){$\frac{accetta}{rifiuta}$}
-		%		\psbezier[linecolor=black, linewidth=0.04](6.7660146,-0.39855364)(7.5631223,-0.46652403)(7.6310925,0.33058324)(6.8339853,0.3985536432683381)
-		%		\psline[linecolor=black, linewidth=0.04](6.8,0.4)(6.8,-0.4)
-		%	\end{pspicture}
+		%   \begin{pspicture}(0,-1.6)(9.75,1.6)
+		%       \psframe[linecolor=black, linewidth=0.04, dimen=outer](2.0,0.4)(0.0,-0.4)
+		%       \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(2.0,0.4)(3.6,1.2)
+		%       \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(2.0,-0.4)(3.6,-1.2)
+		%       \psframe[linecolor=black, linewidth=0.04, dimen=outer](5.2,1.6)(3.6,0.8)
+		%       \psframe[linecolor=black, linewidth=0.04, dimen=outer](5.2,-0.8)(3.6,-1.6)
+		%       \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.2,1.2)(6.8,0.0)
+		%       \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(5.2,-1.2)(6.8,0.0)
+		%       \psline[linecolor=black, linewidth=0.04, arrowsize=0.05291667cm 2.0,arrowlength=1.4,arrowinset=0.0]{->}(7.52,0.0)(8.72,0.0)
+		%       \rput[bl](0.54,-0.08){$w\in\Sigma^*$}
+		%       \rput[bl](4.24,1.08){$A_L$}
+		%       \rput[bl](4.14,-1.32){$A_M$}
+		%       \rput[bl](6.94,-0.1){$\wedge$}
+		%       \rput[bl](5.74,0.84){$\frac{accetta}{rifiuta}$}
+		%       \rput[bl](5.98,-1.14){$\frac{accetta}{rifiuta}$}
+		%       \rput[bl](8.82,-0.24){$\frac{accetta}{rifiuta}$}
+		%       \psbezier[linecolor=black, linewidth=0.04](6.7660146,-0.39855364)(7.5631223,-0.46652403)(7.6310925,0.33058324)(6.8339853,0.3985536432683381)
+		%       \psline[linecolor=black, linewidth=0.04](6.8,0.4)(6.8,-0.4)
+		%   \end{pspicture}
 		%}
 	\end{center}
 \end{proof}
@@ -2120,7 +2194,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			                & a           & b           \\
+							& a           & b           \\
 			\hline
 			$\to (q_0,p_0)$ & $(q_0,p_0)$ & $(q_1,p_1)$ \\
 			\hline
@@ -2178,7 +2252,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			                          & 0       & 1       \\
+									  & 0       & 1       \\
 			\hline
 			$\stackrel{*}{\to} (a,c)$ & $(a,d)$ & $(b,e)$ \\
 			\hline
@@ -2236,7 +2310,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			                & 0           & 1           \\
+							& 0           & 1           \\
 			\hline
 			$\to (p_0,q_0)$ & $(p_0,q_1)$ & $(p_1,q_2)$ \\
 			\hline
