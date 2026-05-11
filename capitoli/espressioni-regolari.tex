@@ -12,18 +12,18 @@ Per ottenere questo obiettivo, introduciamo le espressioni regolari che portano 
 insiemistico dei linguaggi regolari.
 
 \begin{definition}[espressione regolare]\label{def:regex}
-Sia $\Sigma$ un alfabeto. Un'\keyword{espressione regolare} è definita secondo le seguenti regole.
-\begin{enumerate}
-\item $\varepsilon$ e $\emptyset$ sono espressioni regolari;
-\item Ogni simbolo $\sigma\in\Sigma$ è un'espressione regolare;
-\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 \cup E_2$ è un'espressione regolare corrispondente
-	  all'unione, o alternanza, fra $E_1$ e $E_2$;
-\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 E_2$ è un'espressione regolare corrispondente
-	  alla concatenazione di $E_1$ e $E_2$;
-\item Se $E$ è un'espressione regolare, allora $E_1^{*}$ è un'espressione regolare corrispondente
-	  alla chiusura di Kleene di $E$, ovvero alla ripetizione di $E$ un numero imprecisato (incluso $0$) di volte;
-\item Se $E$ è un'espressione regolare, allora $(E)$ è un'espressione regolare.
-\end{enumerate}
+	Sia $\Sigma$ un alfabeto. Un'\keyword{espressione regolare} è definita secondo le seguenti regole.
+	\begin{enumerate}
+		\item $\varepsilon$ e $\emptyset$ sono espressioni regolari;
+		\item Ogni simbolo $\sigma\in\Sigma$ è un'espressione regolare;
+		\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 \cup E_2$ è un'espressione regolare corrispondente
+		      all'unione, o alternanza, fra $E_1$ e $E_2$;
+		\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 E_2$ è un'espressione regolare corrispondente
+		      alla concatenazione di $E_1$ e $E_2$;
+		\item Se $E$ è un'espressione regolare, allora $E_1^{*}$ è un'espressione regolare corrispondente
+		      alla chiusura di Kleene di $E$, ovvero alla ripetizione di $E$ un numero imprecisato (incluso $0$) di volte;
+		\item Se $E$ è un'espressione regolare, allora $(E)$ è un'espressione regolare.
+	\end{enumerate}
 \end{definition}
 
 Le operazioni hanno un ordine di precedenza di valutazione (a parità di precedenza, si valuta da sinistra a destra), in
@@ -40,15 +40,15 @@ Notiamo che le espressioni regolari sono una sintassi che, al momento, può appa
 Abbiamo bisogno di introdurre il linguaggio associato ad un'espressione regolare, seguendo pedissequamente i casi della \Cref{def:regex}.
 
 \begin{definition}[Linguaggio associato ad un'espressione regolare]\label{def:regex-linguaggio}
-Sia $E$ un'espressione regolare. Il linguaggio $L(E)$ associato a $E$ è definito secondo le seguenti regole.
-\begin{enumerate}
-	  \item $L(\epsilon) = \{\epsilon\}$, $L(\emptyset) = \emptyset$;
-\item Se $E$ consiste unicamente di un simbolo $\sigma\in\Sigma$, allora $L(E) = \{\sigma\}$;
-\item Se $E=E_1 \cup E_2$, allora $L(E) = \{w\in \Sigma^{*} : w\in L(E_{1}) \vee  w\in L(E_{2})\}$;
-\item Se $E=E_1E_2$, allora $L(E) = \{ w_{1}w_{2} : w\in L(E_1) L(E_2) \}$;
-\item Se $E = E_1^{*}$, allora $L(E) = \{\epsilon\} \cup L(E_1) \bigcup_{k=1}^{*} \{w_1 \cdots w_{k}: w_{1}, \ldots, w_{k}\in L(E) \}$.
-\item Se $E = (E_1)$, allora $L((E)) = L(E)$.
-\end{enumerate}
+	Sia $E$ un'espressione regolare. Il linguaggio $L(E)$ associato a $E$ è definito secondo le seguenti regole.
+	\begin{enumerate}
+		\item $L(\epsilon) = \{\epsilon\}$, $L(\emptyset) = \emptyset$;
+		\item Se $E$ consiste unicamente di un simbolo $\sigma\in\Sigma$, allora $L(E) = \{\sigma\}$;
+		\item Se $E=E_1 \cup E_2$, allora $L(E) = \{w\in \Sigma^{*} : w\in L(E_{1}) \vee  w\in L(E_{2})\}$;
+		\item Se $E=E_1E_2$, allora $L(E) = \{ w_{1}w_{2} : w\in L(E_1) L(E_2) \}$;
+		\item Se $E = E_1^{*}$, allora $L(E) = \{\epsilon\} \cup L(E_1) \bigcup_{k=1}^{*} \{w_1 \cdots w_{k}: w_{1}, \ldots, w_{k}\in L(E) \}$.
+		\item Se $E = (E_1)$, allora $L((E)) = L(E)$.
+	\end{enumerate}
 \end{definition}
 
 Un linguaggio $L$ viene detto regolare se e solo se esiste un'espressione regolare $E$ che ha $L$ come linguaggio associato.
@@ -56,27 +56,27 @@ Notiamo che un'espressione regolare non è una grammatica, ma una sintassi minim
 Se consideriamo due espressioni regolari identiche quando hanno lo stesso linguaggio associato, possiamo dare alcune proprietà delle operazioni.
 
 \begin{proposition}\label{prop:regex-associative-commutative}
-Valgono le seguenti proprietà delle operazioni su espressioni regolari:
-\begin{itemize}
-\item
-L'unione è commutativa ($E_1 \cup E_2 = E_2 \cup E_1$), associativa $E_1 \cup (E_2 \cup E_3) = (E_1 \cup E_2) \cup E_3$
-e idempotente ($E\cup E = E$).
-\item
-La concatenazione è associativa ma non è commutativa.
-\item
-	  $\emptyset$ è identità per l'unione ($\emptyset+E=E+\emptyset=E$),
-\item
-	  $ \{\varepsilon \} $ è identità per la concatenazione
-($\varepsilon E=E\varepsilon=L$).
-\item
-$\emptyset$ è l'annichilitore per la concatenazione ($\emptyset L=L\emptyset=\emptyset$).
-\item
-	$(E^{*})^{*}=E^{*}$,
-\item
-$\emptyset^*=\varepsilon$;
-\item
-$\varepsilon^*=\varepsilon$;
-\end{itemize}
+	Valgono le seguenti proprietà delle operazioni su espressioni regolari:
+	\begin{itemize}
+		\item
+		      L'unione è commutativa ($E_1 \cup E_2 = E_2 \cup E_1$), associativa $E_1 \cup (E_2 \cup E_3) = (E_1 \cup E_2) \cup E_3$
+		      e idempotente ($E\cup E = E$).
+		\item
+		      La concatenazione è associativa ma non è commutativa.
+		\item
+		      $\emptyset$ è identità per l'unione ($\emptyset+E=E+\emptyset=E$),
+		\item
+		      $ \{\varepsilon \} $ è identità per la concatenazione
+		      ($\varepsilon E=E\varepsilon=L$).
+		\item
+		      $\emptyset$ è l'annichilitore per la concatenazione ($\emptyset L=L\emptyset=\emptyset$).
+		\item
+		      $(E^{*})^{*}=E^{*}$,
+		\item
+		      $\emptyset^*=\varepsilon$;
+		\item
+		      $\varepsilon^*=\varepsilon$;
+	\end{itemize}
 \end{proposition}
 
 L'enfasi sulla minimalità della sintassi è tipica dell'analisi della capacità espressiva.
@@ -89,15 +89,15 @@ In altre parole, l'insieme dei linguaggi associati ad un'espressione regolare no
 estensioni, dove $E$, $E_1$, $E_2$ sono tutte espressioni regolari:
 
 \begin{enumerate}
-\item $E^{+}$, corrispondente  alla ripetizione di $E$ un numero imprecisato, ma strettamente positivo,  di volte.
-È equivalente all'espressione $E E^{*}$;
-\item $E\{n,m\}$, corrispondente  alla ripetizione di $E$ un numero di volte compreso fra $n$ ed $m$, estremi inclusi.
-L'espressione $E\{0,0\}$ è equivalente a $\epsilon$, $E\{0,m\}$ (con $m>0$) è equivalente a $E \cup E\{1,m\}$,
-	  $E\{n,m\}$ (con $n>0$) è equivalente a $E E\{n-1,m-1\}$;
-\item $[abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli indicati.
-	  L'espressione regolare equivalente è $a\cup b\cup c$;
-\item $[\^ abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli \emph{non} indicati.
-	  L'espressione regolare equivalente è $\bigcup_{a_{1}\in \Sigma \setminus \{a,b,c\}} a_{1}$.
+	\item $E^{+}$, corrispondente  alla ripetizione di $E$ un numero imprecisato, ma strettamente positivo,  di volte.
+	      È equivalente all'espressione $E E^{*}$;
+	\item $E\{n,m\}$, corrispondente  alla ripetizione di $E$ un numero di volte compreso fra $n$ ed $m$, estremi inclusi.
+	      L'espressione $E\{0,0\}$ è equivalente a $\epsilon$, $E\{0,m\}$ (con $m>0$) è equivalente a $E \cup E\{1,m\}$,
+	      $E\{n,m\}$ (con $n>0$) è equivalente a $E E\{n-1,m-1\}$;
+	\item $[abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli indicati.
+	      L'espressione regolare equivalente è $a\cup b\cup c$;
+	\item $[\widehat{\,} abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli \emph{non} indicati.
+	      L'espressione regolare equivalente è $\bigcup_{a_{1}\in \Sigma \setminus \{a,b,c\}} a_{1}$.
 \end{enumerate}
 
 
@@ -185,89 +185,89 @@ Sfrutteremo questa intuizione nel resto del libro.
 
 
 \begin{example}\label{exa:01}
-Si consideri il linguaggio su $\Sigma_{B}$ delle parole non nulle formate da  \texttt{0} e \texttt{1} alternati --- equivalentemente, nessuna
-parola contiene la sottostringa  \texttt{00} e \texttt{11} ---
-Trovare un'espressione regolare che ha associato tale linguaggio.
+	Si consideri il linguaggio su $\Sigma_{B}$ delle parole non nulle formate da  \zero e \uno alternati --- equivalentemente, nessuna
+	parola contiene la sottostringa  \zero\zero e \uno\uno ---
+	Trovare un'espressione regolare che ha associato tale linguaggio.
 
-Dividiamo le parole del linguaggio a seconda che abbiano lunghezza pari o dispari e che inizino per \texttt{0} e
-\texttt{1}, facendo l'unione di questi quattro linguaggi.
-Otteniamo così l'espressione $(\mathtt{01})^* | (\mathtt{10})^* | \mathtt{1}(\mathtt{01})^* | \mathtt{0}(\mathtt{10})^*$.
+	Dividiamo le parole del linguaggio a seconda che abbiano lunghezza pari o dispari e che inizino per \zero e
+	\uno, facendo l'unione di questi quattro linguaggi.
+	Otteniamo così l'espressione $(\zero\uno)^* | (\uno\zero)^* | \uno(\zero\uno)^* | \zero(\uno\zero)^*$.
 
-		\[01\to \{01\}\]
-		$$(01)^*\to \{\epsilon, 01, 0101,010101,\cdots\}$$
-		$$(01)^{*} + (10)^{*} \to \{ \epsilon, 01,10,0101,1010, \cdots \} $$
-		ma posso volere diverse quantità di 0 e 1, sempre mantenendo l'alternanza, metto o uno 0 o un 1 davanti a quanto ottenuto appena sopra:
-		$$(01)^*+(10)^*+0(10)^*+1(01)^*\to \{\epsilon,01,10,010,101,\cdots\}$$
-		non è comunque l'unica soluzione, si può avere:
-		$$(\epsilon+1)(01)^*(\epsilon+0)\to \{\epsilon,01,10,010,101,\cdots\}$$
-		oppure ancora:
-		$$(\epsilon+0)(10)^*(\epsilon+1)$$
+	\[\zero\uno\to \{\zero\uno\}\]
+	$$(\zero\uno)^*\to \{\epsilon, \zero\uno, \zero\uno\zero\uno,\zero\uno\zero\uno\zero\uno,\cdots\}$$
+	$$(\zero\uno)^{*} + (\uno\zero)^{*} \to \{ \epsilon, \zero\uno,\uno\zero,\zero\uno\zero\uno,\uno\zero\uno\zero, \cdots \} $$
+	ma posso volere diverse quantità di \zero e \uno, sempre mantenendo l'alternanza, metto o uno \zero o un \uno davanti a quanto ottenuto appena sopra:
+	$$(\zero\uno)^*+(\uno\zero)^*+\zero(\uno\zero)^*+\uno(\zero\uno)^*\to \{\epsilon,\zero\uno,\uno\zero,\zero\uno\zero,\uno\zero\uno,\cdots\}$$
+	non è comunque l'unica soluzione, si può avere:
+	$$(\epsilon+\uno)(\zero\uno)^*(\epsilon+\zero)\to \{\epsilon,\zero\uno,\uno\zero,\zero\uno\zero,\uno\zero\uno,\cdots\}$$
+	oppure ancora:
+	$$(\epsilon+\zero)(\uno\zero)^*(\epsilon+\uno)$$
 \end{example}
 
 
 \begin{Exercise}[label=3-1]
-Ho $E=(0+1)^*0^*(01)^*$:
-\begin{itemize}
-\item 001 fa parte del linguaggio?
-\item 1001 fa parte del linguaggio?
-\item 0101 fa parte del linguaggio?
-\item 0 fa parte del linguaggio?
-\item 10 fa parte del linguaggio?
-\end{itemize}
+	Ho $E=(\zero+\uno)^*\zero^*(\zero\uno)^*$:
+	\begin{itemize}
+		\item \zero\zero\uno fa parte del linguaggio?
+		\item \uno\zero\zero\uno fa parte del linguaggio?
+		\item \zero\uno\zero\uno fa parte del linguaggio?
+		\item \zero fa parte del linguaggio?
+		\item \uno\zero fa parte del linguaggio?
+	\end{itemize}
 \end{Exercise}
 
 
 \begin{Answer}
-\begin{itemize}
-\item 001 è una parola del linguaggio: $\epsilon\cdot 0\cdot 01$
-\item 1001 è una parola del linguaggio: $1\cdot 0\cdot 01$
-\item 0101 è una parola del linguaggio: $\epsilon\cdot\epsilon \cdot 0101$
-\item 0 è una parola del linguaggio: $\epsilon\cdot 0\cdot \epsilon$
-\item 10 è una parola del linguaggio: $1\cdot 0\cdot \epsilon$
-\end{itemize}
+	\begin{itemize}
+		\item \zero\zero\uno è una parola del linguaggio: $\epsilon\cdot \zero\cdot \zero\uno$
+		\item \uno\zero\zero\uno è una parola del linguaggio: $\uno\cdot \zero\cdot \zero\uno$
+		\item \zero\uno\zero\uno è una parola del linguaggio: $\epsilon\cdot\epsilon \cdot \zero\uno\zero\uno$
+		\item \zero è una parola del linguaggio: $\epsilon\cdot \zero\cdot \epsilon$
+		\item \uno\zero è una parola del linguaggio: $\uno\cdot \zero\cdot \epsilon$
+	\end{itemize}
 
 
 
-Notare che in realtà $L((0+1)^*)= \Sigma_{B}^*$ e le parti che seguono sono opzionali (la chiusura di Kleene permette di
-avere la stringa vuota).
-Quindi il linguaggio associato all'espressione regolare è $\Sigma_{B}^*$.
+	Notare che in realtà $L((\zero+\uno)^*)= \Sigma_{B}^*$ e le parti che seguono sono opzionali (la chiusura di Kleene permette di
+	avere la stringa vuota).
+	Quindi il linguaggio associato all'espressione regolare è $\Sigma_{B}^*$.
 \end{Answer}
 
 Si ricorda che:
-$(0+1)^*\neq 0^*+1^*$
+$(\zero+\uno)^*\neq \zero^*+\uno^*$
 
 \begin{example}
-	ho $ER=((01)^*\cdot 10\cdot (0+1)^*)^*$
+	ho $ER=((\zero\uno)^*\cdot \uno\zero\cdot (\zero+\uno)^*)^*$
 	\begin{itemize}
-		\item 0101 fa parte del linguaggio? No
-		\item 01000 fa parte del linguaggio? No
-		\item 01011 fa parte del linguaggio? No
-		\item 10111 fa parte del linguaggio? Si, $\epsilon\cdot 10\cdot 111$
-		\item 101010 fa parte del linguaggio? Si, prendo $10\cdot 1010$
-		\item 101101 fa parte del linguaggio? Si, $\epsilon\cdot 10\cdot 1$ due volte
-		\item 0101100011 fa parte del linguaggio? Si, $0101\cdot 10\cdot 0011$ (0011 lo posso prendere da $(0+1)^*$)
+		\item \zero\uno\zero\uno fa parte del linguaggio? No
+		\item \zero\uno\zero\zero\zero fa parte del linguaggio? No
+		\item \zero\uno\zero\uno\uno fa parte del linguaggio? No
+		\item \uno\zero\uno\uno\uno fa parte del linguaggio? Si, $\epsilon\cdot \uno\zero\cdot \uno\uno\uno$
+		\item \uno\zero\uno\zero\uno\zero fa parte del linguaggio? Si, prendo $\uno\zero\cdot \uno\zero\uno\zero$
+		\item \uno\zero\uno\uno\zero\uno fa parte del linguaggio? Si, $\epsilon\cdot \uno\zero\cdot \uno$ due volte
+		\item \zero\uno\zero\uno\uno\zero\zero\zero\uno\uno fa parte del linguaggio? Si, $\zero\uno\zero\uno\cdot \uno\zero\cdot \zero\zero\uno\uno$ (\zero\zero\uno\uno lo posso prendere da $(\zero+\uno)^*$)
 	\end{itemize}
 \end{example}
 \begin{example}
-ho $ER=((01)^*\cdot 10\cdot (0+1))^*$
-\begin{itemize}
-		\item 0101 fa parte del linguaggio? No
-		\item 01000 fa parte del linguaggio? No
-		\item 01011 fa parte del linguaggio? No
-		\item 10111 fa parte del linguaggio? No
-		\item 101010 fa parte del linguaggio? No
-		\item 101101 fa parte del linguaggio? Si, $\epsilon\cdot 10\cdot 1$ due volte
-		\item 0101100011 fa parte del linguaggio? No
+	ho $ER=((\zero\uno)^*\cdot \uno\zero\cdot (\zero+\uno))^*$
+	\begin{itemize}
+		\item \zero\uno\zero\uno fa parte del linguaggio? No
+		\item \zero\uno\zero\zero\zero fa parte del linguaggio? No
+		\item \zero\uno\zero\uno\uno fa parte del linguaggio? No
+		\item \uno\zero\uno\uno\uno fa parte del linguaggio? No
+		\item \uno\zero\uno\zero\uno\zero fa parte del linguaggio? No
+		\item \uno\zero\uno\uno\zero\uno fa parte del linguaggio? Si, $\epsilon\cdot \uno\zero\cdot \uno$ due volte
+		\item \zero\uno\zero\uno\uno\zero\zero\zero\uno\uno fa parte del linguaggio? No
 	\end{itemize}
 \end{example}
 \begin{example}
-	Da $L\subseteq\{0,1\}|\mbox{ stringhe contenenti almeno una volta 01}$
+	Da $L\subseteq\{\zero,\uno\}|\mbox{ stringhe contenenti almeno una volta \zero\uno}$
 	quindi:
-	$(0+1)^*01(0+1)^*$
+	$(\zero+\uno)^*\zero\uno(\zero+\uno)^*$
 \end{example}
 \begin{example}
-	ho $ER=(00^*1^*)^*$, quindi:
-	$L=\{\epsilon,0,01,000,001,010,011\}=\{\epsilon\}\cup\{ w\in \{0,1\}^* |\text{ w che inizia con 0}\}$
+	ho $ER=(\zero\zero^*\uno^*)^*$, quindi:
+	$L=\{\epsilon,\zero,\zero\uno,\zero\zero\zero,\zero\zero\uno,\zero\uno\zero,\zero\uno\uno\}=\{\epsilon\}\cup\{ w\in \{\zero,\uno\}^* |\text{ w che inizia con \zero}\}$
 \end{example}
 
 \begin{example}
@@ -276,8 +276,8 @@ ho $ER=((01)^*\cdot 10\cdot (0+1))^*$
 \end{example}
 
 \begin{example}
-	ho $ER=(0^*1^*)^*000(0+1)^*$, quindi, sapendo che $\{0,1\}^*$ mi permette tutte le combinazioni che voglio come $(0+1)^*$:
-	$L=\{w\in\{0,1\}^*|\text{ w come voglio con tre 0 consecutivi}\}$
+	ho $ER=(\zero^*\uno^*)^*\zero\zero\zero(\zero+\uno)^*$, quindi, sapendo che $\{\zero,\uno\}^*$ mi permette tutte le combinazioni che voglio come $(\zero+\uno)^*$:
+	$L=\{w\in\{\zero,\uno\}^*|\text{ w come voglio con tre \zero consecutivi}\}$
 \end{example}
 \begin{example}
 	ho $ER=a(a+b)^*c(a+b)^*c(a+b)^*b$, quindi:
@@ -285,31 +285,31 @@ ho $ER=((01)^*\cdot 10\cdot (0+1))^*$
 	$\text{eventualmente non adiacenti}\}$
 \end{example}
 \begin{example}
-Da $L\subseteq\{0,1\}$
- ogni 1 è seguito da 0, a meno che non sia l'ultimo carattere, ovvero 11 non compare
+	Da $L\subseteq\{\zero,\uno\}$
+	ogni \uno è seguito da \zero, a meno che non sia l'ultimo carattere, ovvero \uno\uno non compare
 
 	quindi:
-	$(10+0)^*(\epsilon+1)^*$
+	$(\uno\zero+\zero)^*(\epsilon+\uno)^*$
 \end{example}
 \begin{example}
-	cerco ER per $L\subseteq\{0,1\}^*|\, \text{stringhe contenenti un numero pari di 1}$:
-	$(0^*10^*1)^*0^*$
+	cerco ER per $L\subseteq\{\zero,\uno\}^*|\, \text{stringhe contenenti un numero pari di \uno}$:
+	$(\zero^*\uno\zero^*\uno)^*\zero^*$
 	oppure:
-	$(0+10^*1)^*$
+	$(\zero+\uno\zero^*\uno)^*$
 \end{example}
 \begin{example}
-	cerco ER per $L\subseteq\{0,1\}^*|\, \text{stringhe contenenti un numero dispari di 1}$:
-	$(0^*10^*)^*0^*10^*$
+	cerco ER per $L\subseteq\{\zero,\uno\}^*|\, \text{stringhe contenenti un numero dispari di \uno}$:
+	$(\zero^*\uno\zero^*)^*\zero^*\uno\zero^*$
 	oppure:
-	$(0+10^*1)^*10^*$
+	$(\zero+\uno\zero^*\uno)^*\uno\zero^*$
 \end{example}
 \begin{example}
-	cerco ER per $L\subseteq\{0,1\}^*|\, \text{stringhe contenenti un numero divisibile per 3 di 0}$:
-	$(1^*01^*01^*0)^*1^*$
+	cerco ER per $L\subseteq\{\zero,\uno\}^*|\, \text{stringhe contenenti un numero divisibile per 3 di \zero}$:
+	$(\uno^*\zero\uno^*\zero\uno^*\zero)^*\uno^*$
 \end{example}
 \begin{example}
-	cerco ER per $L\subseteq\{0,1\}^*|\, \text{stringhe contenenti al più una coppia di 1 consecutivi}$:
-	$(10+0)^*(11+1+\epsilon)(01+0)^*$
+	cerco ER per $L\subseteq\{\zero,\uno\}^*|\, \text{stringhe contenenti al più una coppia di \uno consecutivi}$:
+	$(\uno\zero+\zero)^*(\uno\uno+\uno+\epsilon)(\zero\uno+\zero)^*$
 \end{example}
 \begin{example}
 	cerco ER per $L\subseteq\{a,b,c\}^*|\, \text{stringhe contenenti almeno una a e almeno una b}:$
@@ -317,45 +317,45 @@ Da $L\subseteq\{0,1\}$
 \end{example}
 
 \begin{Exercise}[label=0e1-er]
-Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole che contengono almeno un \uno e almeno uno \zero.
-Descrivere un'espressione regolare associata al linguaggio $L$.
+	Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole che contengono almeno un \uno e almeno uno \zero.
+	Descrivere un'espressione regolare associata al linguaggio $L$.
 \end{Exercise}
 
 
 
 \begin{Exercise}[label=re-crescente]
-Sia $L\subseteq \Sigma_{C}^{*}$ il linguaggio delle parole in cui le cifre compaiono in ordine non decrescente (ad esempio
-\texttt{001112}).
-Descrivere un'espressione regolare associata al linguaggio $L$.
+	Sia $L\subseteq \Sigma_{C}^{*}$ il linguaggio delle parole in cui le cifre compaiono in ordine non decrescente (ad esempio
+	\texttt{001112}).
+	Descrivere un'espressione regolare associata al linguaggio $L$.
 \end{Exercise}
 
 \begin{Answer}
-Siccome non è richiesto che ogni cifra in $\Sigma_{C}$ sia presente nella parola, un'espressione è $0^{*}1^{*}2^{*}3^{*}4^{*}5^{*}6^{*}7^{*}8^{*}9^{*}$.
+	Siccome non è richiesto che ogni cifra in $\Sigma_{C}$ sia presente nella parola, un'espressione è $0^{*}1^{*}2^{*}3^{*}4^{*}5^{*}6^{*}7^{*}8^{*}9^{*}$.
 \end{Answer}
 
 
 \begin{Exercise}[label=re-1-101]
-Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente una volta la sottostringa
-\texttt{0110101}).
-Descrivere un'espressione regolare associata al linguaggio $L$.
+	Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente una volta la sottostringa
+	\zero\uno\uno\zero\uno\zero\uno).
+	Descrivere un'espressione regolare associata al linguaggio $L$.
 \end{Exercise}
 
 \begin{Answer}
-La difficoltà principale dell'esercizio consiste nello scrivere un'espressione regolare corrispondente a tutte le
-stringhe binarie che non contengono \texttt{0110101}.
-Un'espressione di questo tipo è
+	La difficoltà principale dell'esercizio consiste nello scrivere un'espressione regolare corrispondente a tutte le
+	stringhe binarie che non contengono \zero\uno\uno\zero\uno\zero\uno.
+	Un'espressione di questo tipo è
 \end{Answer}
 
 \begin{Exercise}[label=re-2-101]
-Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente due volte la sottostringa
-\texttt{0110101}).
-Descrivere un'espressione regolare associata al linguaggio $L$.
+	Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente due volte la sottostringa
+	\zero\uno\uno\zero\uno\zero\uno).
+	Descrivere un'espressione regolare associata al linguaggio $L$.
 \end{Exercise}
 
 \begin{Exercise}[label=re-2-11]
-Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente due volte la sottostringa
-\texttt{11}).
-Descrivere un'espressione regolare associata al linguaggio $L$.
+	Sia $L\subseteq \Sigma_{B}^{*}$ il linguaggio delle parole in cui compare esattamente due volte la sottostringa
+	\uno\uno).
+	Descrivere un'espressione regolare associata al linguaggio $L$.
 \end{Exercise}
 
 
@@ -365,11 +365,11 @@ Una grammatica è regolare se ha una delle seguenti due forme.
 
 
 \begin{definition}\label{def:grammatica-regolare-destra}
-Sia \gramm una grammatica.
-Allora $G$ è detta regolare destra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to Ba$, dove
-$A, \in VB$  e $a\in T$.
-Inoltre, $G$ è detta regolare sinistra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to aB$, dove
-$A, \in VB$  e $a\in T$.
+	Sia \gramm una grammatica.
+	Allora $G$ è detta regolare destra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to Ba$, dove
+	$A, \in VB$  e $a\in T$.
+	Inoltre, $G$ è detta regolare sinistra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to aB$, dove
+	$A, \in VB$  e $a\in T$.
 \end{definition}
 
 
@@ -382,10 +382,11 @@ Questa idea può essere formalizzata in un modello di calcolo che è in grado di
 vedremo nella prossima sezione.
 
 
-\begin{figure}[ht!]
-\includestandalone[width=\textwidth]{diagramma-transizione}
-\caption{Esempio di diagramma di transizione}
-\label{fig:diagramma-transizione}\end{figure}
+\noindent\begin{minipage}{\textwidth}
+	\includegraphics[width=\textwidth]{diagramma-transizione}
+	\captionof{figure}{Esempio di diagramma di transizione}
+	\label{fig:diagramma-transizione}
+\end{minipage}
 
 
 \section{Automi deterministico a stati finiti}\label{sec:DFA}
@@ -395,15 +396,15 @@ semplice possibile e in grado di riconoscere tutti i linguaggi regolari.
 Questo modello viene chiamato automa a stati finiti deterministico (\keyword{DFA}).
 
 \begin{definition}[automa deterministico a stati finiti]\label{def:DFA}
-Un \keyword{automa deterministico a stati finiti} è una quintupla \dfa consiste nelle seguenti parti:
-\begin{itemize}
-	\item $\Sigma$: alfabeto di input;
-	\item $Q$: insieme finito di \emph{stati};
-	\item $\delta: Q\times \Sigma \mapsto Q$: \emph{funzione di transizione}.
-Prende come argomento uno stato e un simbolo di input e restituisce uno stato;
-	\item $q_{0}\in Q$: stato iniziale;
-	\item $F\subseteq Q$: insieme di \emph{stati finali}, o accettanti.
-\end{itemize}
+	Un \keyword{automa deterministico a stati finiti} è una quintupla \dfa consiste nelle seguenti parti:
+	\begin{itemize}
+		\item $\Sigma$: alfabeto di input;
+		\item $Q$: insieme finito di \emph{stati};
+		\item $\delta: Q\times \Sigma \mapsto Q$: \emph{funzione di transizione}.
+		      Prende come argomento uno stato e un simbolo di input e restituisce uno stato;
+		\item $q_{0}\in Q$: stato iniziale;
+		\item $F\subseteq Q$: insieme di \emph{stati finali}, o accettanti.
+	\end{itemize}
 \end{definition}
 
 L'idea intuitiva è che iniziamo nello stato $q_{0}$.
@@ -422,14 +423,14 @@ Nell'ultimo caso denotiamo lo stato iniziale con una freccia entrante che non ha
 un doppio cerchio, e l'etichetta di un arco dallo stato $q_1$ allo stato $q_2$ è l'insieme di caratteri $c$ tali che
 $\delta(q_1, c) = q_2 $.
 \begin{example}
-Consideriamo il linguaggio $L$ formato dalle strighe binarie che hanno la sottostringa \texttt{01}.
-Equivalentemente $L=\{ x\mathtt{01}y: x,y \in \Sigma_{B}^{*}\}$.
-Leggendo la stringa in input, l'automa è in uno dei seguenti casi:
+	Consideriamo il linguaggio $L$ formato dalle strighe binarie che hanno la sottostringa \zero\uno.
+	Equivalentemente $L=\{ x\zero\uno y: x,y \in \Sigma_{B}^{*}\}$.
+	Leggendo la stringa in input, l'automa è in uno dei seguenti casi:
 	\begin{enumerate}
 		\item se ha "già visto" 01, accetterà qualsiasi input, indipendentemente dai caratteri che leggerà in futuro;
 		\item pur non avendo ancora visto 01, l'input più recente è stato 0.
-Se leggerà \texttt{1}, andrà nello stato accettante, altrimenti rimane nello stesso stato;
-		\item non ha ancora visto \texttt{0}, e rimane in questo stato finchè non legge \texttt{0}.
+		      Se leggerà \uno, andrà nello stato accettante, altrimenti rimane nello stesso stato;
+		\item non ha ancora visto \zero, e rimane in questo stato finchè non legge \zero.
 	\end{enumerate}
 	la terza condizione rappresenta lo stato iniziale. All'inizio bisogna vedere uno 0 e poi un 1. Ma se nello stato $q_0$ si vede per primo un 1 allora non abbiamo fatto alcun passo verso 01, e dunque dobbiamo permanere nello stato $q_0$, $\delta(q_0,1)=q_0$. D'altra parte se nello stato iniziale vedo 0 siamo nella seconda condizione, uso quindi $q_2$ per questa condizione, si avrà quindi $\delta(q_0,0)=q_2$. Vedo ora le transizoni di $q_2$, se vedo 0 ho che 0 è l'ultimo simbolo incontrato quindi uso nuovamente $q_2$, $\delta(q_2,0)=q_2$, in attesa di un 1. Se arriva 1 passo allo stato accertante $q_1$ corrispondente alla prima condizione, $\delta(q_2,1)=q_1$. Ora abbiamo incontrato 01 quindi può succedere qualsiasi cosa e dopo qualsiasi cosa accada potremo nuovamente aspettarci qualsiasi cosa, ovvero $\delta(q_1,0)=\delta(q_1,1)=q_1$. Si deduce quindi che:
 	$Q=\{q_0,q_1,q_2\} \text{ e } F=\{q_1\}$
@@ -456,14 +457,15 @@ Se leggerà \texttt{1}, andrà nello stato accettante, altrimenti rimane nello s
 			$q_2$      & $q_2$ & $q_1$
 		\end{tabular}
 	\end{center}
-\caption{L'automa di \cref{fig:dfa-sottostringa-01}, in forma tabellare.}
+	\caption{L'automa di \cref{fig:dfa-sottostringa-01}, in forma tabellare.}
 \end{margintable}
 
 
-\begin{figure}[ht!]
-\includestandalone[width=\textwidth]{dfa-sottostringa-01}
-\caption{DFA che accetta il linguaggio $\Sigma_{B}^{*}\mathtt{01}\Sigma_{B}^{*}$}
-\label{fig:dfa-sottostringa-01}\end{figure}
+\noindent\begin{minipage}{\textwidth}
+	\includegraphics[width=\textwidth]{dfa-sottostringa-01}
+	\captionof{figure}{DFA che accetta il linguaggio $\Sigma_{B}^{*}\zero\uno\Sigma_{B}^{*}$}
+	\label{fig:dfa-sottostringa-01}
+\end{minipage}
 
 
 
@@ -504,71 +506,71 @@ Se leggerà \texttt{1}, andrà nello stato accettante, altrimenti rimane nello s
 	\textbf{Si ha che} $q_E$ \textbf{è lo stato pozzo dove vanno le stringhe venute male}
 	\begin{itemize}
 		\item $n,m\geq 0$:
-			  \begin{center}
-				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-					  \node[state,initial, accepting] (q_0)   {$q_0$};
-					  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-					  \node[state] (q_E) [right=of q_1] {$q_E$};
-					  \path[->]
-					  (q_0) edge  node {1} (q_1)
-					  edge [loop below] node {0} ()
-					  (q_1) edge  node  {} (q_E)
-					  edge [loop below] node {1} ()
-					  (q_E) edge [loop below] node {0,1} ();
-				  \end{tikzpicture}
-			  \end{center}
-			  ovvero posso non generare nulla e uscire subito con $q_0$, generare solo un 1 e passare a $q_1$ e uscire oppure generare 0 e 1 a piacere con l'ultimo stato o generare 0 a piacere dal primo e 1 a piacere dal secondo.
+		      \begin{center}
+			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+				      \node[state,initial, accepting] (q_0)   {$q_0$};
+				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+				      \node[state] (q_E) [right=of q_1] {$q_E$};
+				      \path[->]
+				      (q_0) edge  node {1} (q_1)
+				      edge [loop below] node {0} ()
+				      (q_1) edge  node  {} (q_E)
+				      edge [loop below] node {1} ()
+				      (q_E) edge [loop below] node {0,1} ();
+			      \end{tikzpicture}
+		      \end{center}
+		      ovvero posso non generare nulla e uscire subito con $q_0$, generare solo un 1 e passare a $q_1$ e uscire oppure generare 0 e 1 a piacere con l'ultimo stato o generare 0 a piacere dal primo e 1 a piacere dal secondo.
 		\item $n\geq 0 \,\,m>0$:
-			  \begin{center}
-				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-					  \node[state,initial] (q_0)   {$q_0$};
-					  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-					  \node[state] (q_E) [right=of q_1] {$q_E$};
-					  \path[->]
-					  (q_0) edge  node {1} (q_1)
-					  edge [loop below] node {0} ()
-					  (q_1) edge  node  {} (q_E)
-					  edge [loop below] node {1} ()
-					  (q_E) edge [loop below] node {0,1} ();
-				  \end{tikzpicture}
-			  \end{center}
-			  ovvero come l'esempio sopra solo che non posso uscire in $q_0$ in quanto almeno un 1 deve essere per forza generato
+		      \begin{center}
+			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+				      \node[state,initial] (q_0)   {$q_0$};
+				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+				      \node[state] (q_E) [right=of q_1] {$q_E$};
+				      \path[->]
+				      (q_0) edge  node {1} (q_1)
+				      edge [loop below] node {0} ()
+				      (q_1) edge  node  {} (q_E)
+				      edge [loop below] node {1} ()
+				      (q_E) edge [loop below] node {0,1} ();
+			      \end{tikzpicture}
+		      \end{center}
+		      ovvero come l'esempio sopra solo che non posso uscire in $q_0$ in quanto almeno un 1 deve essere per forza generato
 		\item $n> 0\,\, m\geq 0$:
-			  \begin{center}
-				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-					  \node[state,initial] (q_0)   {$q_0$};
-					  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-					  \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
-					  \node[state] (q_E) [right=of q_2] {$q_E$};
-					  \path[->]
-					  (q_0) edge  node {0} (q_1)
-					  edge [bend right] node {1} (q_E)
-					  (q_1) edge  node {1} (q_2)
-					  edge [loop above] node {0} ()
-					  (q_2) edge node {0} (q_E)
-					  edge [loop above] node {1} ()
-					  (q_E) edge [loop below] node {0,1} ();
-				  \end{tikzpicture}
-			  \end{center}
-			  \textit{CHIARIRE}
+		      \begin{center}
+			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+				      \node[state,initial] (q_0)   {$q_0$};
+				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+				      \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
+				      \node[state] (q_E) [right=of q_2] {$q_E$};
+				      \path[->]
+				      (q_0) edge  node {0} (q_1)
+				      edge [bend right] node {1} (q_E)
+				      (q_1) edge  node {1} (q_2)
+				      edge [loop above] node {0} ()
+				      (q_2) edge node {0} (q_E)
+				      edge [loop above] node {1} ()
+				      (q_E) edge [loop below] node {0,1} ();
+			      \end{tikzpicture}
+		      \end{center}
+		      \textit{CHIARIRE}
 		\item $n,m>0$:
-			  \begin{center}
-				  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-					  \node[state,initial] (q_0)   {$q_0$};
-					  \node[state] (q_1) [right=of q_0] {$q_1$};
-					  \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
-					  \node[state] (q_E) [right=of q_2] {$q_E$};
-					  \path[->]
-					  (q_0) edge  node {0} (q_1)
-					  edge [bend right] node {1} (q_E)
-					  (q_1) edge  node {1} (q_2)
-					  edge [loop above] node {0} ()
-					  (q_2) edge node {0} (q_E)
-					  edge [loop above] node {1} ()
-					  (q_E) edge [loop below] node {0,1} ();
-				  \end{tikzpicture}
-			  \end{center}
-			  \textit{CHIARIRE}
+		      \begin{center}
+			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+				      \node[state,initial] (q_0)   {$q_0$};
+				      \node[state] (q_1) [right=of q_0] {$q_1$};
+				      \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
+				      \node[state] (q_E) [right=of q_2] {$q_E$};
+				      \path[->]
+				      (q_0) edge  node {0} (q_1)
+				      edge [bend right] node {1} (q_E)
+				      (q_1) edge  node {1} (q_2)
+				      edge [loop above] node {0} ()
+				      (q_2) edge node {0} (q_E)
+				      edge [loop above] node {1} ()
+				      (q_E) edge [loop below] node {0,1} ();
+			      \end{tikzpicture}
+		      \end{center}
+		      \textit{CHIARIRE}
 	\end{itemize}
 \end{example}
 
@@ -692,28 +694,28 @@ Se leggerà \texttt{1}, andrà nello stato accettante, altrimenti rimane nello s
 \subsection*{Esercizi}
 
 \begin{Exercise}\label{exe:1-dispari-0-dispari}
-Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole che contengono un numero dispari di \zero e un numero
-dispari di \uno.
+	Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole che contengono un numero dispari di \zero e un numero
+	dispari di \uno.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:101-dfa}
-Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole che contengono la sottostringa \texttt{101}.
+	Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole che contengono la sottostringa \uno\zero\uno.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:no-101-dfa}
-Costruire un DFA che riconosca il linguaggio $L\in\Sigma_{B}$ delle parole che non contengono la sottostringa \texttt{101}.
+	Costruire un DFA che riconosca il linguaggio $L\in\Sigma_{B}$ delle parole che non contengono la sottostringa \uno\zero\uno.
 \end{Exercise}
 
 \begin{Answer}
-\includestandalone[width=\textwidth]{dfa-no-sottostringa-101}
+	\includegraphics[width=\textwidth]{dfa-no-sottostringa-101}
 \end{Answer}
 
 
 
 \begin{Exercise}\label{exe:1100-dfa}
-Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole in cui tutte le occorrenze di \uno\uno precedono la
-prima occorrenza di \zero\zero (se esiste).
+	Costruire un DFA per il linguaggio $L\in\Sigma_{B}$ delle parole in cui tutte le occorrenze di \uno\uno precedono la
+	prima occorrenza di \zero\zero (se esiste).
 \end{Exercise}
 
 
@@ -781,9 +783,9 @@ $\delta:Q\times F\to 2^Q$
 Possiamo ora definire {$\delta$}, delta cappuccio che prende in ingresso uno stato e l'intera stringa $w$. Definisco ricorsivamente:
 \begin{itemize}
 	\item \textbf{caso base:} se $|w|=0$ ovvero se $W=\epsilon$ si ha:
-		  $\hat{\delta}(q,\epsilon)=\{q\}$
+	      $\hat{\delta}(q,\epsilon)=\{q\}$
 	\item \textbf{caso passo:} se $|w|>0$, allora $W=xa$, $a\in\Sigma$ e $x\in\Sigma^*$. Posto $\hat{\delta}(q,x)=\{p_1,\cdots,p_k\}$ si ha:
-		  $\hat{\delta}(q,w)=\cup \delta(p_i,a)$
+	      $\hat{\delta}(q,w)=\cup \delta(p_i,a)$
 \end{itemize}
 %aggiungere esempio
 Per il linguaggio $L$ accettato dall'automa si ha:
@@ -809,7 +811,7 @@ Troviamo ora un algoritmo che trasformi un NFA in un DFA.
 Dal penultimo esempio esempio ricavo:
 \begin{center}
 	\begin{tabular}{c|c|c}
-							 & 0             & 1             \\
+		                     & 0             & 1             \\
 		\hline
 		$\emptyset$          & $\emptyset$   & $\emptyset$   \\
 		\hline
@@ -846,7 +848,7 @@ ovvero:
 che è il DFA che si era anche prima ottenuto. Si hanno però dei sottoinsiemi mai raggiungibili. Si ha quindi:
 \begin{center}
 	\begin{tabular}{c|c|c}
-						 & 0             & 1             \\
+		                 & 0             & 1             \\
 		\hline
 		$\to\,\{q_0\}$   & $\{q_0,q_1\}$ & $\{q_0\}$     \\
 		\hline
@@ -880,9 +882,9 @@ con:
 	\item $Q_D=2^{Q_N}$ (quindi se $Q_N=n$ si ha $|Q_D|=2^n$)
 	\item $F_D=\{S\subseteq Q_n|\, S\cap F_N\neq \emptyset\}$
 	\item $\forall S\subseteq Q_N$ e $ \forall a \in\Sigma$:
-		  $\delta_D(S,a)=\cup \delta_n(p,a)$
-		  per esempio:
-		  $\delta_D(\{q_0,q_1,q_2\},0)=\delta_N(q_0,0)\cup \delta_N(q_1,0) \cup\delta_N(q_2,0) $
+	      $\delta_D(S,a)=\cup \delta_n(p,a)$
+	      per esempio:
+	      $\delta_D(\{q_0,q_1,q_2\},0)=\delta_N(q_0,0)\cup \delta_N(q_1,0) \cup\delta_N(q_2,0) $
 \end{itemize}
 Si definisce l'$\epsilon-NFA$, l'automa astati finiti non deterministici con $\epsilon$ transizioni. Con la transizione $\epsilon$ posso saltare i nodi, ovvero avanza senza aggiungere caratteri
 \begin{example}
@@ -917,7 +919,7 @@ si ha inoltre che:
 mettendo in tabella l'esempio precedente si ha:
 \begin{center}
 	\begin{tabular}{c|c|c|c}
-								& a                 & b             & c           \\
+		                        & a                 & b             & c           \\
 		\hline
 		$*\to\,\{q_0,q_1,q_2\}$ & $\{q_0,q_1,q_2\}$ & $\{q_1,q_2\}$ & $\{q_2\}$   \\
 		\hline
@@ -1217,7 +1219,7 @@ che diventa il seguente DFA:
 	si ottiene quindi:
 	\begin{center}
 		\begin{tabular}{c|c|c|c}
-						 & a           & b           & c           \\
+			             & a           & b           & c           \\
 			\hline
 			$to\,\{p\}$  & $\{p\}$     & $\{p,q\}$   & $\{p,q,r\}$ \\
 			\hline
@@ -1261,22 +1263,22 @@ torniamo a dare bene qualche definizione per {$\delta$} in un DFA:
 con: $q\in Q,\,\,\, w\in \Sigma^*\,\,\,e\,\,\,${$\delta$}$(p,w)=q$
 \begin{itemize}
 	\item
-		  \textbf{caso base:} $w=\epsilon\to |w|=0\to${$\delta$}$(q,\epsilon)=q$
+	      \textbf{caso base:} $w=\epsilon\to |w|=0\to${$\delta$}$(q,\epsilon)=q$
 
-		  \textbf{caso passo:} $|w|\neq0\to w=ax$ con $a\in \Sigma,x\in \Sigma^*$:
-		  {$\delta$}$(q,w)=${$\delta$}$(q,ax)=${$\delta$} $(\delta(q,a),x)$
+	      \textbf{caso passo:} $|w|\neq0\to w=ax$ con $a\in \Sigma,x\in \Sigma^*$:
+	      {$\delta$}$(q,w)=${$\delta$}$(q,ax)=${$\delta$} $(\delta(q,a),x)$
 	\item
-		  \textbf{caso base:} $w=\epsilon\to |w|=0\to \delta(q,w)=\delta(q,\epsilon)=q$
+	      \textbf{caso base:} $w=\epsilon\to |w|=0\to \delta(q,w)=\delta(q,\epsilon)=q$
 
-		  \textbf{caso passo:} $|w|\neq0\to w=xa$ con $a\in \Sigma,x\in \Sigma^*$:
-		  {$\delta$}$(q,w)=${$\delta$}$(q,xa)=${$\delta$} $(\delta(q,x),a)$
+	      \textbf{caso passo:} $|w|\neq0\to w=xa$ con $a\in \Sigma,x\in \Sigma^*$:
+	      {$\delta$}$(q,w)=${$\delta$}$(q,xa)=${$\delta$} $(\delta(q,x),a)$
 \end{itemize}
 in un NFA si ha:
 \begin{itemize}
 	\item \textbf{caso base:}  {$\delta$}$(q,\epsilon=\{q\},\,\,\forall q\in Q$
 	\item \textbf{caso passo:} posto $w=ax$ e {$\delta$}$(q,a)=\{p_1,\cdots,p_n$ allora {$\delta$}$(q,w)=\cup${$\delta$}$(p_i, x)0\{r_1,\cdots,r_n\}$.
-		  {$\delta$}$(q,a)=p$
-		  {$\delta$}$(q,w)=$ {$\delta$}$(q,xa)=$ {$\delta$}$(p,x)=r$
+		      {$\delta$}$(q,a)=p$
+	      {$\delta$}$(q,w)=$ {$\delta$}$(q,xa)=$ {$\delta$}$(p,x)=r$
 \end{itemize}
 oppure:
 \begin{itemize}
@@ -1316,41 +1318,41 @@ $\delta_F(S,a) \text{ si ottiene }\cup \delta_E(p_i,a)=\{r_1,\cdots, r_n\}$
 $\delta_N(S,a)=ECLOSE(\{r_1, \cdots, r_n\})$
 
 \begin{Exercise}\label{exe:no-101-er}
-Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole che non contengono la sottostringa \texttt{101}.
+	Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole che non contengono la sottostringa \uno\zero\uno.
 \end{Exercise}
 
 \begin{Answer}
-Una possibilità, che verrà formalizzata in \Cref{sec:da-DFA-a-ER} consiste nel partire dal DFA che riconosce il
-linguaggio e sintetizzare l'espressione regolare a partire dall'automa.
+	Una possibilità, che verrà formalizzata in \Cref{sec:da-DFA-a-ER} consiste nel partire dal DFA che riconosce il
+	linguaggio e sintetizzare l'espressione regolare a partire dall'automa.
 
-Per ottenere un'ER semplice è invece preferibile ragionare sulla definizione di linguaggio da esprimere.
-Una definizione equivalente è l'insieme delle parole in cui ogni occorrenza del carattere \texttt{1} è seguita da un
-altro \texttt{1}, oppure da \texttt{00}, oppure ancora tale \texttt{1} è uno degli ultimi due caratteri della parola (in
-questo caso, non potrà essere il carattere iniziale di una sottostringa \texttt{101})
-Questa formulazione si presta maggiormente a disegnare un'espressione regolare.
-Infatti, una riscrittura diretta di quanto descritto sopra, tenendo presente che un numero arbitrari di \texttt{0}
-potrebbe precedere il primo \texttt{1} e seguire ogni \texttt{0}, diventa
-$$\texttt{0}^{*}(\texttt{100}\texttt{0}^{*})^{*} (\texttt{10} |\texttt{1} | \epsilon)$$ che può essere ulteriormente
-semplificata in
-$$\texttt{0}^{*}(\texttt{100}\texttt{0}^{*})^{*} \texttt{1}^{*} \texttt{0}^{*}.$$
+	Per ottenere un'ER semplice è invece preferibile ragionare sulla definizione di linguaggio da esprimere.
+	Una definizione equivalente è l'insieme delle parole in cui ogni occorrenza del carattere \uno è seguita da un
+	altro \uno, oppure da \zero\zero, oppure ancora tale \uno è uno degli ultimi due caratteri della parola (in
+	questo caso, non potrà essere il carattere iniziale di una sottostringa \uno\zero\uno)
+	Questa formulazione si presta maggiormente a disegnare un'espressione regolare.
+	Infatti, una riscrittura diretta di quanto descritto sopra, tenendo presente che un numero arbitrari di \zero
+	potrebbe precedere il primo \uno e seguire ogni \zero, diventa
+	$$\zero^{*}(\uno\zero\zero\zero^{*})^{*} (\uno\zero |\uno | \epsilon)$$ che può essere ulteriormente
+	semplificata in
+	$$\zero^{*}(\uno\zero\zero\zero^{*})^{*} \uno^{*} \zero^{*}.$$
 \end{Answer}
 
 
 
 \begin{Exercise}\label{exe:no-diff2-er}
-Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole che soddisfano le due seguenti
-condizioni:
-\begin{enumerate}
-\item hanno lo stesso numero di \zero e \uno
-\item in ogni prefisso il numero di \zero e \uno differisce al massimo di $1$.
-\end{enumerate}
-Sono quindi parole del linguaggio $\epsilon$, \zero\uno, \texttt{10}, \texttt{101010}, \texttt{0101}.
-Non sono parole del linguaggio \texttt{1100}.
+	Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole che soddisfano le due seguenti
+	condizioni:
+	\begin{enumerate}
+		\item hanno lo stesso numero di \zero e \uno
+		\item in ogni prefisso il numero di \zero e \uno differisce al massimo di $1$.
+	\end{enumerate}
+	Sono quindi parole del linguaggio $\epsilon$, \zero\uno, \uno\zero, \uno\zero\uno\zero\uno\zero, \zero\uno\zero\uno.
+	Non sono parole del linguaggio \uno\uno\zero\zero.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:3x3}
-Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole con un numero di \zero multiplo di $3$ e
-un numero di \uno multiplo di $3$.
+	Costruire un'espressione regolare per il linguaggio $L\in\Sigma_{B}$ delle parole con un numero di \zero multiplo di $3$ e
+	un numero di \uno multiplo di $3$.
 \end{Exercise}
 
 
@@ -1363,39 +1365,39 @@ La costruzione segue la definizione di espressione regolare.
 Di conseguenza analizziamo prima i casi base: quelli in cui $E$ non contiene nessuna operazione.
 
 \begin{enumerate}
-\item se $R=\epsilon$, allora $L(R)=\{\epsilon\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
-	  quello accettante $q_{1}$.
-	  Inoltre esiste una $\epsilon$-transizione da $q_{0}$ a $q_{1}$.
-	  In altre parole, $\delta(q_{0},\epsilon) = q_{1}$.
-	  \begin{center}
-	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-	  \node[state,initial] (q_0)   {$q_0$};
-	  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-	  \path[->]
-	  (q_0) edge node {$\epsilon$} (q_1);
-	  \end{tikzpicture}
-	  \end{center}
-\item se $R=\emptyset$, allora $L(R)=\emptyset$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e quello accettante $q_{1}$.
-	  Non ci sono transizioni.
-	  In altre parole, $\delta(q_{0},\cdot)$ non è mai definita.
-	  \begin{center}
-	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-	  \node[state,initial] (q_0)   {$q_0$};
-	  \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; ;
-	  \end{tikzpicture}
-	  \end{center}
-\item se $R=a$, dove $a$ è un carattere, allora  $L(R)=\{a\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
-	  quello accettante $q_{1}$.
-	  Inoltre esiste una transizione etichettata  $a$ da $q_{0}$ a $q_{1}$.
-	  In altre parole, $\delta(q_{0},a) = q_{1}$.
-	  \begin{center}
-	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-	  \node[state,initial] (q_0)   {$q_0$};
-	  \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
-	  \path[->]
-	  (q_0) edge node {a} (q_1);
-	  \end{tikzpicture}
-	  \end{center}
+	\item se $R=\epsilon$, allora $L(R)=\{\epsilon\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
+	      quello accettante $q_{1}$.
+	      Inoltre esiste una $\epsilon$-transizione da $q_{0}$ a $q_{1}$.
+	      In altre parole, $\delta(q_{0},\epsilon) = q_{1}$.
+	      \begin{center}
+		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			      \node[state,initial] (q_0)   {$q_0$};
+			      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+			      \path[->]
+			      (q_0) edge node {$\epsilon$} (q_1);
+		      \end{tikzpicture}
+	      \end{center}
+	\item se $R=\emptyset$, allora $L(R)=\emptyset$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e quello accettante $q_{1}$.
+	      Non ci sono transizioni.
+	      In altre parole, $\delta(q_{0},\cdot)$ non è mai definita.
+	      \begin{center}
+		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			      \node[state,initial] (q_0)   {$q_0$};
+			      \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; ;
+		      \end{tikzpicture}
+	      \end{center}
+	\item se $R=a$, dove $a$ è un carattere, allora  $L(R)=\{a\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
+	      quello accettante $q_{1}$.
+	      Inoltre esiste una transizione etichettata  $a$ da $q_{0}$ a $q_{1}$.
+	      In altre parole, $\delta(q_{0},a) = q_{1}$.
+	      \begin{center}
+		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			      \node[state,initial] (q_0)   {$q_0$};
+			      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
+			      \path[->]
+			      (q_0) edge node {a} (q_1);
+		      \end{tikzpicture}
+	      \end{center}
 \end{enumerate}
 
 In tutti i casi base, è immediato notare che il linguaggio accettato dall'automa corrisponde sempre a $L(R)$.
@@ -1422,55 +1424,55 @@ Inoltre aggiungiamo a $Q$ un nuovo stato $q_{R}$ che sarà l'unico stato finale,
 $q_{S}$ a $q_{R}$ e una da $q_{0,T}$ a  a $q_{R}$.
 Notiamo che l'automa descritto accetta il linguaggio $L(S) \cup L(T)$ e ha un solo stato finale.
 
-	  \begin{center}
-	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-	  \node[state,initial] (q_0)   {$q_0$};
-	  \node[state] (q_1) [above right =of q_0] {$q_{0,S}$};
-	  \node[state] (q_2) [below right =of q_0] {$q_{0,T}$};
-	  \node[draw=none,fill=none] (Q_E) [right = of q_1] {$S$};
-	  \node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
-	  \node[state] (q_3) [right=of Q_E] {$q_S$};
-	  \node[state] (q_4) [right=of Q_F] {$q_T#$};
-	  \node[state, accepting] (q_5) [below right =of q_3] {$q_R$};
-	  \path[->]
-	  (q_0) edge node {$\epsilon$} (q_1)
-	  (q_0) edge node {$\epsilon$} (q_2)
-	  (q_3) edge node {$\epsilon$} (q_5)
-	  (q_4) edge node {$\epsilon$} (q_5);
-	  \end{tikzpicture}
-	  \end{center}
+\begin{center}
+	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+		\node[state,initial] (q_0)   {$q_0$};
+		\node[state] (q_1) [above right =of q_0] {$q_{0,S}$};
+		\node[state] (q_2) [below right =of q_0] {$q_{0,T}$};
+		\node[draw=none,fill=none] (Q_E) [right = of q_1] {$S$};
+		\node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
+		\node[state] (q_3) [right=of Q_E] {$q_S$};
+		\node[state] (q_4) [right=of Q_F] {$q_T#$};
+		\node[state, accepting] (q_5) [below right =of q_3] {$q_R$};
+		\path[->]
+		(q_0) edge node {$\epsilon$} (q_1)
+		(q_0) edge node {$\epsilon$} (q_2)
+		(q_3) edge node {$\epsilon$} (q_5)
+		(q_4) edge node {$\epsilon$} (q_5);
+	\end{tikzpicture}
+\end{center}
 
 se $R=ST$ quindi $L(R)=L(S)L(T)$:
-	  \begin{center}
-	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-	  \node[state,initial] (q_0)   {$q_0$};
-	  \node[draw=none,fill=none] (Q_E) [right = of q_0] {$S$};
-	  \node[state] (q_1) [ right =of Q_E] {$q_1$};
-	  \node[state] (q_2) [right =of q_1] {$q_2$};
-	  \node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
-	  \node[state] (q_3) [right=of Q_F] {$q_3$};
-	  \node[draw=none,fill=none] (Q_G) [right = of q_3] {};
-	  \path[->]
-	  (q_1) edge node {$\epsilon$} (q_2)
-	  (q_3) edge node {} (Q_G);
-	  \end{tikzpicture}
-	  \end{center}
+\begin{center}
+	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+		\node[state,initial] (q_0)   {$q_0$};
+		\node[draw=none,fill=none] (Q_E) [right = of q_0] {$S$};
+		\node[state] (q_1) [ right =of Q_E] {$q_1$};
+		\node[state] (q_2) [right =of q_1] {$q_2$};
+		\node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
+		\node[state] (q_3) [right=of Q_F] {$q_3$};
+		\node[draw=none,fill=none] (Q_G) [right = of q_3] {};
+		\path[->]
+		(q_1) edge node {$\epsilon$} (q_2)
+		(q_3) edge node {} (Q_G);
+	\end{tikzpicture}
+\end{center}
 
 se $R=S^*$ quindi $L(R)=(L(S))^*$:
-	  \begin{center}
-	  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-	  \node[state,initial] (q_0)   {$q_0$};
-	  \node[state] (q_1) [ right =of Q_E] {$q_1$};
-	  \node[draw=none,fill=none] (Q_F) [right = of q_1] {$S$};
-	  \node[state] (q_2) [right =of Q_F] {$q_2$};
-	  \node[state] (q_3) [right=of q_2] {$q_3$};
-	  \path[->]
-	  (q_0) edge node {$\epsilon$} (q_1)
-	  (q_2) edge [bend right = 35]  node {$\epsilon$} (q_1)
-	  (q_0) edge [bend right = 25] node  {$\epsilon$} (q_3)
-	  (q_2) edge node {$\epsilon$} (q_3);
-	  \end{tikzpicture}
-	  \end{center}
+\begin{center}
+	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+		\node[state,initial] (q_0)   {$q_0$};
+		\node[state] (q_1) [ right =of Q_E] {$q_1$};
+		\node[draw=none,fill=none] (Q_F) [right = of q_1] {$S$};
+		\node[state] (q_2) [right =of Q_F] {$q_2$};
+		\node[state] (q_3) [right=of q_2] {$q_3$};
+		\path[->]
+		(q_0) edge node {$\epsilon$} (q_1)
+		(q_2) edge [bend right = 35]  node {$\epsilon$} (q_1)
+		(q_0) edge [bend right = 25] node  {$\epsilon$} (q_3)
+		(q_2) edge node {$\epsilon$} (q_3);
+	\end{tikzpicture}
+\end{center}
 
 
 
@@ -1606,29 +1608,29 @@ ed elimino $s$:
 quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 \begin{itemize}
 	\item se $q_0\neq q_1$:
-		  \begin{center}
-			  \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-				  \node[state, initial] (q_0)   {$q_1$};
-				  \node[state, accepting] (q_1) [right=of q_1] {$q_k$};
-				  \path[->]
-				  (q_0) edge [bend left =25]node {$S$} (q_1)
-				  (q_1) edge [bend left =25]node {$T$} (q_0)
-				  (q_0)   edge [loop above] node {$R$} ()
-				  (q_1)   edge [loop above] node {$U$} ();
-			  \end{tikzpicture}
-		  \end{center}
-		  rappresenta:
-		  $E_i=(R+SU^{*}T)^{*}SU^{*}$
+	      \begin{center}
+		      \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+			      \node[state, initial] (q_0)   {$q_1$};
+			      \node[state, accepting] (q_1) [right=of q_1] {$q_k$};
+			      \path[->]
+			      (q_0) edge [bend left =25]node {$S$} (q_1)
+			      (q_1) edge [bend left =25]node {$T$} (q_0)
+			      (q_0)   edge [loop above] node {$R$} ()
+			      (q_1)   edge [loop above] node {$U$} ();
+		      \end{tikzpicture}
+	      \end{center}
+	      rappresenta:
+	      $E_i=(R+SU^{*}T)^{*}SU^{*}$
 	\item se $q_0=q$:
-		  \begin{center}
-			  \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-				  \node[state, initial, accepting] (q_0)   {$q_1$};
-				  \path[->]
-				  (q_0)   edge [loop above] node {$R$} ();
-			  \end{tikzpicture}
-		  \end{center}
-		  rappresenta:
-		  $E_i=R^{*}$
+	      \begin{center}
+		      \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+			      \node[state, initial, accepting] (q_0)   {$q_1$};
+			      \path[->]
+			      (q_0)   edge [loop above] node {$R$} ();
+		      \end{tikzpicture}
+	      \end{center}
+	      rappresenta:
+	      $E_i=R^{*}$
 \end{itemize}
 
 \begin{example}
@@ -1783,46 +1785,46 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 \label{sec:da-ER-a-eNFA}
 
 \begin{Exercise}\label{exe:er-nfa-1}
-Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\zero\uno)\kleene$.
+	Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\zero\uno)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-nfa-2}
-Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\uno(\zero\uno)\kleene)\kleene$.
+	Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\uno(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-nfa-3}
-Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)\kleene(\zero\uno)\kleene)\kleene$.
+	Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)\kleene(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-nfa-4}
-Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)(\zero\uno)\kleene)\kleene$.
+	Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-nfa-5}
-Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
+	Costruire l'\enfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
 \end{Exercise}
 
 Per gli esercizi che seguono, si suggerisce di usare la soluzione degli Esercizi~\ref{exe:er-nfa-1}--\ref{exe:er-nfa-5}.
 
 
 \begin{Exercise}\label{exe:er-dfa-1}
-Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\zero\uno)\kleene$.
+	Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\zero\uno)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-dfa-2}
-Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\uno(\zero\uno)\kleene)\kleene$.
+	Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $(\uno(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-dfa-3}
-Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)\kleene(\zero\uno)\kleene)\kleene$.
+	Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)\kleene(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-dfa-4}
-Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)(\zero\uno)\kleene)\kleene$.
+	Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno|\epsilon)(\zero\uno)\kleene)\kleene$.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:er-dfa-5}
-Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
+	Costruire il dfa che riconosce il linguaggio associato alla seguente espressione regolare: $((\uno\zero\zero|\epsilon)\uno(\uno\zero|\zero\uno)\kleene)\kleene\zero\zero$.
 \end{Exercise}
 
 \section{Pumping Lemma per i linguaggi regolari}
@@ -1833,54 +1835,54 @@ lunga può essere espansa, ovvero esiste una sua sottostringa che può essere ri
 ottenendo sempre una nuova parola del linguaggio.
 
 \begin{lemma}[Lemma dell'espansione]\label{lem:pumping-lemma}
-Sia $L$ un linguaggio regolare.
-Allora esiste una costante $p$, detta costante di espansione, tale che per ogni parola $w\in L$ con $|w|\le p$, la parola $w$ può
-essere decomposta come $w=xyz$ con $|xy|\le p$, $y\ne \epsilon$, e $xy^{i}z$ è una parola del linguaggio $L$ per ogni intero $i\ge 0$.
+	Sia $L$ un linguaggio regolare.
+	Allora esiste una costante $p$, detta costante di espansione, tale che per ogni parola $w\in L$ con $|w|\le p$, la parola $w$ può
+	essere decomposta come $w=xyz$ con $|xy|\le p$, $y\ne \epsilon$, e $xy^{i}z$ è una parola del linguaggio $L$ per ogni intero $i\ge 0$.
 
-Notiamo immediatamente che questo lemma non permette di trarre conclusioni se il linguaggio $L$ non
-è regolare.
-In particolare, anche se $L$ non è regolare, potremmo avere una decomposizione $xyz$ di una parola tale che $xy^{i}z$
-è sempre una parola di $L$.
+	Notiamo immediatamente che questo lemma non permette di trarre conclusioni se il linguaggio $L$ non
+	è regolare.
+	In particolare, anche se $L$ non è regolare, potremmo avere una decomposizione $xyz$ di una parola tale che $xy^{i}z$
+	è sempre una parola di $L$.
 \end{lemma}
 
 \begin{proof}
-Siccome $L$ è un linguaggio regolare, allora esiste un \dfa che accetta esattamente $L$.
-Sia $p$ il numero di stati $|Q|$ e sia $w$ una parola del linguaggio $L$ con lunghezza maggiore di $p$.
-Sia $r_{0}, \ldots , r_{|w|}$ la sequenza di stati di $A$ attraversati quando viene letto l'input $w$, ovvero
-$r_{i} = \hat{\delta}(q_{0}, w[:i])$.
-Siccome $|w|>p$, allora esistono $i,j$ tali che $r_{i}=r_{j}$ e $i<j$.
-Allora definiamo $x$, $y$, $z$ rispettivamente come la sottostringa di $w$ che precede l'ingresso in $r_{i}$, che va da
-$r_{i}$ a $r_{j}$, che segue $r_{j}$ --- formalmente $x= w[:i]$, $y= w[i+1:j]$,  $z= w[j+1:]$.
-È immediato notare che $xyz=w$ e $y\ne \epsilon$, perchè $j>i$.
-Dalla definizione \gdv{TODO} di transizione estesa, $\hat{\delta}(q_{0}, w) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])$.
-Siccome $r_{i}=r_{j}$,  $\hat{\delta}(r_{i}, w[i+1:j]) = r_{i}$,
-$\hat{\delta}(q_{0}, xy^{i}z) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])=\hat{\delta}(\hat{\delta}(q_{0}, w[:i]),  w[j+1:])$
-per ogni intero $i\ge 0$.
-Siccome $w\in L$, allora $\hat{\delta}(q_{0}, xyz)\in F$: ciò implica che $\hat{\delta}(q_{0}, xy^{i}z)\in F$ per ogni intero $i>0$,
-completando la dimostrazione.
+	Siccome $L$ è un linguaggio regolare, allora esiste un \dfa che accetta esattamente $L$.
+	Sia $p$ il numero di stati $|Q|$ e sia $w$ una parola del linguaggio $L$ con lunghezza maggiore di $p$.
+	Sia $r_{0}, \ldots , r_{|w|}$ la sequenza di stati di $A$ attraversati quando viene letto l'input $w$, ovvero
+	$r_{i} = \hat{\delta}(q_{0}, w[:i])$.
+	Siccome $|w|>p$, allora esistono $i,j$ tali che $r_{i}=r_{j}$ e $i<j$.
+	Allora definiamo $x$, $y$, $z$ rispettivamente come la sottostringa di $w$ che precede l'ingresso in $r_{i}$, che va da
+	$r_{i}$ a $r_{j}$, che segue $r_{j}$ --- formalmente $x= w[:i]$, $y= w[i+1:j]$,  $z= w[j+1:]$.
+	È immediato notare che $xyz=w$ e $y\ne \epsilon$, perchè $j>i$.
+	Dalla definizione \gdv{TODO} di transizione estesa, $\hat{\delta}(q_{0}, w) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])$.
+	Siccome $r_{i}=r_{j}$,  $\hat{\delta}(r_{i}, w[i+1:j]) = r_{i}$,
+	$\hat{\delta}(q_{0}, xy^{i}z) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])=\hat{\delta}(\hat{\delta}(q_{0}, w[:i]),  w[j+1:])$
+	per ogni intero $i\ge 0$.
+	Siccome $w\in L$, allora $\hat{\delta}(q_{0}, xyz)\in F$: ciò implica che $\hat{\delta}(q_{0}, xy^{i}z)\in F$ per ogni intero $i>0$,
+	completando la dimostrazione.
 \end{proof}
 
 \begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-\node[state, initial] (q_0) {$p_0$};
-\node[state] (q_1) [right=of q_0] {$p_i$};
-\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
-\path[->]
-(q_0) edge node {x} (q_1)
-(q_1) edge node {z} (q_2)
-edge [loop above] node {y} ();
-\end{tikzpicture}
+	\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+		\node[state, initial] (q_0) {$p_0$};
+		\node[state] (q_1) [right=of q_0] {$p_i$};
+		\node[state, accepting] (q_2) [right =of q_1] {$\text{ }$} ;
+		\path[->]
+		(q_0) edge node {x} (q_1)
+		(q_1) edge node {z} (q_2)
+		edge [loop above] node {y} ();
+	\end{tikzpicture}
 \end{center}
 
 Una particolarità del lemma dell'espansione è che utilizziamo la contronominale,\sidenote{La contronominale di
-$p\Rightarrow q$ è $\lnot q \Rightarrow \lnot p$} quindi mostreremo che non vale la tesi
+	$p\Rightarrow q$ è $\lnot q \Rightarrow \lnot p$} quindi mostreremo che non vale la tesi
 del \Cref{lem:pumping-lemma} e, come conseguenza, avremo dimostrato che il linguaggio $L$ non è regolare.
 Riscriviamo quindi il \Cref{lem:pumping-lemma} come la sua contronominale.
 
 \begin{lemma}[Lemma dell'espansione --- contronominale]\label{lem:pumping-lemma-2}
-Sia $L$ un linguaggio.
-Se per ogni costante $p$ esiste una parola $w\in L$ con $|w|\le p$, tale che per ogni decomposizione di $w$ come $xyz$, con
-$|xy|\le p$, $y\ne \epsilon$, esiste un intero $i\ge 0$ tale che $xy^{i}z\notin L$, allora $L$ non è regolare.
+	Sia $L$ un linguaggio.
+	Se per ogni costante $p$ esiste una parola $w\in L$ con $|w|\le p$, tale che per ogni decomposizione di $w$ come $xyz$, con
+	$|xy|\le p$, $y\ne \epsilon$, esiste un intero $i\ge 0$ tale che $xy^{i}z\notin L$, allora $L$ non è regolare.
 \end{lemma}
 
 
@@ -1891,40 +1893,40 @@ supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati
 $0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.
 Formalmente si ha:
 \begin{theorem}
-Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
-$y\neq \epsilon$
-$|xy|\leq n$
-$\forall k\geq 0\,\,\, zy^kz\in L$
-in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
+	Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
+	$y\neq \epsilon$
+	$|xy|\leq n$
+	$\forall k\geq 0\,\,\, zy^kz\in L$
+	in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
 \end{theorem}
 
 
 
 \begin{example}
-mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
-$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
-ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
+	mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
+	$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
+	ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
 \end{example}
 \begin{example}
-$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?
-suppongo per assurdo di sì, con $n$ costante del pumping lemma.
-$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
-Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
+	$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?
+	suppongo per assurdo di sì, con $n$ costante del pumping lemma.
+	$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
+	Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
 \end{example}
 \begin{example}
-$L=\{0^n1^m|\, n\leq m\}$ è regolare?
-$w=0^{n-l}0^l1^{m}$ con:
-$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
-con $|y|=l$ e $0<l\leq n$
-quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
-$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
-scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
+	$L=\{0^n1^m|\, n\leq m\}$ è regolare?
+	$w=0^{n-l}0^l1^{m}$ con:
+	$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$
+	con $|y|=l$ e $0<l\leq n$
+	quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
+	$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
+	scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
 \end{example}
 
 
 \begin{Exercise}\label{exe:pump-parentesi}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole in cui ogni prefisso contiene un numero di \zero che è
-maggiore o uguale al numero di \uno non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole in cui ogni prefisso contiene un numero di \zero che è
+	maggiore o uguale al numero di \uno non è regolare.
 \end{Exercise}
 
 Il linguaggio dell'Esercizio~\ref{exe:pump-parentesi} è anche chiamato il linguaggio delle parentesi bilanciate (dove
@@ -1932,103 +1934,103 @@ Il linguaggio dell'Esercizio~\ref{exe:pump-parentesi} è anche chiamato il lingu
 
 
 \begin{Exercise}\label{exe:pump-tanti-1}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\leq m$
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\leq m$
+	non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-palindrome}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome
+	non è regolare.
 \end{Exercise}
 
 
 
 \begin{Exercise}\label{exe:pump-primi}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole $\zero^{n}$ con $n$ numero primo
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole $\zero^{n}$ con $n$ numero primo
+	non è regolare.
 \end{Exercise}
 
 \begin{Answer}
-Prendiamo la parola $\zero^{n}$ con $n$ numero primo sufficientemente grande, e consideriamo la suddivisione generica
-$xyz$ con $x=\zero^{i}$, $y=\zero^{l}$, $z=\zero^{n-l-i}$.
-L'espansione $xy^{n-l}z$ è la parola $\zero^{i}\zero^{l(n-l)}\zero^{n-l-i} = \zero^{(n-l)(l+1)}$ quindi la sua lunghezza
-non è un numero primo.
+	Prendiamo la parola $\zero^{n}$ con $n$ numero primo sufficientemente grande, e consideriamo la suddivisione generica
+	$xyz$ con $x=\zero^{i}$, $y=\zero^{l}$, $z=\zero^{n-l-i}$.
+	L'espansione $xy^{n-l}z$ è la parola $\zero^{i}\zero^{l(n-l)}\zero^{n-l-i} = \zero^{(n-l)(l+1)}$ quindi la sua lunghezza
+	non è un numero primo.
 \end{Answer}
 
 
 \begin{Exercise}\label{exe:pump-regolare}
-Spiegare perchè non è possibile applicare il pumping lemma per dimostrare che il linguaggio  $(\zero\uno)\kleene$ non è
-regolare.
+	Spiegare perchè non è possibile applicare il pumping lemma per dimostrare che il linguaggio  $(\zero\uno)\kleene$ non è
+	regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-tanti-0}
-Spiegare perchè non è possibile applicare il pumping lemma per dimostrare che il linguaggio delle parole nella forma
-$\zero^n\uno^m$ con $n\geq m$ non è regolare.
+	Spiegare perchè non è possibile applicare il pumping lemma per dimostrare che il linguaggio delle parole nella forma
+	$\zero^n\uno^m$ con $n\geq m$ non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-palindromi-pari}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome di lunghezza pari
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome di lunghezza pari
+	non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-palindromi-dispari}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome di lunghezza dispari
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome di lunghezza dispari
+	non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-palindromi}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole palindrome
+	non è regolare.
 \end{Exercise}
 
 
 
 \begin{Exercise}\label{exe:pump-copie}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $ww$ con $w\in\Sigma_{B}\kleene$, determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $ww$ con $w\in\Sigma_{B}\kleene$, determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-011+}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero\uno^{n}$ con $n > 2$, determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero\uno^{n}$ con $n > 2$, determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-1l0k1n}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-1l0k1n}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, tale che $l=k$ oppure $k=n$,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, tale che $l=k$ oppure $k=n$,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-0square}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^{k}$, tale che $k$ sia un quadrato,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^{k}$, tale che $k$ sia un quadrato,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-01square}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $k+l$ sia un quadrato,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $k+l$ sia un quadrato,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-0prodotto2primi}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^{k}$, tale che $k$ sia il prodotto di
-esattamente due numeri primi,
-determinare se è regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^{k}$, tale che $k$ sia il prodotto di
+	esattamente due numeri primi,
+	determinare se è regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 
@@ -2039,28 +2041,28 @@ $L,M\in REG\to L\cup M\in REG$
 si può dimostrare in due maniere:
 \begin{itemize}
 	\item \textbf{con le espressioni regolari:}
-		  $L,M\in REG \to \exists R, S \text{ ER tali che } L(R)=L \text { e } L(S)=M$
-		  $L\cup M=L(R+S) \text{ e quindi appartenente a } REG$
+	      $L,M\in REG \to \exists R, S \text{ ER tali che } L(R)=L \text { e } L(S)=M$
+	      $L\cup M=L(R+S) \text{ e quindi appartenente a } REG$
 	\item \textbf{con gli automi:}
-		  $\text{se }L,M\in REG\to \exists \epsilon-NFA \text{ che con L e M va dallo stato iniziale a quello finale}$:
-		  \begin{center}
-			  \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-				  \node[state,initial] (q_0)   {$q_0$};
-				  \node[state] (q_1) [above right =of q_0] {$q_1$};
-				  \node[state] (q_2) [below right =of q_0] {$q_2$};
-				  \node[draw=none,fill=none] (Q_E) [right = of q_1] {$L$};
-				  \node[draw=none,fill=none] (Q_F) [right = of q_2] {$M$};
-				  \node[state] (q_3) [right=of Q_E] {$q_3$};
-				  \node[state] (q_4) [right=of Q_F] {$q_4$};
-				  \node[state, accepting] (q_5) [below right =of q_3] {$q_5$};
-				  \path[->]
-				  (q_0) edge node {$\epsilon$} (q_1)
-				  (q_0) edge node {$\epsilon$} (q_2)
-				  (q_3) edge node {$\epsilon$} (q_5)
-				  (q_4) edge node {$\epsilon$} (q_5);
-			  \end{tikzpicture}
-		  \end{center}
-		  accetta $L\cup M$ che quindi è $REG$
+	      $\text{se }L,M\in REG\to \exists \epsilon-NFA \text{ che con L e M va dallo stato iniziale a quello finale}$:
+	      \begin{center}
+		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			      \node[state,initial] (q_0)   {$q_0$};
+			      \node[state] (q_1) [above right =of q_0] {$q_1$};
+			      \node[state] (q_2) [below right =of q_0] {$q_2$};
+			      \node[draw=none,fill=none] (Q_E) [right = of q_1] {$L$};
+			      \node[draw=none,fill=none] (Q_F) [right = of q_2] {$M$};
+			      \node[state] (q_3) [right=of Q_E] {$q_3$};
+			      \node[state] (q_4) [right=of Q_F] {$q_4$};
+			      \node[state, accepting] (q_5) [below right =of q_3] {$q_5$};
+			      \path[->]
+			      (q_0) edge node {$\epsilon$} (q_1)
+			      (q_0) edge node {$\epsilon$} (q_2)
+			      (q_3) edge node {$\epsilon$} (q_5)
+			      (q_4) edge node {$\epsilon$} (q_5);
+		      \end{tikzpicture}
+	      \end{center}
+	      accetta $L\cup M$ che quindi è $REG$
 \end{itemize}
 Inoltre siano due i due alfabeti $\Sigma\subseteq\Gamma$, si ha che:
 $\text{se L è regolare su }\Sigma\to \text{L è regolare su }\Gamma$
@@ -2194,7 +2196,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-							& a           & b           \\
+			                & a           & b           \\
 			\hline
 			$\to (q_0,p_0)$ & $(q_0,p_0)$ & $(q_1,p_1)$ \\
 			\hline
@@ -2252,7 +2254,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-									  & 0       & 1       \\
+			                          & 0       & 1       \\
 			\hline
 			$\stackrel{*}{\to} (a,c)$ & $(a,d)$ & $(b,e)$ \\
 			\hline
@@ -2310,7 +2312,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-							& 0           & 1           \\
+			                & 0           & 1           \\
 			\hline
 			$\to (p_0,q_0)$ & $(p_0,q_1)$ & $(p_1,q_2)$ \\
 			\hline
@@ -2326,54 +2328,54 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 
 
 \begin{Exercise}\label{exe:pump-tanti-0}
-Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\geq m$
-non è regolare.
+	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\geq m$
+	non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-01multiplo}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l$ è un multiplo di $k$,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l$ è un multiplo di $k$,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-01entrodoppio}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le 2k$,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le 2k$,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 \begin{Exercise}\label{exe:pump-01entrodoppio2}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le \lfloor
-\frac{k}{2} \rfloor$,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le \lfloor
+		\frac{k}{2} \rfloor$,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-01absdiff}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $|l - k| \le 2$,
-determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $|l - k| \le 2$,
+	determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-noncopie}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $w_{1}w_{2}$ con $w_{1}\neq w_{2}$, determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $w_{1}w_{2}$ con $w_{1}\neq w_{2}$, determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 
 \begin{Exercise}\label{exe:pump-noncopiecon1}
-Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $w_{1}1w_{2}$ con $w_{1}\neq w_{2}$, determinare se è
-regolare.
-In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $w_{1}1w_{2}$ con $w_{1}\neq w_{2}$, determinare se è
+	regolare.
+	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
 Si prende la stringa $\zero^{n!}\uno\zero^{(n+1)!}$, l'espansione generica con $|y| = k$ è  $\zero^{n! + (i-1)k}\uno\zero^{(n+1)!}$.
@@ -2535,191 +2537,191 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 $\delta$ è $\delta_L$ per $Q_L$ e $\delta$ è $\delta_M$ per $Q_M$
 per vedere se $q_L\approx q_M$ uso il riempi tabella e se sono equivalenti si ha che $L=M$
 \begin{example}
-Sia $A$:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-\node[state, initial, accepting] (q_0) {$a$};
-\node[state] (q_1) [right=of q_0] {$b$};
-\path[->]
-(q_0) edge [bend left = 25] node {1} (q_1)
-edge [loop above] node {0} ()
-(q_1) edge [bend left = 25] node {0} (q_0)
-edge [loop above] node {1} ();
-\end{tikzpicture}
-\end{center}
-e $B$:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-\node[state, initial, accepting] (q_0) {$c$};
-\node[state, accepting] (q_1) [right=of q_0] {$d$};
-\node[state] (q_2) [below =of q_0] {$e$};
-\path[->]
-(q_0) edge node {0} (q_1)
-edge [bend right=25] node {1} (q_2)
-(q_1) edge node {1} (q_2)
-edge [loop above] node {0} ()
-(q_2) edge [bend right =25] node {0} (q_0)
-edge [loop below] node {1} ();
-\end{tikzpicture}
-\end{center}
-entrambi i linguaggi accettano $(\epsilon+(0+1)^*0)$
-applico la tabella:
-\begin{center}
-\begin{tabular}{c|c|c|c|c|}
-  \hline
-  b & x & / & / & / \\
-  \hline
-  c &   & x & / & / \\
-  \hline
-  d &   & x &   & / \\
-  \hline
-  e & x &   & x & x \\
-  \hline
-	& a & b & c & d \\
-  \hline
-\end{tabular}
-\end{center}
-e quindi dato che $a\approx c$ si ha che i due linguaggi sono lo stesso linguaggio.
+	Sia $A$:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			\node[state, initial, accepting] (q_0) {$a$};
+			\node[state] (q_1) [right=of q_0] {$b$};
+			\path[->]
+			(q_0) edge [bend left = 25] node {1} (q_1)
+			edge [loop above] node {0} ()
+			(q_1) edge [bend left = 25] node {0} (q_0)
+			edge [loop above] node {1} ();
+		\end{tikzpicture}
+	\end{center}
+	e $B$:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+			\node[state, initial, accepting] (q_0) {$c$};
+			\node[state, accepting] (q_1) [right=of q_0] {$d$};
+			\node[state] (q_2) [below =of q_0] {$e$};
+			\path[->]
+			(q_0) edge node {0} (q_1)
+			edge [bend right=25] node {1} (q_2)
+			(q_1) edge node {1} (q_2)
+			edge [loop above] node {0} ()
+			(q_2) edge [bend right =25] node {0} (q_0)
+			edge [loop below] node {1} ();
+		\end{tikzpicture}
+	\end{center}
+	entrambi i linguaggi accettano $(\epsilon+(0+1)^*0)$
+	applico la tabella:
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|}
+			\hline
+			b & x & / & / & / \\
+			\hline
+			c &   & x & / & / \\
+			\hline
+			d &   & x &   & / \\
+			\hline
+			e & x &   & x & x \\
+			\hline
+			  & a & b & c & d \\
+			\hline
+		\end{tabular}
+	\end{center}
+	e quindi dato che $a\approx c$ si ha che i due linguaggi sono lo stesso linguaggio.
 \end{example}
 passiamo ora alla \textbf{minimizzazione}, che prende in input un DFA $A$ e restituisce un $DFA$ $A_{min}$ tale che $L(A)=L(A_{min})$ e che $A_{min}$ ha il numero più piccolo possibile di stati per distinguere $L(A)$.
 Procedo così:
 \begin{enumerate}
-\item si rimuovono gli stati non raggiungibili
-\item applico la tabella per scoprire le tabelle di equivalenza, gli stati del nuovo automa sono le classi di equivalenza
+	\item si rimuovono gli stati non raggiungibili
+	\item applico la tabella per scoprire le tabelle di equivalenza, gli stati del nuovo automa sono le classi di equivalenza
 \end{enumerate}
 si ha che lo stato iniziale è la classe di equivalenza dello stato finale e gli stati finali sono le classi di equivalenza degli stati finali.
 La minimizzazione si dimostra per assurdo:
 Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)=L(N)\,|Q_N|<|Q_M|$. I due stati iniziali sono indistinguibili. Sia $p\in M\,\,q\in N$ tali $p\approx q\,\, \forall a\in\Sigma$ quindi: $\delta p,a)=\delta(q,a)$, Ogni stato $p\in Q_;$è quindi indistinguibile da almeno uno stato di $N$. Avendo però $N$ meno stati si avranno almeno due stati di $M$ indistinguibili dallo stesso di $N$ ma non sono indistinguibili per la tabella. SI ha un assurdo.
 \begin{example}
-Si ha il seguente automa:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
-\node[state, initial] (q_0) {$a$};
-\node[state] (q_1) [right=of q_0] {$b$};
-\node[state, accepting] (q_2) [right=of q_1] {$c$};
-\node[state] (q_3) [right=of q_2] {$d$};
-\node[state] (q_4) [below=of q_0] {$e$};
-\node[state, accepting] (q_5) [right=of q_4] {$f$};
-\node[state] (q_6) [right=of q_5] {$g$};
-\node[state] (q_7) [right=of q_6] {$h$};
-\node[state, accepting] (q_8) [below=of q_5] {$i$};
-\path[->]
-(q_0) edge node {1} (q_4)
-edge node {0} (q_1)
-(q_1) edge node {0} (q_2)
-edge [bend left =25] node {1} (q_5)
-(q_2) edge [bend left =25] node {1} (q_7)
-edge node {0} (q_3)
-(q_3) edge node {1} (q_7)
-edge [bend right= 85] node {0} (q_4)
-(q_4) edge node {0} (q_5)
-edge [bend left =25] node {1} (q_8)
-(q_5) edge [bend left = 25] node {0} (q_1)
-edge node {0} (q_6)
-(q_6) edge node {1} (q_1)
-edge node {0} (q_7)
-(q_7) edge node {0} (q_8)
-edge [bend left = 25] node {1} (q_2)
-(q_8) edge [bend left = 25] node {1} (q_4)
-edge [bend left = 85] node {0} (q_0);
-\end{tikzpicture}
-\end{center}
-faccio la tabella
-\begin{center}
-\begin{tabular}{c|c|c|c|c|c|c|c|c|}
-  \hline
-  b &   & / & / & / & / & / & / & / \\
-  \hline
-  c & x & x & / & / & / & / & / & / \\
-  \hline
-  d &   & z & x & / & / & / & / & / \\
-  \hline
-  e & x &   & x & x & / & / & / & / \\
-  \hline
-  f & x & x &   & x & x & / & / & / \\
-  \hline
-  g &   & x & x &   & x & x & / & / \\
-  \hline
-  h & x &   & x & x &   & x & x & / \\
-  \hline
-  i & x & x &   & x & x &   & x & x \\
-  \hline
-	& a & b & c & d & e & f & g & h \\
-  \hline
-\end{tabular}
-\end{center}
-al caso base segno tutte le caselle degli stati accettanti tranne quelle che incrociano con altri stati accettanti e poi completo il resto della tabella. Ottengo:
-$a\approx d\approx g$
-$b\approx e\approx h$
-$c\approx f\approx i$
+	Si ha il seguente automa:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
+			\node[state, initial] (q_0) {$a$};
+			\node[state] (q_1) [right=of q_0] {$b$};
+			\node[state, accepting] (q_2) [right=of q_1] {$c$};
+			\node[state] (q_3) [right=of q_2] {$d$};
+			\node[state] (q_4) [below=of q_0] {$e$};
+			\node[state, accepting] (q_5) [right=of q_4] {$f$};
+			\node[state] (q_6) [right=of q_5] {$g$};
+			\node[state] (q_7) [right=of q_6] {$h$};
+			\node[state, accepting] (q_8) [below=of q_5] {$i$};
+			\path[->]
+			(q_0) edge node {1} (q_4)
+			edge node {0} (q_1)
+			(q_1) edge node {0} (q_2)
+			edge [bend left =25] node {1} (q_5)
+			(q_2) edge [bend left =25] node {1} (q_7)
+			edge node {0} (q_3)
+			(q_3) edge node {1} (q_7)
+			edge [bend right= 85] node {0} (q_4)
+			(q_4) edge node {0} (q_5)
+			edge [bend left =25] node {1} (q_8)
+			(q_5) edge [bend left = 25] node {0} (q_1)
+			edge node {0} (q_6)
+			(q_6) edge node {1} (q_1)
+			edge node {0} (q_7)
+			(q_7) edge node {0} (q_8)
+			edge [bend left = 25] node {1} (q_2)
+			(q_8) edge [bend left = 25] node {1} (q_4)
+			edge [bend left = 85] node {0} (q_0);
+		\end{tikzpicture}
+	\end{center}
+	faccio la tabella
+	\begin{center}
+		\begin{tabular}{c|c|c|c|c|c|c|c|c|}
+			\hline
+			b &   & / & / & / & / & / & / & / \\
+			\hline
+			c & x & x & / & / & / & / & / & / \\
+			\hline
+			d &   & z & x & / & / & / & / & / \\
+			\hline
+			e & x &   & x & x & / & / & / & / \\
+			\hline
+			f & x & x &   & x & x & / & / & / \\
+			\hline
+			g &   & x & x &   & x & x & / & / \\
+			\hline
+			h & x &   & x & x &   & x & x & / \\
+			\hline
+			i & x & x &   & x & x &   & x & x \\
+			\hline
+			  & a & b & c & d & e & f & g & h \\
+			\hline
+		\end{tabular}
+	\end{center}
+	al caso base segno tutte le caselle degli stati accettanti tranne quelle che incrociano con altri stati accettanti e poi completo il resto della tabella. Ottengo:
+	$a\approx d\approx g$
+	$b\approx e\approx h$
+	$c\approx f\approx i$
 
-e quindi ottengo, l'automa minimizzato:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
-\node[state, initial] (q_0) {$\{a,d,g\}$};
-\node[state] (q_1) [right=of q_0] {$\{b,e,h\}$};
-\node[state, accepting] (q_2) [below =of q_0] {$\{c,f,i\}$};
-\path[->]
-(q_0) edge node {0,1} (q_1)
-(q_1) edge [bend left =25] node {0,1} (q_2)
-(q_2) edge [bend left =25] node {1} (q_1)
-edge node {0} (q_0);
-\end{tikzpicture}
-\end{center}
+	e quindi ottengo, l'automa minimizzato:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
+			\node[state, initial] (q_0) {$\{a,d,g\}$};
+			\node[state] (q_1) [right=of q_0] {$\{b,e,h\}$};
+			\node[state, accepting] (q_2) [below =of q_0] {$\{c,f,i\}$};
+			\path[->]
+			(q_0) edge node {0,1} (q_1)
+			(q_1) edge [bend left =25] node {0,1} (q_2)
+			(q_2) edge [bend left =25] node {1} (q_1)
+			edge node {0} (q_0);
+		\end{tikzpicture}
+	\end{center}
 \end{example}
 \begin{example}
-Sia $A$:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-\node[state, initial, accepting] (q_0) {$a$};
-\node[state] (q_1) [right=of q_0] {$b$};
-\path[->]
-(q_0) edge [bend left = 25] node {1} (q_1)
-edge [loop above] node {0} ()
-(q_1) edge [bend left = 25] node {0} (q_0)
-edge [loop above] node {1} ();
-\end{tikzpicture}
-\end{center}
-e $B$:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-\node[state, initial, accepting] (q_0) {$c$};
-\node[state, accepting] (q_1) [right=of q_0] {$d$};
-\node[state] (q_2) [below =of q_0] {$e$};
-\path[->]
-(q_0) edge node {0} (q_1)
-edge [bend right=25] node {1} (q_2)
-(q_1) edge node {1} (q_2)
-edge [loop above] node {0} ()
-(q_2) edge [bend right =25] node {0} (q_0)
-edge [loop below] node {1} ();
-\end{tikzpicture}
-\end{center}
-riduco $B$:
-\begin{center}
-\begin{tabular}{c|c|c}
-  \hline
-  d &   & / \\
-  \hline
-  e & x & x \\
-  \hline
-	& c & d \\
-  \hline
-\end{tabular}
-\end{center}
-quindi $c\approx d$. Ottengo quindi:
-\begin{center}
-\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-\node[state, initial, accepting] (q_0) {$\{c,d\}$};
-\node[state] (q_1) [right=of q_0] {$e$};
-\path[->]
-(q_0) edge [bend left = 25] node {1} (q_1)
-edge [loop above] node {0} ()
-(q_1) edge [bend left = 25] node {0} (q_0)
-edge [loop above] node {1} ();
-\end{tikzpicture}
-\end{center}
-quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
+	Sia $A$:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			\node[state, initial, accepting] (q_0) {$a$};
+			\node[state] (q_1) [right=of q_0] {$b$};
+			\path[->]
+			(q_0) edge [bend left = 25] node {1} (q_1)
+			edge [loop above] node {0} ()
+			(q_1) edge [bend left = 25] node {0} (q_0)
+			edge [loop above] node {1} ();
+		\end{tikzpicture}
+	\end{center}
+	e $B$:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+			\node[state, initial, accepting] (q_0) {$c$};
+			\node[state, accepting] (q_1) [right=of q_0] {$d$};
+			\node[state] (q_2) [below =of q_0] {$e$};
+			\path[->]
+			(q_0) edge node {0} (q_1)
+			edge [bend right=25] node {1} (q_2)
+			(q_1) edge node {1} (q_2)
+			edge [loop above] node {0} ()
+			(q_2) edge [bend right =25] node {0} (q_0)
+			edge [loop below] node {1} ();
+		\end{tikzpicture}
+	\end{center}
+	riduco $B$:
+	\begin{center}
+		\begin{tabular}{c|c|c}
+			\hline
+			d &   & / \\
+			\hline
+			e & x & x \\
+			\hline
+			  & c & d \\
+			\hline
+		\end{tabular}
+	\end{center}
+	quindi $c\approx d$. Ottengo quindi:
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			\node[state, initial, accepting] (q_0) {$\{c,d\}$};
+			\node[state] (q_1) [right=of q_0] {$e$};
+			\path[->]
+			(q_0) edge [bend left = 25] node {1} (q_1)
+			edge [loop above] node {0} ()
+			(q_1) edge [bend left = 25] node {0} (q_0)
+			edge [loop above] node {1} ();
+		\end{tikzpicture}
+	\end{center}
+	quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
 \end{example}
 La tabella non funziona ovviamente per gli NFA
 

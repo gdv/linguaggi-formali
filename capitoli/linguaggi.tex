@@ -7,7 +7,7 @@ Un \textbf{simbolo} o \textbf{carattere} è un qualsiasi oggetto.
 
 
 \begin{definition}[Alfabeto]\label{def:alfabeto}
-Un \keyword{alfabeto}, normalmente indicato con $\Sigma$, è un insieme finito e non vuoto di simboli.
+	Un \keyword{alfabeto}, normalmente indicato con $\Sigma$, è un insieme finito e non vuoto di simboli.
 \end{definition}
 
 Esempi di alfabeti sono \texttt{abcdefghijklmnopqrstuvwxyz}, e l'insieme di cifre \texttt{0123456789}.
@@ -23,11 +23,11 @@ La concatenazione di due simboli viene rappresentata semplicemente scrivendo un 
 
 
 \begin{definition}[Parola]\label{def:parola}
-Sia $\Sigma$ un alfabeto.
-Allora una \keyword{parola} è una sequenza $\sigma_{1}\cdots\sigma_{n}$ di simboli, non necessariamente
-distinti, dell'alfabeto $\Sigma$.
-Una parola viene normalmente rappresentata tramite la giustapposizione dei
-simboli che compongono la sequenza, rispettando l'ordine.
+	Sia $\Sigma$ un alfabeto.
+	Allora una \keyword{parola} è una sequenza $\sigma_{1}\cdots\sigma_{n}$ di simboli, non necessariamente
+	distinti, dell'alfabeto $\Sigma$.
+	Una parola viene normalmente rappresentata tramite la giustapposizione dei
+	simboli che compongono la sequenza, rispettando l'ordine.
 \end{definition}
 
 Normalmente usiamo le ultime lettere dell'alfabeto latino (ad esempio $w$, $x$,
@@ -40,7 +40,7 @@ Il primo simbolo speciale che vediamo è $\epsilon$ e rappresenta la stringa vuo
 formata dalla sequenza di zero simboli.
 
 \begin{definition}[Linguaggio]\label{def:linguaggio}
-Dato un alfabeto $\Sigma$, un \keyword{linguaggio} $L$ è un insieme di parole su $\Sigma$.
+	Dato un alfabeto $\Sigma$, un \keyword{linguaggio} $L$ è un insieme di parole su $\Sigma$.
 \end{definition}
 
 Sebbene l'alfabeto sia finito, un linguaggio potrebbe contenere un numero
@@ -54,13 +54,13 @@ caratteri corrisponde ad un documento JSON se e solo se soddisfa la specifica),
 e l'insieme dei documenti JSON è infinito.
 
 \begin{example}\label{exa:numeri}
-Un numero è formato da una parte intera che consiste unicamente di cifre e,
-opzionalmente, da una parte frazionaria che consiste unicamente di cifre.
-Se la parte frazionaria esiste, allora la parte intera e la parte frazionaria
-sono separate da un punto.
-La parte intera non può iniziare con \texttt{0} e la parte frazionaria non può
-finire con \texttt{0}.
-L'insieme di tutti i numeri è un linguaggio (infinito).
+	Un numero è formato da una parte intera che consiste unicamente di cifre e,
+	opzionalmente, da una parte frazionaria che consiste unicamente di cifre.
+	Se la parte frazionaria esiste, allora la parte intera e la parte frazionaria
+	sono separate da un punto.
+	La parte intera non può iniziare con \texttt{0} e la parte frazionaria non può
+	finire con \texttt{0}.
+	L'insieme di tutti i numeri è un linguaggio (infinito).
 \end{example}
 
 La descrizione nell'\cref{exa:numeri} è di natura insiemistica:  il
@@ -88,17 +88,17 @@ La nozione di  concatenazione non si applica solo ai caratteri, ma anche a strin
 
 
 \begin{definition}[Concatenazione]\label{def:concatenazione-parole}
-Siano $w$ e $x$ due parole.
-La loro \keyword{concatenazione} $wx$ è ottenuta prendendo $w$ e facendo seguire a questa la stringa  $x$.
-Più formalmente, se $w=a_{1}\cdots a_{|w|}$ e $x=b_{1}\cdots b_{|w|}$, allora la loro concatenazione $wx$ è la stringa
-$a_{1}\cdots a_{|w|} b_{1}\cdots b_{|w|}$.
+	Siano $w$ e $x$ due parole.
+	La loro \keyword{concatenazione} $wx$ è ottenuta prendendo $w$ e facendo seguire a questa la stringa  $x$.
+	Più formalmente, se $w=a_{1}\cdots a_{|w|}$ e $x=b_{1}\cdots b_{|w|}$, allora la loro concatenazione $wx$ è la stringa
+	$a_{1}\cdots a_{|w|} b_{1}\cdots b_{|w|}$.
 \end{definition}
 
 \begin{definition}[Concatenazione di linguaggi]\label{def:concatenazione-linguaggi}
-Siano $L_{1}$ e $L_{2}$ due linguaggi, rispettivamente su alfabeto $\Sigma_{1}$ e $\Sigma_{2}$.
-Allora la loro concatenazione $L_{1}L_{2}$ è uguale alla concatenazione di tutte le coppie ordinate di parole di $L_{1}$
-e $L_2$.
-Formalmente, $L_{1}L_{2} = \{ w_{1}w_2 : w_{1}\in L_{1}, w_{2}\in L_2\}$.
+	Siano $L_{1}$ e $L_{2}$ due linguaggi, rispettivamente su alfabeto $\Sigma_{1}$ e $\Sigma_{2}$.
+	Allora la loro concatenazione $L_{1}L_{2}$ è uguale alla concatenazione di tutte le coppie ordinate di parole di $L_{1}$
+	e $L_2$.
+	Formalmente, $L_{1}L_{2} = \{ w_{1}w_2 : w_{1}\in L_{1}, w_{2}\in L_2\}$.
 \end{definition}
 
 Una definizione equivalente di concatenazione di linguaggi è $L_{1}L_{2} = \{ w_{1}w_2 : (w_{1}, w_{2})\in L_{1} \times L_2\}$.
@@ -106,9 +106,9 @@ Si noti anche che l'alfabeto del linguaggio $L_1 L_2$ è $\Sigma_{1} \cup \Sigma
 
 
 \begin{definition}\label{def:potenza-linguaggio}
-Sia $L$ un linguaggio e sia $k$ un numero intero strettamente positivo.
-Allora la $k$-esima \keyword{potenza} di $L$, denotata con $L^k$, è l'insieme di tutte le stringhe ottenute concatenando
-$k$ parole, non necessariamente distinte, del linguaggio $L$.
+	Sia $L$ un linguaggio e sia $k$ un numero intero strettamente positivo.
+	Allora la $k$-esima \keyword{potenza} di $L$, denotata con $L^k$, è l'insieme di tutte le stringhe ottenute concatenando
+	$k$ parole, non necessariamente distinte, del linguaggio $L$.
 \end{definition}
 
 Per convenzione, si indica con $L^{0} = \{ epsilon \}$.
@@ -116,9 +116,9 @@ Quindi possiamo vedere $L^{1} =L$, mentre $L^{k} = L^{k-1} \Sigma$ se $k>1$.
 Una variante della \cref{def:concatenazione-linguaggi} consiste nella definizione di potenza di un alfabeto.
 
 \begin{definition}\label{def:potenza-alfabeto}
-Sia $\Sigma$ un alfabeto e sia $k$ un numero intero strettamente positivo.
-Allora la $k$-esima \keyword{potenza} di $\Sigma$, denotata con $\Sigma^k$, è l'insieme di tutte le stringhe di
-lunghezza $k$ sull'alfabeto $\Sigma$.
+	Sia $\Sigma$ un alfabeto e sia $k$ un numero intero strettamente positivo.
+	Allora la $k$-esima \keyword{potenza} di $\Sigma$, denotata con $\Sigma^k$, è l'insieme di tutte le stringhe di
+	lunghezza $k$ sull'alfabeto $\Sigma$.
 \end{definition}
 
 Per convenzione, si indica con $\Sigma^{0} = \{ \epsilon \}$, esattamente come nel caso di potenza di un linguaggio.
@@ -128,7 +128,7 @@ Non possiamo dire $\Sigma^{1} = \Sigma$ perchè il primo è un insieme di parole
 insieme di simboli.
 
 \begin{example}\label{exa:L3}
-L'alfabeto $\Sigma_{B}^{3}$ è formato dalle stringhe \texttt{000}, \texttt{001}, \texttt{010}, \texttt{011}, \texttt{100}, \texttt{101}, \texttt{110}, \texttt{111}.
+	L'alfabeto $\Sigma_{B}^{3}$ è formato dalle stringhe \zero\zero\zero, \zero\zero\uno, \zero\uno\zero, \zero\uno\uno, \uno\zero\zero, \uno\zero\uno, \uno\uno\zero, \uno\uno\uno.
 \end{example}
 
 
@@ -138,8 +138,8 @@ La nozione di chiusura permette di generalizzare la potenza al caso $k=\infty$.
 
 
 \begin{definition}\label{def:punto-fisso}
-Sia $A$ un insieme non vuoto e sia $\phi$ una funzione con mappa insiemi in insiemi.
-Allora $A$ è un \keyword{punto fisso} per $\phi$ se $\phi(A) \subseteq A$.
+	Sia $A$ un insieme non vuoto e sia $\phi$ una funzione con mappa insiemi in insiemi.
+	Allora $A$ è un \keyword{punto fisso} per $\phi$ se $\phi(A) \subseteq A$.
 \end{definition}
 
 In altre parole, $A$ è un punto fisso se l'applicazione di $\phi$ non ``cambia'' $A$.
@@ -148,28 +148,28 @@ Noi siamo interessati ai \emph{minimi punti fissi} che contengono un insieme $A$
 tali che $B$ sia un punto fisso per $\phi$.
 
 \begin{definition}\label{def:kleene}
-Sia $\Sigma$ un alfabeto.
-Allora la sua \keyword{chiusura di Kleene}, denotata con $\Sigma^{*}$, è l'unione infinita di potenze
-$\bigcup_{k=0}^{\infty} \Sigma^k = \Sigma^0 \cup \Sigma^1 \cup \cdots$.
+	Sia $\Sigma$ un alfabeto.
+	Allora la sua \keyword{chiusura di Kleene}, denotata con $\Sigma^{*}$, è l'unione infinita di potenze
+	$\bigcup_{k=0}^{\infty} \Sigma^k = \Sigma^0 \cup \Sigma^1 \cup \cdots$.
 \end{definition}
 
 \begin{proposition}\label{prop:kleene-punto-fisso}
-Sia $\Sigma$ un alfabeto.
-Allora $\Sigma^{*}$ è il minimo punto fisso di $\Sigma \cup \{\epsilon\}$ rispetto alla funzione
-chiusura di Kleene come minimo punto fisso di $L\cup \{\epsilon\}$ rispetto alla funzione $\phi$ che mappa ogni
-linguaggio $L$ in $\phi(L) = L^{2}$.
+	Sia $\Sigma$ un alfabeto.
+	Allora $\Sigma^{*}$ è il minimo punto fisso di $\Sigma \cup \{\epsilon\}$ rispetto alla funzione
+	chiusura di Kleene come minimo punto fisso di $L\cup \{\epsilon\}$ rispetto alla funzione $\phi$ che mappa ogni
+	linguaggio $L$ in $\phi(L) = L^{2}$.
 \end{proposition}
 
 \begin{example}\label{exa:chiusura-kleene}
-$\Sigma_{B}^{*} = \{\mathtt{\epsilon},\mathtt{0},\mathtt{1},\mathtt{00},\mathtt{01},\mathtt{10},\mathtt{100},\mathtt{000},\ldots \}$.
+	$\Sigma_{B}^{*} = \{\mathtt{\epsilon},\zero,\uno,\zero\zero,\zero\uno,\uno\zero,\uno\zero\zero,\zero\zero\zero,\ldots \}$.
 \end{example}
 
 Adesso possiamo introdurre la notazione più utilizzata per specificare un linguaggio costruito su un determinato alfabeto.
 
 
 \begin{observation}\label{obs:linguaggio}
-Un linguaggio $L$ su alfabeto $\Sigma$ è un sottoinsieme di stringhe in $ \Sigma^*$,
-quindi $L\subseteq \Sigma^*$.
+	Un linguaggio $L$ su alfabeto $\Sigma$ è un sottoinsieme di stringhe in $ \Sigma^*$,
+	quindi $L\subseteq \Sigma^*$.
 \end{observation}
 
 Siccome ogni linguaggio è un insieme, il simbolo $\emptyset$ denota anche il \keyword{linguaggio vuoto} (notare che
@@ -181,23 +181,23 @@ Vediamo adesso alcuni esempi di linguaggi sull'alfabeto $\Sigma_{B}$.
 
 
 \begin{example}\label{exa:0n01}
-Le stringhe che consistono in $n$ \texttt{0} seguiti da $n$ \texttt{1}:
-$\{\varepsilon,\mathtt{01},\mathtt{0011},\mathtt{000111},\ldots\}$.
+	Le stringhe che consistono in $n$ \zero seguiti da $n$ \uno:
+	$\{\varepsilon,\zero\uno,\zero\zero\uno\uno,\zero\zero\zero\uno\uno\uno,\ldots\}$.
 \end{example}
 
 \begin{example}\label{exa:0=1}
-le stringhe con un uguale numero di 0 e di 1:
-$\{\varepsilon,\mathtt{01},\mathtt{10},\mathtt{0011},\mathtt{0110},\mathtt{0101},\mathtt{1001},\ldots\}$.
+	le stringhe con un uguale numero di \zero{} e di \uno{}:
+	$\{\varepsilon,\zero\uno,\uno\zero,\zero\zero\uno\uno,\zero\uno\uno\zero,\zero\uno\zero\uno,\uno\zero\zero\uno,\ldots\}$.
 \end{example}
 
 \begin{example}\label{exa:numeri-primi-binari}
-le stringhe che codificano un numero primo:
-$\{\mathtt{10},\mathtt{11},\mathtt{101}, \mathtt{111}, \ldots\}$.
+	le stringhe che codificano un numero primo:
+	$\{\uno\zero,\uno\uno,\uno\zero\uno, \uno\uno\uno, \ldots\}$.
 \end{example}
 
 \begin{example}\label{exa:numeri-primi-unari}
-le stringhe che sono una codifica unaria di un numero primo, senza usare \texttt{0}:
-$\{\mathtt{11},\mathtt{111},\mathtt{11111}, \mathtt{1111111}, \ldots\}$.
+	le stringhe che sono una codifica unaria di un numero primo, senza usare \zero:
+	$\{\mathtt{11},\mathtt{111},\mathtt{11111}, \mathtt{1111111}, \ldots\}$.
 \end{example}
 
 L'\cref{exa:numeri-primi-unari} è interessante perchè l'alfabeto effettivamente usato ha un solo simbolo.
@@ -205,8 +205,8 @@ In altre parole, non sono necessari due simboli per le nozioni di alfabeto e lin
 
 
 \begin{observation}\label{obs:linguaggi-banali}
-Sia $\Sigma$ un alfabeto.
-Allora $\emptyset$, $\{\varepsilon\}$, e $\Sigma^{k}$ per ogni intero $k\ge 1$ sono tutti linguaggi per l'alfabeto $\Sigma$.
+	Sia $\Sigma$ un alfabeto.
+	Allora $\emptyset$, $\{\varepsilon\}$, e $\Sigma^{k}$ per ogni intero $k\ge 1$ sono tutti linguaggi per l'alfabeto $\Sigma$.
 \end{observation}
 
 Notiamo che tutti gli esempi di linguaggi che abbiamo dato in questa sezione sono basati sulla descrizione di una
@@ -222,27 +222,27 @@ di grammatica: ciò ci porterà a vedere come sia possibile \emph{generare} tutt
 
 
 \begin{definition}[Grammatica]\label{def:grammatica}
-Una \keyword{grammatica} $G$ è una quadrupla $G=\langle V, T, P, \mathsf{S} \rangle$ dove:
-\begin{itemize}
-	\item $V$ è un insieme finito di \keyword{variabili} o non terminali;
-	\item $T$ è un insieme finito di simboli \keyword{terminali}, ovvero i simboli dell'alfabeto di riferimento,
-	  disgiunto dalle variabili.
-Quindi $V \cap T=\emptyset$;
-	\item $P$ è un insieme finito di \textbf{produzioni} o regole;
-	\item $\mathsf{S}\in V$ è il \keyword{simbolo iniziale} ($\mathsf{S}$ rappresenta ``start'').
-\end{itemize}
+	Una \keyword{grammatica} $G$ è una quadrupla $G=\langle V, T, P, \mathsf{S} \rangle$ dove:
+	\begin{itemize}
+		\item $V$ è un insieme finito di \keyword{variabili} o non terminali;
+		\item $T$ è un insieme finito di simboli \keyword{terminali}, ovvero i simboli dell'alfabeto di riferimento,
+		      disgiunto dalle variabili.
+		      Quindi $V \cap T=\emptyset$;
+		\item $P$ è un insieme finito di \textbf{produzioni} o regole;
+		\item $\mathsf{S}\in V$ è il \keyword{simbolo iniziale} ($\mathsf{S}$ rappresenta ``start'').
+	\end{itemize}
 \end{definition}
 
 
 Dobbiamo ancora fornire la definizione di produzione.
 
 \begin{definition}\label{def:produzione}
-Una \keyword{produzione} $\alpha \to \beta$ formata da tre parti:
-\begin{itemize}
-\item una stringa non vuota $\alpha$, detta \keyword{testa},  sull'alfabeto $V \cup T$,
-	  \item il simbolo $\to$ della produzione;
-\item una stringa $\beta$, detta \keyword{corpo},  sull'alfabeto $V \cup T$.
-\end{itemize}
+	Una \keyword{produzione} $\alpha \to \beta$ formata da tre parti:
+	\begin{itemize}
+		\item una stringa non vuota $\alpha$, detta \keyword{testa},  sull'alfabeto $V \cup T$,
+		\item il simbolo $\to$ della produzione;
+		\item una stringa $\beta$, detta \keyword{corpo},  sull'alfabeto $V \cup T$.
+	\end{itemize}
 \end{definition}
 
 Notiamo che sia la testa che il corpo di una produzione possono contenere sia terminali che variabili, senza alcuna
@@ -265,36 +265,36 @@ Il processo di ripetute applicazioni di produzioni si chiama derivazione.
 Per semplificare alcune parti, introduciamo la definizione di forma sentenziale.
 
 \begin{definition}[Forma sentenziale]\label{def:forma-sentenziale}
-Sia \gramm una grammatica.
-Una \keyword{forma sentenziale} è una stringa sull'alfabeto $V\cup T$.
+	Sia \gramm una grammatica.
+	Una \keyword{forma sentenziale} è una stringa sull'alfabeto $V\cup T$.
 \end{definition}
 
 
 \begin{example}\label{exa:0001}
-Consideriamo il linguaggio $L$ su alfabeto $\Sigma_{B}$ delle parola che contengono esattamente un \texttt{1} e questo
-carattere is deve trovare in ultima posizione.
-Una grammatica $G=\langle V, T, P, S \rangle$ che genera il linguaggio $L$ ha $V=\{\mathsf{Z}, \mathsf{U}\}$,
-$T=\{\mathtt{0}, \mathtt{1}\}$, e le produzioni $\mathsf{S}\to \mathsf{Z}\mathsf{U}$, $\mathsf{S}\to \mathsf{U}$,
-$\mathsf{U}\to \mathtt{1}$, $\mathsf{Z}\to \mathsf{Z}\mathtt{0}$, and $\mathsf{Z}\to \mathtt{0}$.
+	Consideriamo il linguaggio $L$ su alfabeto $\Sigma_{B}$ delle parola che contengono esattamente un \uno e questo
+	carattere is deve trovare in ultima posizione.
+	Una grammatica $G=\langle V, T, P, S \rangle$ che genera il linguaggio $L$ ha $V=\{\mathsf{Z}, \mathsf{U}\}$,
+	$T=\{\zero, \uno\}$, e le produzioni $\mathsf{S}\to \mathsf{Z}\mathsf{U}$, $\mathsf{S}\to \mathsf{U}$,
+	$\mathsf{U}\to \uno$, $\mathsf{Z}\to \mathsf{Z}\zero$, and $\mathsf{Z}\to \zero$.
 \end{example}
 
-Possiamo notare che la stringa \texttt{001} viene generata dalla grammatica $G$ tramite la seguente sequenza di
+Possiamo notare che la stringa \zero\zero\uno viene generata dalla grammatica $G$ tramite la seguente sequenza di
 applicazioni di produzione:
 
-\[\mathsf{S} \sprod{\mathsf{S}\to \mathsf{Z}\mathsf{U}} \mathsf{Z}\mathsf{U}  \sprod{\mathsf{Z}\to \mathsf{Z}\mathtt{0}} \mathsf{Z}\mathtt{0}\mathsf{U} \sprod{\mathsf{U}\to \mathtt{1}} \mathsf{Z}\mathtt{0}\mathtt{1} \sprod{\mathsf{Z}\to \mathtt{0}} \mathtt{0}\mathtt{0}\mathtt{1} \]
+\[\mathsf{S} \sprod{\mathsf{S}\to \mathsf{Z}\mathsf{U}} \mathsf{Z}\mathsf{U}  \sprod{\mathsf{Z}\to \mathsf{Z}\zero} \mathsf{Z}\zero\mathsf{U} \sprod{\mathsf{U}\to \uno} \mathsf{Z}\zero\uno \sprod{\mathsf{Z}\to \zero} \zero\zero\uno \]
 
-Questa derivazione non è l'unica possibile per generare la stringa \texttt{001} e la grammatica $G$ che abbiamo
+Questa derivazione non è l'unica possibile per generare la stringa \zero\zero\uno e la grammatica $G$ che abbiamo
 descritto non è l'unica in grado di generare il linguaggio $G$.
 Possiamo adesso dare la definizione formale di applicazione di una produzione.
 
 \begin{definition}Applicazione di una produzione\label{def:applicazione-produzione}
-Siano $\alpha$, $\beta$, $\gamma$, $\delta$ stringhe su alfabeto $V\cup T$.
-Sia $\gramm$ una grammatica e sia \prodgen una sua produzione (quindi $\alpha\neq\epsilon$).
-L'\keyword{applicazione} della produzione \prodgen alla stringa $\gamma\alpha\delta$ è denotata con
-$\gamma\alpha\delta \sprod{\prodgen} \gamma\beta\delta$ e rappresenta il fatto che $\alpha$ viene sostituita con $\beta$.
-Se la produzione \prodgen è facilmente identificabile, oppure se non ci interessa specificare la produzione usata, possiamo denotare l'applicazione indicando solo la grammatica $G$
-con $\gamma\alpha\delta \sprod{G} \gamma\beta\delta$.
-Se anche la grammatica coinvolta non è ambigua, possiamo ometterla usando la scrittura $\gamma\alpha\delta \sprod{} \gamma\beta\delta$.
+	Siano $\alpha$, $\beta$, $\gamma$, $\delta$ stringhe su alfabeto $V\cup T$.
+	Sia $\gramm$ una grammatica e sia \prodgen una sua produzione (quindi $\alpha\neq\epsilon$).
+	L'\keyword{applicazione} della produzione \prodgen alla stringa $\gamma\alpha\delta$ è denotata con
+	$\gamma\alpha\delta \sprod{\prodgen} \gamma\beta\delta$ e rappresenta il fatto che $\alpha$ viene sostituita con $\beta$.
+	Se la produzione \prodgen è facilmente identificabile, oppure se non ci interessa specificare la produzione usata, possiamo denotare l'applicazione indicando solo la grammatica $G$
+	con $\gamma\alpha\delta \sprod{G} \gamma\beta\delta$.
+	Se anche la grammatica coinvolta non è ambigua, possiamo ometterla usando la scrittura $\gamma\alpha\delta \sprod{} \gamma\beta\delta$.
 \end{definition}
 
 Per denotare in modo compatto l'effetto di una sequenza di applicazioni di produzioni, e definire il linguaggio generato
@@ -302,17 +302,17 @@ da una grammatica, introduciamo il concetto di
 produzione estesa.
 
 \begin{definition}[Applicazione estesa di una produzione]\label{def:applicazione-produzione-estesa}
-Sia $\gramm$ una grammatica e siano $\alpha$, $\beta$ due forme sentenziali di $G$.
-Allora possiamo scrivere $\alpha \eprod{G} \beta$ se esiste una sequenza
-$\langle \gamma_{1}, \ldots, \gamma_{n}\rangle $ di $n$ forme sentenziali tali che $\alpha = \gamma_{1}$,
-$\beta = \gamma_{n}$, e $\gamma_{i} \sprod{G} \gamma_{i+1}$ per ogni $1\le k< n$.
-In questo caso diciamo che $\beta$ è il risultato dell'\keyword{applicazione estesa} di produzioni di $G$ alla stringa $\alpha$.
+	Sia $\gramm$ una grammatica e siano $\alpha$, $\beta$ due forme sentenziali di $G$.
+	Allora possiamo scrivere $\alpha \eprod{G} \beta$ se esiste una sequenza
+	$\langle \gamma_{1}, \ldots, \gamma_{n}\rangle $ di $n$ forme sentenziali tali che $\alpha = \gamma_{1}$,
+	$\beta = \gamma_{n}$, e $\gamma_{i} \sprod{G} \gamma_{i+1}$ per ogni $1\le k< n$.
+	In questo caso diciamo che $\beta$ è il risultato dell'\keyword{applicazione estesa} di produzioni di $G$ alla stringa $\alpha$.
 \end{definition}
 
 
 \begin{definition}[linguaggio generato]\label{def:linguaggio-generato}
-Sia \gramm una grammatica.
-Il \keyword{linguaggio generato} da $G$, denotato con $L(G)$ è l'insieme $L(G)= \{ w\in T^{*}: S \eprod{G} w\}$.
+	Sia \gramm una grammatica.
+	Il \keyword{linguaggio generato} da $G$, denotato con $L(G)$ è l'insieme $L(G)= \{ w\in T^{*}: S \eprod{G} w\}$.
 \end{definition}
 
 Inoltre la definizione di grammatica è estremamente poco vincolata, rendendo difficile capire quali sia il linguaggio
@@ -323,12 +323,12 @@ Una prima classificazione delle grammatiche corrisponde alla gerarchia di Chomsk
 0, 1, 2, 3.
 
 \begin{definition}\label{def:tipo-0}
-Ogni grammatica \gramm definita secondo la \cref{def:grammatica} è di tipo 0.
+	Ogni grammatica \gramm definita secondo la \cref{def:grammatica} è di tipo 0.
 \end{definition}
 
 \begin{definition}\label{def:tipo-1}
-Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni hanno lunghezza almeno pari a alla testa è di tipo 1.
-Queste grammatiche sono anche dette \keyword{grammatiche dipendenti dal contesto}.
+	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni hanno lunghezza almeno pari a alla testa è di tipo 1.
+	Queste grammatiche sono anche dette \keyword{grammatiche dipendenti dal contesto}.
 \end{definition}
 
 Chiaramente le grammatiche di tipo 1 sono incluse in quelle di tipo 1 e si dimostra facilmente che l'inclusione è stretta.
@@ -338,9 +338,9 @@ Le grammatiche di tipo 1 sono invece utilizzate nell'analisi dei linguaggi natur
 
 
 \begin{definition}\label{def:tipo-2}\label{def:CFG}
-Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni hanno testa formata da esattamente una variabile e per
-coda una forma sentenziale non vuota è di tipo 2.
-Queste grammatiche sono anche dette \keyword{grammatiche libere dal contesto}.
+	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni hanno testa formata da esattamente una variabile e per
+	coda una forma sentenziale non vuota è di tipo 2.
+	Queste grammatiche sono anche dette \keyword{grammatiche libere dal contesto}.
 \end{definition}
 
 Quasi tutti i linguaggi artificiali sono generati da grammatiche di tipo 2: per questo motivo saranno oggetto di uno
@@ -348,9 +348,9 @@ studio estensivo in questo testo.
 Spesso però siamo interessati ad ulteriori restrizioni.
 
 \begin{definition}\label{def:tipo-3}
-Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni sono forma $A\to aB$ o $A\to a$, dove $A$ e $B$ sono
-variabili e $a$ è un terminale, è di tipo 3.
-Queste grammatiche sono anche dette \keyword{grammatiche regolari}.
+	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni sono forma $A\to aB$ o $A\to a$, dove $A$ e $B$ sono
+	variabili e $a$ è un terminale, è di tipo 3.
+	Queste grammatiche sono anche dette \keyword{grammatiche regolari}.
 \end{definition}
 
 In realtà questa gerarchia ammette la possibilità di classi di grammatiche intermedie fra una classe e un'altra.
@@ -375,12 +375,12 @@ Sintetizziamo nella \cref{tab:linguaggi-modelli-grammatiche} le relazioni che sv
 	\caption{Grammatiche, linguaggi e modelli di calcolo}
 	\begin{tabular}{p{2.8cm} p{4.0cm} p{7.0cm}}
 		\toprule
-		Linguaggi di tipo   & Grammatiche   & Modello di calcolo \\
+		Linguaggi di tipo & Grammatiche             & Modello di calcolo                    \\
 		\midrule
-		0   & senza restrizioni       & Macchina di Turing        \\
-		1     & dipendenti dal contesto     & Macchina di Turing con spazio lineare  \\
-		2   & libere dal contesto     & Automi a pila      \\
-		3   & regolari     & Automi a stati finiti      \\
+		0                 & senza restrizioni       & Macchina di Turing                    \\
+		1                 & dipendenti dal contesto & Macchina di Turing con spazio lineare \\
+		2                 & libere dal contesto     & Automi a pila                         \\
+		3                 & regolari                & Automi a stati finiti                 \\
 		\bottomrule
 	\end{tabular}
 \end{table*}
@@ -389,9 +389,9 @@ Sintetizziamo nella \cref{tab:linguaggi-modelli-grammatiche} le relazioni che sv
 
 Un linguaggio può essere visto in tre modi:
 \begin{enumerate}
-\item come un insieme di parole;
-\item tramite una grammatica che genera tutte e sole le parole del linguaggio;
-	  \item tramite una macchina che riconosce tutte e sole le parole del linguaggio.
+	\item come un insieme di parole;
+	\item tramite una grammatica che genera tutte e sole le parole del linguaggio;
+	\item tramite una macchina che riconosce tutte e sole le parole del linguaggio.
 
 \end{enumerate}
 

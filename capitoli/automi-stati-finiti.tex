@@ -21,34 +21,34 @@ con $A$ nome del DFA, $Q$ insiem degli stati, $\Sigma$ rappresentante i simboli 
 Vediamo come decidere se accettare o meno una stringa (sequenza di caratteri) in input mediante un DFA.\\
 Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consultando la funzione di transizione $\delta$, per esempio  $\delta(q_0,a_1)=q_1$ e trovo lo stato in cui il DFA entra dopo aver letto $a_1$. Poi passo a $\delta(q_1,a_2)=q_2$ e così via, $\delta(q_{i-1},a_i)=q_i$ fino a ottenere $q_n$. Se $q_n$ è elemento di $F$ allora $a_1...a_n$ viene accettato, altrimenti viene rifiutato.
 \begin{example}
-	specifico DFA che accetta tutte le strighe binarie in cui compare la sequenza 01:
-	$$L=\{w|w \mbox{ è della forma x01y, con x e y pari a 0 o 1} \}=\{01,11010,100011,...\}$$
+	specifico DFA che accetta tutte le strighe binarie in cui compare la sequenza \zero\uno:
+	$$L=\{w|w \mbox{ è della forma x\zero\uno y, con x e y pari a \zero{} o \uno{}} \}=\{\zero\uno,\uno\uno\zero\uno,\uno\zero\zero\zero\uno\uno,...\}$$
 	o anche:
-	$$L=\{x01y| x,y\in\{0,1\}^* \}$$
+	$$L=\{x\zero\uno y| x,y\in\{\zero,\uno\}^* \}$$
 	abbiamo quindi:
-	$$\Sigma=\{0,1\}$$
+	$$\Sigma=\{\zero,\uno\}$$
 	ragioniamo sul fatto che $A$:
 	\begin{enumerate}
-		\item se ha "già visto" 01, accetterà qualsiasi input
-		\item pur non avendo ancora visto 01, l'input più recente è stato 0, cosicché se ora vede un 1 avrà visto 01
-		\item non ha ancora visto 01, ma l'input più recente è nullo (siamo all'inizio), in tal caso A non accetta finché non vede
-		      uno 0 e subito dopo un 1
+		\item se ha "già visto" \zero\uno, accetterà qualsiasi input
+		\item pur non avendo ancora visto \zero\uno, l'input più recente è stato \zero{}, cosicché se ora vede un \uno{} avrà visto \zero\uno
+		\item non ha ancora visto \zero\uno, ma l'input più recente è nullo (siamo all'inizio), in tal caso A non accetta finché non vede
+		      uno \zero{} e subito dopo un \uno{}
 	\end{enumerate}
-	la terza condizione rappresenta lo stato iniziale. All'inizio bisogna vedere uno 0 e poi un 1. Ma se nello stato $q_0$ si vede per primo un 1 allora non abbiamo fatto alcun passo verso 01, e dunque dobbiamo permanere nello stato $q_0$, $\delta(q_0,1)=q_0$. D'altra parte se nello stato iniziale vedo 0 siamo nella seconda condizione, uso quindi $q_2$ per questa condizione, si avrà quindi $\delta(q_0,0)=q_2$. Vedo ora le transizoni di $q_2$, se vedo 0 ho che 0 è l'ultimo simbolo incontrato quindi uso nuovamente $q_2$, $\delta(q_2,0)=q_2$, in attesa di un 1. Se arriva 1 passo allo stato accertante $q_1$ corrispondente alla prima condizione, $\delta(q_2,1)=q_1$. Ora abbiamo incontrato 01 quindi può succedere qualsiasi cosa e dopo qualsiasi cosa accada potremo nuovamente aspettarci qualsiasi cosa, ovvero $\delta(q_1,0)=\delta(q_1,1)=q_1$. Si deduce quindi che:
+	la terza condizione rappresenta lo stato iniziale. All'inizio bisogna vedere uno \zero{} e poi un \uno{}. Ma se nello stato $q_0$ si vede per primo un \uno{} allora non abbiamo fatto alcun passo verso \zero\uno, e dunque dobbiamo permanere nello stato $q_0$, $\delta(q_0,\uno)=q_0$. D'altra parte se nello stato iniziale vedo \zero{} siamo nella seconda condizione, uso quindi $q_2$ per questa condizione, si avrà quindi $\delta(q_0,\zero)=q_2$. Vedo ora le transizoni di $q_2$, se vedo \zero{} ho che \zero{} è l'ultimo simbolo incontrato quindi uso nuovamente $q_2$, $\delta(q_2,\zero)=q_2$, in attesa di un \uno{}. Se arriva \uno{} passo allo stato accertante $q_1$ corrispondente alla prima condizione, $\delta(q_2,\uno)=q_1$. Ora abbiamo incontrato \zero\uno quindi può succedere qualsiasi cosa e dopo qualsiasi cosa accada potremo nuovamente aspettarci qualsiasi cosa, ovvero $\delta(q_1,\zero)=\delta(q_1,\uno)=q_1$. Si deduce quindi che:
 	$$Q=\{q_0,q_1,q_2\} \mbox{ e } F=\{q_1\}$$
 	quindi:
-	$$A=\{\{q_0,q_1,q_2\} ,\{0,1\}, \delta, q_0, \{q_1\} \}$$
+	$$A=\{\{q_0,q_1,q_2\} ,\{\zero,\uno\}, \delta, q_0, \{q_1\} \}$$
 	con in totale le seguenti transizioni:
-	$$\delta(q_0,1)=q_0$$
-	$$\delta(q_0,0)=q_2$$
-	$$\delta(q_2,0)=q_2$$
-	$$\delta(q_2,1)=q_1$$
-	$$\delta(q_1,0)=q_1$$
-	$$\delta(q_1,1)=q_1$$
+	$$\delta(q_0,\uno)=q_0$$
+	$$\delta(q_0,\zero)=q_2$$
+	$$\delta(q_2,\zero)=q_2$$
+	$$\delta(q_2,\uno)=q_1$$
+	$$\delta(q_1,\zero)=q_1$$
+	$$\delta(q_1,\uno)=q_1$$
 	posso rappresentarle in maniera tabulare, con lo stato inizale indicato da $\to$ e quelli accettanti con $*$:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			$\delta$   & 0     & 1     \\
+			$\delta$   & \zero & \uno  \\
 			\hline
 			$\to\,q_0$ & $q_1$ & $q_0$ \\
 			\hline
@@ -64,11 +64,11 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 			\node[state] (q_2) [right=of q_0] {$q_2$};
 			\node[state, accepting] (q_1) [right=of q_2] {$q_1$};
 			\path[->]
-			(q_0) edge  node {0} (q_2)
-			edge [loop below] node {1} ()
-			(q_2) edge  node  {1} (q_1)
-			edge [loop below] node {0} ()
-			(q_1) edge [loop below] node {0,1} ();
+			(q_0) edge  node {\zero} (q_2)
+			edge [loop below] node {\uno} ()
+			(q_2) edge  node  {\uno} (q_1)
+			edge [loop below] node {\zero} ()
+			(q_1) edge [loop below] node {\zero,\uno} ();
 		\end{tikzpicture}
 
 	\end{center}
@@ -105,7 +105,7 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 	ovvero se da $q_0$ vado a $q_1$ sono obbligato ab generare una sola $b$, dato che il nodo accettnate è $q_1$. In entrambi i nodi posso generare quante $a$ voglio e posso tornare da $q_1$ a $q_0$ per generare altre $b$.
 \end{example}
 \begin{example}
-	Trovo automa per: $$L=\{w\in\{0,1\}^*| w= 0^n1^m\}$$
+	Trovo automa per: $$L=\{w\in\{\zero,\uno\}^*| w= \zero^n\uno^m\}$$
 	vediamo i vari casi:
 	\textbf{Si ha che} $q_E$ \textbf{è lo stato pozzo dove vanno le stringhe venute male}
 	\begin{itemize}
@@ -116,14 +116,14 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
 				      \node[state] (q_E) [right=of q_1] {$q_E$};
 				      \path[->]
-				      (q_0) edge  node {1} (q_1)
-				      edge [loop below] node {0} ()
+				      (q_0) edge  node {\uno} (q_1)
+				      edge [loop below] node {\zero} ()
 				      (q_1) edge  node  {} (q_E)
-				      edge [loop below] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
+				      edge [loop below] node {\uno} ()
+				      (q_E) edge [loop below] node {\zero,\uno} ();
 			      \end{tikzpicture}
 		      \end{center}
-		      ovvero posso non generare nulla e uscire subito con $q_0$, generare solo un 1 e passare a $q_1$ e uscire oppure generare 0 e 1 a piacere con l'ultimo stato o generare 0 a piacere dal primo e 1 a piacere dal secondo.
+		      ovvero posso non generare nulla e uscire subito con $q_0$, generare solo un \uno{} e passare a $q_1$ e uscire oppure generare \zero{} e \uno{} a piacere con l'ultimo stato o generare \zero{} a piacere dal primo e \uno{} a piacere dal secondo.
 		\item $n\geq 0 \,\,m>0$:
 		      \begin{center}
 			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -131,14 +131,14 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 				      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
 				      \node[state] (q_E) [right=of q_1] {$q_E$};
 				      \path[->]
-				      (q_0) edge  node {1} (q_1)
-				      edge [loop below] node {0} ()
+				      (q_0) edge  node {\uno} (q_1)
+				      edge [loop below] node {\zero} ()
 				      (q_1) edge  node  {} (q_E)
-				      edge [loop below] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
+				      edge [loop below] node {\uno} ()
+				      (q_E) edge [loop below] node {\zero,\uno} ();
 			      \end{tikzpicture}
 		      \end{center}
-		      ovvero come l'esempio sopra solo che non posso uscire in $q_0$ in quanto almeno un 1 deve essere per forza generato
+		      ovvero come l'esempio sopra solo che non posso uscire in $q_0$ in quanto almeno un \uno{} deve essere per forza generato
 		\item $n> 0\,\, m\geq 0$:
 		      \begin{center}
 			      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -147,13 +147,13 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 				      \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
 				      \node[state] (q_E) [right=of q_2] {$q_E$};
 				      \path[->]
-				      (q_0) edge  node {0} (q_1)
-				      edge [bend right] node {1} (q_E)
-				      (q_1) edge  node {1} (q_2)
-				      edge [loop above] node {0} ()
-				      (q_2) edge node {0} (q_E)
-				      edge [loop above] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
+				      (q_0) edge  node {\zero} (q_1)
+				      edge [bend right] node {\uno} (q_E)
+				      (q_1) edge  node {\uno} (q_2)
+				      edge [loop above] node {\zero} ()
+				      (q_2) edge node {\zero} (q_E)
+				      edge [loop above] node {\uno} ()
+				      (q_E) edge [loop below] node {\zero,\uno} ();
 			      \end{tikzpicture}
 		      \end{center}
 		      \textit{CHIARIRE}
@@ -165,13 +165,13 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 				      \node[state, accepting] (q_2) [right=of q_1] {$q_2$};
 				      \node[state] (q_E) [right=of q_2] {$q_E$};
 				      \path[->]
-				      (q_0) edge  node {0} (q_1)
-				      edge [bend right] node {1} (q_E)
-				      (q_1) edge  node {1} (q_2)
-				      edge [loop above] node {0} ()
-				      (q_2) edge node {0} (q_E)
-				      edge [loop above] node {1} ()
-				      (q_E) edge [loop below] node {0,1} ();
+				      (q_0) edge  node {\zero} (q_1)
+				      edge [bend right] node {\uno} (q_E)
+				      (q_1) edge  node {\uno} (q_2)
+				      edge [loop above] node {\zero} ()
+				      (q_2) edge node {\zero} (q_E)
+				      edge [loop above] node {\uno} ()
+				      (q_E) edge [loop below] node {\zero,\uno} ();
 			      \end{tikzpicture}
 		      \end{center}
 		      \textit{CHIARIRE}
@@ -277,7 +277,7 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 	\end{center}
 \end{example}
 \begin{example}
-	Trovo automa per: $$L=\{x010y|\,x,y\in\{o,1\}^*\}$$
+	Trovo automa per: $$L=\{x\zero\uno\zero y|\,x,y\in\{o,1\}^*\}$$
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_{0}$};
@@ -285,12 +285,12 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 			\node[state] (q_2) [right=of q_1] {$q_{2}$};
 			\node[state, accepting] (q_3) [right= of q_2] {$q_{3}$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {1} ()
-			(q_1) edge  node {1} (q_2)
-			edge [loop above] node {0} ()
-			(q_2) edge  node {0} (q_3)
-			(q_3) edge [loop below] node {0,1} ();
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\uno} ()
+			(q_1) edge  node {\uno} (q_2)
+			edge [loop above] node {\zero} ()
+			(q_2) edge  node {\zero} (q_3)
+			(q_3) edge [loop below] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -299,7 +299,7 @@ Ho una sequenza in input $a_1...a_n$. Parto dallo stato iniziale $q_0$, consulta
 Un automa a stati finiti non deterministici (\textit{NFA}) può trovarsi in diversi stati contemporaneamente. Come i DFA accettano linguaggi regolari e spesso sono più semplici da trattare rispetto ai DFA.\\
 Un NFA è definito come un DFA ma si ha un diverso tipo di transizione $\delta$, che ha sempre come argomenti uno stato e un simbolo di input ma restituisce zero o più stati.
 \begin{example}
-	Sia $L=\{x01|\,x\in\{o,1\}$ ovvero il linguaggio formato da tutte le stringhe binarie che terminano in 01.\\
+	Sia $L=\{x\zero\uno|\,x\in\{o,1\}$ ovvero il linguaggio formato da tutte le stringhe binarie che terminano in \zero\uno.\\
 	Avremo il seguente automa determinsitico:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
@@ -307,12 +307,12 @@ Un NFA è definito come un DFA ma si ha un diverso tipo di transizione $\delta$,
 			\node[state] (q_1) [right=of q_0] {$q_{1}$};
 			\node[state, accepting] (q_2) [right=of q_1] {$q_{2}$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {1} ()
-			(q_1) edge  node {1} (q_2)
-			edge [loop above] node {0} ()
-			(q_2) edge  [bend left =25] node {0} (q_1)
-			edge [bend left = 50] node {1} (q_0);
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\uno} ()
+			(q_1) edge  node {\uno} (q_2)
+			edge [loop above] node {\zero} ()
+			(q_2) edge  [bend left =25] node {\zero} (q_1)
+			edge [bend left = 50] node {\uno} (q_0);
 		\end{tikzpicture}
 	\end{center}
 	che diventa il seguente NFA:
@@ -322,22 +322,22 @@ Un NFA è definito come un DFA ma si ha un diverso tipo di transizione $\delta$,
 			\node[state] (q_1) [right=of q_0] {$q_{1}$};
 			\node[state, accepting] (q_2) [right=of q_1] {$q_{2}$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {0,1} ()
-			(q_1) edge  node {1} (q_2);
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\zero,\uno} ()
+			(q_1) edge  node {\uno} (q_2);
 		\end{tikzpicture}
 	\end{center}
 	quindi con:
-	$$\delta(q_0,0)=\{q_0,q_1\}$$
-	$$\delta(q_0,1)=\{q_0\}$$
-	$$\delta(q_1,0)=\emptyset$$
-	$$\delta(q_1,1)=\{q_2\}$$
-	$$\delta(q_2,0)=\emptyset$$
-	$$\delta(q_2,1)=\emptyset$$
+	$$\delta(q_0,\zero)=\{q_0,q_1\}$$
+	$$\delta(q_0,\uno)=\{q_0\}$$
+	$$\delta(q_1,\zero)=\emptyset$$
+	$$\delta(q_1,\uno)=\{q_2\}$$
+	$$\delta(q_2,\zero)=\emptyset$$
+	$$\delta(q_2,\uno)=\emptyset$$
 	in forma tabulare:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			$\delta$    & 0             & 1           \\
+			$\delta$    & \zero         & \uno        \\
 			\hline
 			$\to \,q_0$ & $\{q_0,q_1\}$ & $\{q_1\}$   \\
 			\hline
@@ -346,11 +346,11 @@ Un NFA è definito come un DFA ma si ha un diverso tipo di transizione $\delta$,
 			$*\, q_0$   & $\emptyset$   & $\emptyset$
 		\end{tabular}
 	\end{center}
-	vediamone la simulazione per la stringa 00101:
+	vediamone la simulazione per la stringa \zero\zero\uno\zero\uno:
 	\begin{center}
 		\includegraphics[scale=0.7]{img/nfa.png}
 	\end{center}
-	ovvero si parte dallo stato inziale, quando viene letto 0 si passa a $q_0$ e $q_1$, poi viene letto il secondo 0 quindi $q_0$ va nuovamente verso $q_0$ e $q_1$ mentre il primo $q_1$ muore non avendo transizioni su 0. Arriva poi l'1 quindi $q_0$ va solon verso $q_0$ e $q_1$ verso $q_2$ e sarebbe accettante ma l'input non è finito. Ora arriva 0 e $q_2$ si blocca mentre $q_0$ va sia in $q_0$ che in $q_1$. Arriva infine un 1 che manda $q_0$ in $q_0$ e $q_1$ in $q_2$ che è accettante e non avendo altri input si è dimostrata l'appartenenza della stringa al linguaggio
+	ovvero si parte dallo stato inziale, quando viene letto \zero{} si passa a $q_0$ e $q_1$, poi viene letto il secondo \zero{} quindi $q_0$ va nuovamente verso $q_0$ e $q_1$ mentre il primo $q_1$ muore non avendo transizioni su \zero{}. Arriva poi l'\uno{} quindi $q_0$ va solon verso $q_0$ e $q_1$ verso $q_2$ e sarebbe accettante ma l'input non è finito. Ora arriva \zero{} e $q_2$ si blocca mentre $q_0$ va sia in $q_0$ che in $q_1$. Arriva infine un \uno{} che manda $q_0$ in $q_0$ e $q_1$ in $q_2$ che è accettante e non avendo altri input si è dimostrata l'appartenenza della stringa al linguaggio
 \end{example}
 definisco quindi un NFA come una quintupla:
 $$A=(Q,\Sigma,\delta,q_0,F)$$
@@ -367,7 +367,7 @@ Possiamo ora definire {$\delta$}, delta cappuccio che prende in ingresso uno sta
 Per il linguaggio $L$ accettato dall'automa si ha:
 $$L(A)=\{w\in \Sigma^*|\, \hat{\delta}(q_0,q)\cap F\neq \emptyset\}$$
 \begin{example}
-	Automa per $L=\{x010y|\,x,y\in\{0,1\}^*\}$ ovvero tutte le stringhe con dentro la sequenza $010$:
+	Automa per $L=\{x\zero\uno\zero y|\,x,y\in\{\zero,\uno\}^*\}$ ovvero tutte le stringhe con dentro la sequenza $\zero\uno\zero$:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_{0}$};
@@ -375,11 +375,11 @@ $$L(A)=\{w\in \Sigma^*|\, \hat{\delta}(q_0,q)\cap F\neq \emptyset\}$$
 			\node[state] (q_2) [right=of q_1] {$q_{2}$};
 			\node[state, accepting] (q_3) [right=of q_2] {$q_{3}$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {0,1} ()
-			(q_1) edge  node {1} (q_2)
-			(q_2) edge  node {0} (q_3)
-			(q_3)     edge [loop above] node {0,1} ();
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\zero,\uno} ()
+			(q_1) edge  node {\uno} (q_2)
+			(q_2) edge  node {\zero} (q_3)
+			(q_3)     edge [loop above] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -387,7 +387,7 @@ Troviamo ora un algoritmo che trasformi un NFA in un DFA.\\
 Dal penultimo esempio esempio ricavo:
 \begin{center}
 	\begin{tabular}{c|c|c}
-		                     & 0             & 1             \\
+		                     & \zero         & \uno          \\
 		\hline
 		$\emptyset$          & $\emptyset$   & $\emptyset$   \\
 		\hline
@@ -413,18 +413,18 @@ ovvero:
 		\node[state] (q_1) [right=of q_0] {$\{q_{0}, q_1\}$};
 		\node[state] (q_2) [right=of q_1] {$\{q_0,q_{2}\}$};
 		\path[->]
-		(q_0) edge  node {0} (q_1)
-		edge [loop above] node {1} ()
-		(q_1) edge  node {1} (q_2)
-		edge [loop above] node {0} ()
-		(q_2) edge [bend left =25]  node {0} (q_1)
-		edge [bend left =45] node  {1} (q_0);
+		(q_0) edge  node {\zero} (q_1)
+		edge [loop above] node {\uno} ()
+		(q_1) edge  node {\uno} (q_2)
+		edge [loop above] node {\zero} ()
+		(q_2) edge [bend left =25]  node {\zero} (q_1)
+		edge [bend left =45] node  {\uno} (q_0);
 	\end{tikzpicture}
 \end{center}
 che è il DFA che si era anche prima ottenuto. Si hanno però dei sottoinsiemi mai raggiungibili. Si ha quindi:
 \begin{center}
 	\begin{tabular}{c|c|c}
-		                 & 0             & 1             \\
+		                 & \zero         & \uno          \\
 		\hline
 		$\to\,\{q_0\}$   & $\{q_0,q_1\}$ & $\{q_0\}$     \\
 		\hline
@@ -440,12 +440,12 @@ e definendo $\{q_0\}=a, \, \{q_0,q_1\}=b\,\,\, e\,\,\, \{q_0,q_2\}=c$ si avrà:
 		\node[state] (q_1) [right=of q_0] {$b$};
 		\node[state, accepting] (q_2) [right=of q_1] {$c$};
 		\path[->]
-		(q_0) edge  node {0} (q_1)
-		edge [loop above] node {1} ()
-		(q_1) edge  node {1} (q_2)
-		edge [loop above] node {0} ()
-		(q_2) edge  [bend left =25] node {0} (q_1)
-		edge [bend left = 50] node {1} (q_0);
+		(q_0) edge  node {\zero} (q_1)
+		edge [loop above] node {\uno} ()
+		(q_1) edge  node {\uno} (q_2)
+		edge [loop above] node {\zero} ()
+		(q_2) edge  [bend left =25] node {\zero} (q_1)
+		edge [bend left = 50] node {\uno} (q_0);
 	\end{tikzpicture}
 \end{center}
 Definiamo questo algoritmo che avrà:
@@ -460,7 +460,7 @@ con:
 	\item $\forall S\subseteq Q_N$ e $ \forall a \in\Sigma$:
 	      $$\delta_D(S,a)=\cup \delta_n(p,a)$$
 	      per esempio:
-	      $$\delta_D(\{q_0,q_1,q_2\},0)=\delta_N(q_0,0)\cup \delta_N(q_1,0) \cup\delta_N(q_2,0) $$
+	      $$\delta_D(\{q_0,q_1,q_2\},\zero)=\delta_N(q_0,\zero)\cup \delta_N(q_1,\zero) \cup\delta_N(q_2,\zero) $$
 \end{itemize}
 Si definisce l'$\varepsilon-NFA$, l'automa astati finiti non deterministici con $\varepsilon$ transizioni. Con la transizione $\varepsilon$ posso saltare i nodi, ovvero avanza senza aggiungere caratteri
 \begin{example}
@@ -566,8 +566,8 @@ che diventa il seguente DFA:
 \newpage
 \subsubsection{esercizi}
 \begin{example}
-	automa DFA per $w=x010y,\,x,y\in\{0,1\}^*$ :\\
-	la stringa più corta è 010
+	automa DFA per $w=x\zero\uno\zero y,\,x,y\in\{\zero,\uno\}^*$ :\\
+	la stringa più corta è \zero\uno\zero
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_{0}$};
@@ -575,13 +575,13 @@ che diventa il seguente DFA:
 			\node[state] (q_2) [right=of q_1] {$q_{2}$};
 			\node[state, accepting] (q_3) [right=of q_2] {$q_{3}$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {1} ()
-			(q_1) edge  node {1} (q_2)
-			edge [loop above] node {0} ()
-			(q_2) edge  node {0} (q_3)
-			edge  [bend left = 45] node {1}(q_0)
-			(q_3) edge [loop above] node {0,1} ();
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\uno} ()
+			(q_1) edge  node {\uno} (q_2)
+			edge [loop above] node {\zero} ()
+			(q_2) edge  node {\zero} (q_3)
+			edge  [bend left = 45] node {\uno}(q_0)
+			(q_3) edge [loop above] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -635,7 +635,7 @@ che diventa il seguente DFA:
 \end{example}
 \newpage
 \begin{example}
-	cerco DFA per  stringhe di bit non contegano 000
+	cerco DFA per  stringhe di bit non contegano \zero\zero\zero
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial, accepting] (q_0) {$q_0$};
@@ -643,18 +643,18 @@ che diventa il seguente DFA:
 			\node[state, accepting] (q_2) [right=of q_1]{$q_2$};
 			\node[state] (q_e) [right=of q_2]{$q_E$};
 			\path[->]
-			(q_0) edge  [bend left=25] node {0} (q_1)
-			edge [loop] node {1} ()
-			(q_1) edge node {0} (q_2)
-			edge [bend left=25] node {1} (q_0)
-			(q_2) edge node {0} (q_e)
-			edge  [bend left=55] node{1} (q_0)
-			(q_e) edge [loop ] node {0,1} ();
+			(q_0) edge  [bend left=25] node {\zero} (q_1)
+			edge [loop] node {\uno} ()
+			(q_1) edge node {\zero} (q_2)
+			edge [bend left=25] node {\uno} (q_0)
+			(q_2) edge node {\zero} (q_e)
+			edge  [bend left=55] node{\uno} (q_0)
+			(q_e) edge [loop ] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
 \begin{example}
-	cerco DFA per  stringhe di bit non contegano 000 almeno una volta
+	cerco DFA per  stringhe di bit non contegano \zero\zero\zero almeno una volta
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_0$};
@@ -662,13 +662,13 @@ che diventa il seguente DFA:
 			\node[state] (q_2) [right=of q_1]{$q_2$};
 			\node[state, accepting] (q_e) [right=of q_2]{$q_E$};
 			\path[->]
-			(q_0) edge  [bend left=25] node {0} (q_1)
-			edge [loop] node {1} ()
-			(q_1) edge node {0} (q_2)
-			edge [bend left=25] node {1} (q_0)
-			(q_2) edge node {0} (q_e)
-			edge  [bend left=55] node{1} (q_0)
-			(q_e) edge [loop ] node {0,1} ();
+			(q_0) edge  [bend left=25] node {\zero} (q_1)
+			edge [loop] node {\uno} ()
+			(q_1) edge node {\zero} (q_2)
+			edge [bend left=25] node {\uno} (q_0)
+			(q_2) edge node {\zero} (q_e)
+			edge  [bend left=55] node{\uno} (q_0)
+			(q_e) edge [loop ] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -685,21 +685,21 @@ che diventa il seguente DFA:
 			\node[state] (q_6) [below=of q_5]{$q_6$};
 			\node[state] (q_e) [right=of q_3]{$q_E$};
 			\path[->]
-			(q_0) edge  [bend left=25] node {0} (q_1)
-			edge [loop] node {1} ()
-			(q_1) edge node {0} (q_2)
-			edge [bend left=25] node {1} (q_0)
-			(q_2) edge node {0} (q_3)
-			edge  [bend left=45] node{1} (q_0)
-			(q_3) edge node {0} (q_e)
-			edge node {1} (q_4)
-			(q_4) edge [bend left=25] node {0} (q_5)
-			edge [loop right] node {1} ()
-			(q_5) edge [bend left=25] node {1} (q_4)
-			edge node {0} (q_6)
-			(q_6) edge [bend right=25] node {0} (q_e)
-			edge [bend left=55] node {0} (q_4)
-			(q_e) edge [loop ] node {0,1} ();
+			(q_0) edge  [bend left=25] node {\zero} (q_1)
+			edge [loop] node {\uno} ()
+			(q_1) edge node {\zero} (q_2)
+			edge [bend left=25] node {\uno} (q_0)
+			(q_2) edge node {\zero} (q_3)
+			edge  [bend left=45] node{\uno} (q_0)
+			(q_3) edge node {\zero} (q_e)
+			edge node {\uno} (q_4)
+			(q_4) edge [bend left=25] node {\zero} (q_5)
+			edge [loop right] node {\uno} ()
+			(q_5) edge [bend left=25] node {\uno} (q_4)
+			edge node {\zero} (q_6)
+			(q_6) edge [bend right=25] node {\zero} (q_e)
+			edge [bend left=55] node {\zero} (q_4)
+			(q_e) edge [loop ] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -877,14 +877,14 @@ partiamo con un esempio:
 		\node[state] (q_3) [right=of q_2] {$q_{n-1}$};
 		\node[state, accepting] (q_4) [right=of q_3] {$q_n$};
 		\path[->]
-		(q_0) edge  node {1} (q_1)
-		edge [loop above] node {0,1} ()
-		(q_1) edge  node {0,1} (q_2)
-		(q_2) edge node {0,1} (q_3)
-		(q_3) edge node {0,1} (q_4);
+		(q_0) edge  node {\uno} (q_1)
+		edge [loop above] node {\zero,\uno} ()
+		(q_1) edge  node {\zero,\uno} (q_2)
+		(q_2) edge node {\zero,\uno} (q_3)
+		(q_3) edge node {\zero,\uno} (q_4);
 	\end{tikzpicture}
 \end{center}
-che definisce un $L\subseteq\{0,1\}^*$ tale che $w\in L$ sse n-simo elemento della fine è 1. Si ha:
+che definisce un $L\subseteq\{\zero,\uno\}^*$ tale che $w\in L$ sse n-simo elemento della fine è 1. Si ha:
 $$|Q_N|=n+1\to |Q_D|=2^n$$
 Si ha che dato un $\varepsilon$-NFA $E=(Q_E, \Sigma, \delta_E, q_{0_E}, F_E)$ che riconosce $L$ in un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ equivalenti con $Q_N=2^{Q_E}$ stati in $Q_E$ $\varepsilon$-close: \textit{ECLOSE(S)=S} e $q_N=ECLOSE(q_E)$:
 $$F_N\{S\in Q_F,\,\, S\subseteq Q_E | S\cap F_E\neq \emptyset\}$$
@@ -978,8 +978,8 @@ $$\delta_N(S,a)=ECLOSE(\{r_1, ..., r_n\})$$
 \newpage
 \begin{example}
 	creo E-NFA per
-	$$ER=(0+1)^*1(0+1)$$
-	si ha che per 0+1:
+	$$ER=(\zero+\uno)^*1(\zero+\uno)$$
+	si ha che per \zero+\uno:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state,initial] (q_0)   {$q_0$};
@@ -991,13 +991,13 @@ $$\delta_N(S,a)=ECLOSE(\{r_1, ..., r_n\})$$
 			\path[->]
 			(q_0) edge node {$\varepsilon$} (q_1)
 			(q_0) edge node {$\varepsilon$} (q_2)
-			(q_1) edge node {$0$} (q_3)
-			(q_2) edge node {$1$} (q_4)
+			(q_1) edge node {$\zero$} (q_3)
+			(q_2) edge node {$\uno$} (q_4)
 			(q_3) edge node {$\varepsilon$} (q_5)
 			(q_4) edge node {$\varepsilon$} (q_5);
 		\end{tikzpicture}
 	\end{center}
-	da qui ottengo $(0+1)^*$
+	da qui ottengo $(\zero+\uno)^*$
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_i)   {$q_i$};
@@ -1013,9 +1013,9 @@ $$\delta_N(S,a)=ECLOSE(\{r_1, ..., r_n\})$$
 			(q_i) edge [bend right =65] node {$\varepsilon$} (q_f)
 			(q_0) edge node {$\varepsilon$} (q_1)
 			(q_0) edge node {$\varepsilon$} (q_2)
-			(q_1) edge node {$0$} (q_3)
+			(q_1) edge node {$\zero$} (q_3)
 			(q_5) edge  [bend right =100] node [above] {$\varepsilon$} (q_0)
-			(q_2) edge node {$1$} (q_4)
+			(q_2) edge node {$\uno$} (q_4)
 			(q_3) edge node {$\varepsilon$} (q_5)
 			(q_5) edge node {$\varepsilon$} (q_f)
 			(q_4) edge node {$\varepsilon$} (q_5);
@@ -1047,19 +1047,19 @@ $$\delta_N(S,a)=ECLOSE(\{r_1, ..., r_n\})$$
 			(q_i) edge [bend right =65] node {$\varepsilon$} (q_f)
 			(q_0) edge node {$\varepsilon$} (q_1)
 			(q_0) edge node {$\varepsilon$} (q_2)
-			(q_1) edge node {$0$} (q_3)
+			(q_1) edge node {$\zero$} (q_3)
 			(q_5) edge  [bend right =100] node [above] {$\varepsilon$} (q_0)
-			(q_2) edge node {$1$} (q_4)
+			(q_2) edge node {$\uno$} (q_4)
 			(q_3) edge node {$\varepsilon$} (q_5)
 			(q_5) edge node {$\varepsilon$} (q_f)
 			(q_4) edge node {$\varepsilon$} (q_5)
 			(q_f) edge node  {$\varepsilon$} (q_m)
-			(q_m) edge node  {$1$} (q_n)
+			(q_m) edge node  {$\uno$} (q_n)
 			(q_n) edge node  {$\varepsilon$} (q_6)
 			(q_6) edge node {$\varepsilon$} (q_7)
 			(q_6) edge node {$\varepsilon$} (q_8)
-			(q_6) edge node {$0$} (q_8)
-			(q_7) edge node {$1$} (q_9)
+			(q_6) edge node {$\zero$} (q_8)
+			(q_7) edge node {$\uno$} (q_9)
 			(q_8) edge node {$\varepsilon$} (q_a)
 			(q_a) edge node {$\varepsilon$} (q_b)
 			(q_9) edge node {$\varepsilon$} (q_b);
@@ -1141,10 +1141,10 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 			\node[state, accepting] (q_2) [right=of q_1] {$C$};
 			\node[state, accepting] (q_3) [right=of q_2] {$D$};
 			\path[->]
-			(q_0) edge  node {1} (q_1)
-			edge [loop above] node {0,1} ()
-			(q_1) edge  node {0,1} (q_2)
-			(q_2) edge  node {0,1} (q_3);
+			(q_0) edge  node {\uno} (q_1)
+			edge [loop above] node {\zero,\uno} ()
+			(q_1) edge  node {\zero,\uno} (q_2)
+			(q_2) edge  node {\zero,\uno} (q_3);
 		\end{tikzpicture}
 	\end{center}
 	questo automa accetta le stringhe binarie con un uno in penultima o terzultima posizione.\\
@@ -1156,17 +1156,17 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 			\node[state, accepting] (q_2) [right=of q_1] {$C$};
 			\node[state, accepting] (q_3) [right=of q_2] {$D$};
 			\path[->]
-			(q_0) edge  node {1} (q_1)
-			edge [loop above] node {0+1} ()
-			(q_1) edge  node {0+1} (q_2)
-			(q_2) edge  node {0+1} (q_3);
+			(q_0) edge  node {\uno} (q_1)
+			edge [loop above] node {\zero+\uno} ()
+			(q_1) edge  node {\zero+\uno} (q_2)
+			(q_2) edge  node {\zero+\uno} (q_3);
 		\end{tikzpicture}
 	\end{center}
 	elimino B che non è iniziale o finale . Il predecessore di B è A e il successore è C. Si ha quindi:
-	$$A\to B:1$$
-	$$B\to C:0+1$$
+	$$A\to B:\uno$$
+	$$B\to C:\zero+\uno$$
 	e non ho loop in B ($\emptyset$) e nessun arco tra A e C ($R_{a,c}=\emptyset$). Quindi:
-	$$R_{A,C}^{'}=\emptyset+1\emptyset^*(0+1)=1(0+1)$$
+	$$R_{A,C}^{'}=\emptyset+\uno\emptyset^*(\zero+\uno)=\uno(\zero+\uno)$$
 	ovvero:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
@@ -1174,33 +1174,33 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 			\node[state, accepting] (q_2) [right=of q_0] {$C$};
 			\node[state, accepting] (q_3) [right=of q_2] {$D$};
 			\path[->]
-			(q_0) edge  node {1(0+1)} (q_2)
-			edge [loop above] node {0+1} ()
-			(q_2) edge  node {0+1} (q_3);
+			(q_0) edge  node {1(\zero+\uno)} (q_2)
+			edge [loop above] node {\zero+\uno} ()
+			(q_2) edge  node {\zero+\uno} (q_3);
 		\end{tikzpicture}
 	\end{center}
 	Ho ora solo stati iniziali e finali, quindi $E=E_1+E_2$.
 	Trovo $E1$, elimino quindi C. Si ha:
-	$$A\to C:1(0+1)$$
-	$$C\to D:0+1$$
+	$$A\to C:\uno(\zero+\uno)$$
+	$$C\to D:\zero+\uno$$
 	e non ho loop in B ($\emptyset$) e nessun arco tra A e D($R_{A,D}=\emptyset$), ovvero:
-	$$R_{A,D}=\emptyset+1(0+1)\emptyset^*(0+1)=1(0+1)(0+1)$$
+	$$R_{A,D}=\emptyset+1(\zero+\uno)\emptyset^*(\zero+\uno)=\uno(\zero+\uno)(\zero+\uno)$$
 	che è:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
 			\node[state, initial] (q_0) {$A$};
 			\node[state, accepting] (q_3) [right=of q_0] {$D$};
 			\path[->]
-			(q_0) edge  node {1(0+1)(0+1)} (q_3)
-			edge [loop above] node {0+1} ();
+			(q_0) edge  node {1(\zero+\uno)(\zero+\uno)} (q_3)
+			edge [loop above] node {\zero+\uno} ();
 		\end{tikzpicture}
 	\end{center}
 	quindi:
-	$$E_1=((0+1)+1(0+1)(0+1)\emptyset^*\emptyset)^*1(0+1)(0+1)\emptyset^*=(0+1)^*1(0+1)(0+1)$$
+	$$E_1=((\zero+\uno)+1(\zero+\uno)(\zero+\uno)\emptyset^*\emptyset)^*1(\zero+\uno)(\zero+\uno)\emptyset^*=(\zero+\uno)^*1(\zero+\uno)(\zero+\uno)$$
 	ottengo $E2$ eliminando D che non ha successori, quindi:
-	$$E_2=(0+1)^*1(0+1)$$
+	$$E_2=(\zero+\uno)^*1(\zero+\uno)$$
 	e quindi infine:
-	$$E=E_1+E_2=(0+1)^*1(0+1)(0+1)+(0+1)^*1(0+1)=(0+1)^*1(0+1)(\varepsilon+0+1)$$
+	$$E=E_1+E_2=(\zero+\uno)^*1(\zero+\uno)(\zero+\uno)+(\zero+\uno)^*1(\zero+\uno)=(\zero+\uno)^*1(\zero+\uno)(\varepsilon+\zero+\uno)$$
 \end{example}
 \begin{example}
 	\begin{center}
@@ -1210,23 +1210,23 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 			\node[state] (q_2) [right=of q_1] {$r$};
 			\node[state] (q_3) [below=of q_1] {$q$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {1} ()
-			(q_1) edge [bend left = 25] node {0} (q_3)
-			(q_1) edge  node {1} (q_2)
-			(q_2) edge  [bend left = 25] node {1} (q_3)
-			edge [loop above] node {0} ()
-			(q_3) edge  [bend left = 25] node {1} (q_1)
-			(q_3) edge  [bend left = 25] node {0} (q_0);
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\uno} ()
+			(q_1) edge [bend left = 25] node {\zero} (q_3)
+			(q_1) edge  node {\uno} (q_2)
+			(q_2) edge  [bend left = 25] node {\uno} (q_3)
+			edge [loop above] node {\zero} ()
+			(q_3) edge  [bend left = 25] node {\uno} (q_1)
+			(q_3) edge  [bend left = 25] node {\zero} (q_0);
 		\end{tikzpicture}
 	\end{center}
 	rimuovo $r$:
-	$$s\to r:1$$
-	$$r\to q:1$$
-	$$loop:0$$
-	$$R_{s,q}=0$$
+	$$s\to r:\uno$$
+	$$r\to q:\uno$$
+	$$loop:\zero$$
+	$$R_{s,q}=\zero$$
 	Si ottiene quindi:
-	$$R^{'}_{s,q}=0+10^*1$$
+	$$R^{'}_{s,q}=\zero+\uno\zero^*\uno$$
 	ovvero:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
@@ -1234,38 +1234,38 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 			\node[state] (q_1) [right =of q_0] {$s$};
 			\node[state] (q_3) [below=of q_1] {$q$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [loop above] node {1} ()
-			(q_1) edge [bend left = 25] node {$0+10^*1$} (q_3)
-			(q_3) edge  [bend left = 25] node {1} (q_1)
-			(q_3) edge  [bend left = 25] node {0} (q_0);
+			(q_0) edge  node {\zero} (q_1)
+			edge [loop above] node {\uno} ()
+			(q_1) edge [bend left = 25] node {$\zero+\uno\zero^*\uno$} (q_3)
+			(q_3) edge  [bend left = 25] node {\uno} (q_1)
+			(q_3) edge  [bend left = 25] node {\zero} (q_0);
 		\end{tikzpicture}
 	\end{center}
 	elimino ora $s$, che ha due predecessori, $p$ e $q$, quindi:
-	$$p\to s:0$$
-	$$q\to s:1$$
-	$$s\to q:0+10^*1$$
+	$$p\to s:\zero$$
+	$$q\to s:\uno$$
+	$$s\to q:\zero+\uno\zero^*\uno$$
 	non ha loop e non ha archi diretti tra $p$ e $q$ ($R_{p,q}=\emptyset$). Si ottengono quindi:
-	$$R_{p,q}=\emptyset+0\emptyset^*(0+10^*1)=0(0+10^*1)$$
-	$$R_{q,q}=\emptyset+10^*(0+10^*1)=1(0+10^*1)$$
+	$$R_{p,q}=\emptyset+\zero\emptyset^*(\zero+\uno\zero^*\uno)=\zero(\zero+\uno\zero^*\uno)$$
+	$$R_{q,q}=\emptyset+\uno\zero^*(\zero+\uno\zero^*\uno)=\uno(\zero+\uno\zero^*\uno)$$
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
 			\node[state, initial, accepting] (q_0) {$p$};
 			\node[state] (q_3) [right=of q_0] {$q$};
 			\path[->]
-			(q_0) edge [bend left = 25] node {$0(0+10^*1)$} (q_3)
-			edge [loop above] node {1} ()
-			(q_3) edge  [bend left = 25] node {0} (q_0)
-			edge [loop above] node {$1(0+10^*1)$} ();
+			(q_0) edge [bend left = 25] node {$\zero(\zero+\uno\zero^*\uno)$} (q_3)
+			edge [loop above] node {\uno} ()
+			(q_3) edge  [bend left = 25] node {\zero} (q_0)
+			edge [loop above] node {$\uno(\zero+\uno\zero^*\uno)$} ();
 		\end{tikzpicture}
 	\end{center}
 	elimino ora $q$ che ha $p$ sia come predecessore che come successore:
-	$$p\to q: 0(0+10^*1)$$
-	$$q\to p:0$$
-	$$loop: 1(0+10^*1)$$
-	$$R_{p,p}:1$$
+	$$p\to q: \zero(\zero+\uno\zero^*\uno)$$
+	$$q\to p:\zero$$
+	$$loop: \uno(\zero+\uno\zero^*\uno)$$
+	$$R_{p,p}:\uno$$
 	ottenendo:
-	$$R^{'}_{p,p}=1+0(0+10^*1)(1(0+10^*1))^*0=1+(00+010^*1)(10+110^*1)^*0$$
+	$$R^{'}_{p,p}=\uno+\zero(\zero+\uno\zero^*\uno)(\uno(\zero+\uno\zero^*\uno))^*\zero=\uno+(\zero\zero+\zero\uno\zero^*\uno)(\uno\zero+\uno\uno\zero^*\uno)^*\zero$$
 	\newpage
 	ovvero:
 
@@ -1273,11 +1273,11 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 		\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
 			\node[state, initial, accepting] (q_0) {$p$};
 			\path[->]
-			(q_0)   edge [loop above] node {$1+(00+010^*1)(10+110^*1)^*0$} ();
+			(q_0)   edge [loop above] node {$\uno+(\zero\zero+\zero\uno\zero^*\uno)(\uno\zero+\uno\uno\zero^*\uno)^*\zero$} ();
 		\end{tikzpicture}
 	\end{center}
 	Essendo $p$ sia iniziale che finale si ha:
-	$$E=(1+(00+010^*1)(10+110^*1)^*0)^*$$
+	$$E=(\uno+(\zero\zero+\zero\uno\zero^*\uno)(\uno\zero+\uno\uno\zero^*\uno)^*\zero)^*$$
 \end{example}
 \section{Chiusura di un Linguaggio regolare}
 Sia $REG$ la classe dei linguaggi regolari (ovvero ogni linguaggio regolare su un alfabeto finito non vuoto). Si ha la seguente proprietà:
@@ -1375,9 +1375,9 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state, initial] (q_0) {$r$};
 			\node[state, accepting] (q_1) [right=of q_0] {$s$};
 			\path[->]
-			(q_0) edge node {0} (q_1)
-			edge [loop above] node {1} ()
-			(q_1) edge [loop above] node {0,1} ();
+			(q_0) edge node {\zero} (q_1)
+			edge [loop above] node {\uno} ()
+			(q_1) edge [loop above] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 	$A_M$, stringhe binarie con almeno un uno:
@@ -1386,9 +1386,9 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state, initial] (q_0) {$p$};
 			\node[state, accepting] (q_1) [right=of q_0] {$q$};
 			\path[->]
-			(q_0) edge node {1} (q_1)
-			edge [loop above] node {0} ()
-			(q_1) edge [loop above] node {0,1} ();
+			(q_0) edge node {\uno} (q_1)
+			edge [loop above] node {\zero} ()
+			(q_1) edge [loop above] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
 	ottengo l'automa prodotto:
@@ -1399,16 +1399,16 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state] (q_2) [below=of q_0] {$q,r$};
 			\node[state, accepting] (q_3) [right=of q_2] {$q,s$};
 			\path[->]
-			(q_0) edge  node {1} (q_1)
-			edge  node {0} (q_2)
-			(q_1) edge  node {0} (q_3)
-			edge [loop above] node {1} ()
-			(q_2) edge  node {1} (q_3)
-			edge [loop below] node {0} ()
-			(q_3) edge [loop below] node {0,1} ();
+			(q_0) edge  node {\uno} (q_1)
+			edge  node {\zero} (q_2)
+			(q_1) edge  node {\zero} (q_3)
+			edge [loop above] node {\uno} ()
+			(q_2) edge  node {\uno} (q_3)
+			edge [loop below] node {\zero} ()
+			(q_3) edge [loop below] node {\zero,\uno} ();
 		\end{tikzpicture}
 	\end{center}
-	$$\delta((p,r),0)=(\delta_L(p,o),\delta_M8r,o))=(q,r)$$
+	$$\delta((p,r),\zero)=(\delta_L(p,o),\delta_M8r,o))=(q,r)$$
 \end{example}
 
 \begin{example}
@@ -1461,7 +1461,7 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			(q_1) edge [bend left =25] node {b} (q_2)
 			edge [loop above] node {a} ()
 			(q_2) edge [bend left =25] node {b} (q_1)
-			edge [loop above] node {1} ();
+			edge [loop above] node {\uno} ();
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -1474,10 +1474,10 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state, initial, accepting] (q_0) {$a$};
 			\node[state] (q_1) [right=of q_0] {$b$};
 			\path[->]
-			(q_0) edge [bend left = 25] node {1} (q_1)
-			edge [loop above] node {0} ()
-			(q_1) edge [bend left = 25] node {0} (q_0)
-			edge [loop above] node {1} ();
+			(q_0) edge [bend left = 25] node {\uno} (q_1)
+			edge [loop above] node {\zero} ()
+			(q_1) edge [bend left = 25] node {\zero} (q_0)
+			edge [loop above] node {\uno} ();
 		\end{tikzpicture}
 	\end{center}
 	e $B$:
@@ -1487,18 +1487,18 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state, accepting] (q_1) [right=of q_0] {$d$};
 			\node[state] (q_2) [below right=of q_0] {$e$};
 			\path[->]
-			(q_0) edge  node {0} (q_1)
-			edge [bend left =25] node {1} (q_2)
-			(q_1) edge node {1} (q_2)
-			edge [loop above] node {0} ()
-			(q_2) edge [bend left =25] node {0} (q_0)
-			edge [loop below] node {1} ();
+			(q_0) edge  node {\zero} (q_1)
+			edge [bend left =25] node {\uno} (q_2)
+			(q_1) edge node {\uno} (q_2)
+			edge [loop above] node {\zero} ()
+			(q_2) edge [bend left =25] node {\zero} (q_0)
+			edge [loop below] node {\uno} ();
 		\end{tikzpicture}
 	\end{center}
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			                          & 0       & 1       \\
+			                          & \zero   & \uno    \\
 			\hline
 			$\stackrel{*}{\to} (a,c)$ & $(a,d)$ & $(b,e)$ \\
 			\hline
@@ -1514,12 +1514,12 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state] (q_1) [right=of q_0] {$b,e$};
 			\node[state, accepting] (q_2) [below =of q_0] {$a,d$};
 			\path[->]
-			(q_0) edge  node {0} (q_2)
-			edge [bend left =25] node {1} (q_1)
-			edge [loop above] node {0} ()
-			(q_1) edge [bend left =25] node {0} (q_0)
-			edge [loop above] node {1} ()
-			(q_2) edge  node {1} (q_1);
+			(q_0) edge  node {\zero} (q_2)
+			edge [bend left =25] node {\uno} (q_1)
+			edge [loop above] node {\zero} ()
+			(q_1) edge [bend left =25] node {\zero} (q_0)
+			edge [loop above] node {\uno} ()
+			(q_2) edge  node {\uno} (q_1);
 		\end{tikzpicture}
 	\end{center}
 \end{example}
@@ -1532,10 +1532,10 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state, initial] (q_0) {$p_0$};
 			\node[state, accepting] (q_1) [right=of q_0] {$p_1$};
 			\path[->]
-			(q_0) edge [bend left = 25] node {1} (q_1)
-			edge [loop above] node {0} ()
-			(q_1) edge [bend left = 25] node {0} (q_0)
-			edge [loop above] node {1} ();
+			(q_0) edge [bend left = 25] node {\uno} (q_1)
+			edge [loop above] node {\zero} ()
+			(q_1) edge [bend left = 25] node {\zero} (q_0)
+			edge [loop above] node {\uno} ();
 		\end{tikzpicture}
 	\end{center}
 	e $B$:
@@ -1545,18 +1545,18 @@ $$A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$$
 			\node[state] (q_1) [right=of q_0] {$q_1$};
 			\node[state] (q_2) [below right=of q_0] {$q_2$};
 			\path[->]
-			(q_0) edge [bend left =25] node {0} (q_1)
-			edge [bend left =25] node {1} (q_2)
-			(q_1) edge [bend left =25] node {1} (q_2)
-			edge [loop above] node {0} ()
-			(q_2) edge [bend left =25] node {0} (q_0)
-			edge [bend left =25] node {1} (q_1);
+			(q_0) edge [bend left =25] node {\zero} (q_1)
+			edge [bend left =25] node {\uno} (q_2)
+			(q_1) edge [bend left =25] node {\uno} (q_2)
+			edge [loop above] node {\zero} ()
+			(q_2) edge [bend left =25] node {\zero} (q_0)
+			edge [bend left =25] node {\uno} (q_1);
 		\end{tikzpicture}
 	\end{center}
 	faccio la tabella:
 	\begin{center}
 		\begin{tabular}{c|c|c}
-			                & 0           & 1           \\
+			                & \zero       & \uno        \\
 			\hline
 			$\to (p_0,q_0)$ & $(p_0,q_1)$ & $(p_1,q_2)$ \\
 			\hline
@@ -1599,30 +1599,30 @@ due stati, uno finale e uno non finale, sono sicuramente distinguibili, basti pe
 			\node[state] (q_6) [right=of q_5] {$g$};
 			\node[state] (q_7) [right=of q_6] {$h$};
 			\path[->]
-			(q_0) edge node {1} (q_5)
-			edge node {0} (q_1)
-			(q_1) edge node {1} (q_2)
-			edge node [below] {0} (q_6)
-			(q_2) edge [bend right =25] node {0} (q_0)
-			edge [loop above] node {1} ()
-			(q_3) edge node {0} (q_2)
+			(q_0) edge node {\uno} (q_5)
+			edge node {\zero} (q_1)
+			(q_1) edge node {\uno} (q_2)
+			edge node [below] {\zero} (q_6)
+			(q_2) edge [bend right =25] node {\zero} (q_0)
+			edge [loop above] node {\uno} ()
+			(q_3) edge node {\zero} (q_2)
 			edge node [below]{1} (q_6)
-			(q_4) edge node {1} (q_5)
-			edge [bend right =45] node {1} (q_7)
-			(q_5) edge node [above] {0} (q_2)
-			edge node {1} (q_6)
-			(q_6) edge [bend left =25] node {1} (q_4)
-			edge [loop below] node {0} ()
-			(q_7) edge node {0} (q_6)
+			(q_4) edge node {\uno} (q_5)
+			edge [bend right =45] node {\uno} (q_7)
+			(q_5) edge node [above] {\zero} (q_2)
+			edge node {\uno} (q_6)
+			(q_6) edge [bend left =25] node {\uno} (q_4)
+			edge [loop below] node {\zero} ()
+			(q_7) edge node {\zero} (q_6)
 			edge node [above] {1} (q_2);
 		\end{tikzpicture}
 	\end{center}
 	cerco di capire se $a$ e $g$ sono equivalenti:
 	\begin{itemize}
 		\item $\varepsilon$ non li distingue perché entrambi sono non accettanti
-		\item 0 non li distingue perché li porta rispettivamente in \textit{b} e \textit{g}, che non sono accettanti
-		\item 1 non li distingue perché li porta rispettivamente in \textit{f} e \textit{e}, che non sono accettanti
-		\item 01 li distingue perché $\stackrel{\wedge}{\delta}(a,01)=c$ e $\stackrel{\wedge}{\delta}(g,01)=e$ e il primo è accettante mentre il secondo no, quindi i due stati non sono equivalenti
+		\item \zero{} non li distingue perché li porta rispettivamente in \textit{b} e \textit{g}, che non sono accettanti
+		\item \uno{} non li distingue perché li porta rispettivamente in \textit{f} e \textit{e}, che non sono accettanti
+		\item \zero\uno{} li distingue perché $\stackrel{\wedge}{\delta}(a,\zero\uno)=c$ e $\stackrel{\wedge}{\delta}(g,\zero\uno)=e$ e il primo è accettante mentre il secondo no, quindi i due stati non sono equivalenti
 	\end{itemize}
 	si verifica che invece \textit{a} e \textit{e} sono equivalenti
 \end{example}
@@ -1677,7 +1677,7 @@ $c$ è accettante quindi segniamo tutte le caselle relative a $c$ per il caso ba
 		\hline
 	\end{tabular}
 \end{center}
-poiché, per esempio $c,h$ è distinguibile e gli stati $e$ e $f$ con 0 vanno in $h$ e $c$ si ha che anche $e$ e $f$ sono distinguibili, segno quindi nelle caselle appropriate. Proseguo controllando anche le altre coppie e riempio le caselle. Ottengo:
+poiché, per esempio $c,h$ è distinguibile e gli stati $e$ e $f$ con \zero{} vanno in $h$ e $c$ si ha che anche $e$ e $f$ sono distinguibili, segno quindi nelle caselle appropriate. Proseguo controllando anche le altre coppie e riempio le caselle. Ottengo:
 \begin{center}
 	\begin{tabular}{c|c|c|c|c|c|c|c|}
 		\hline
@@ -1721,10 +1721,10 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state, initial, accepting] (q_0) {$a$};
 				\node[state] (q_1) [right=of q_0] {$b$};
 				\path[->]
-				(q_0) edge [bend left = 25] node {1} (q_1)
-				edge [loop above] node {0} ()
-				(q_1) edge [bend left = 25] node {0} (q_0)
-				edge [loop above] node {1} ();
+				(q_0) edge [bend left = 25] node {\uno} (q_1)
+				edge [loop above] node {\zero} ()
+				(q_1) edge [bend left = 25] node {\zero} (q_0)
+				edge [loop above] node {\uno} ();
 			\end{tikzpicture}
 		\end{center}
 		e $B$:
@@ -1734,15 +1734,15 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state, accepting] (q_1) [right=of q_0] {$d$};
 				\node[state] (q_2) [below =of q_0] {$e$};
 				\path[->]
-				(q_0) edge node {0} (q_1)
-				edge [bend right=25] node {1} (q_2)
-				(q_1) edge node {1} (q_2)
-				edge [loop above] node {0} ()
-				(q_2) edge [bend right =25] node {0} (q_0)
-				edge [loop below] node {1} ();
+				(q_0) edge node {\zero} (q_1)
+				edge [bend right=25] node {\uno} (q_2)
+				(q_1) edge node {\uno} (q_2)
+				edge [loop above] node {\zero} ()
+				(q_2) edge [bend right =25] node {\zero} (q_0)
+				edge [loop below] node {\uno} ();
 			\end{tikzpicture}
 		\end{center}
-		entrambi i linguaggi accettano $(\varepsilon+(0+1)^*0)$
+		entrambi i linguaggi accettano $(\varepsilon+(\zero+\uno)^*\zero)$
 		applico la tabella:
 		\begin{center}
 			\begin{tabular}{c|c|c|c|c|}
@@ -1785,24 +1785,24 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state] (q_7) [right=of q_6] {$h$};
 				\node[state, accepting] (q_8) [below=of q_5] {$i$};
 				\path[->]
-				(q_0) edge node {1} (q_4)
-				edge node {0} (q_1)
-				(q_1) edge node {0} (q_2)
-				edge [bend left =25] node {1} (q_5)
-				(q_2) edge [bend left =25] node {1} (q_7)
-				edge node {0} (q_3)
-				(q_3) edge node {1} (q_7)
-				edge [bend right= 85] node {0} (q_4)
-				(q_4) edge node {0} (q_5)
-				edge [bend left =25] node {1} (q_8)
-				(q_5) edge [bend left = 25] node {0} (q_1)
-				edge node {0} (q_6)
-				(q_6) edge node {1} (q_1)
-				edge node {0} (q_7)
-				(q_7) edge node {0} (q_8)
-				edge [bend left = 25] node {1} (q_2)
-				(q_8) edge [bend left = 25] node {1} (q_4)
-				edge [bend left = 85] node {0} (q_0);
+				(q_0) edge node {\uno} (q_4)
+				edge node {\zero} (q_1)
+				(q_1) edge node {\zero} (q_2)
+				edge [bend left =25] node {\uno} (q_5)
+				(q_2) edge [bend left =25] node {\uno} (q_7)
+				edge node {\zero} (q_3)
+				(q_3) edge node {\uno} (q_7)
+				edge [bend right= 85] node {\zero} (q_4)
+				(q_4) edge node {\zero} (q_5)
+				edge [bend left =25] node {\uno} (q_8)
+				(q_5) edge [bend left = 25] node {\zero} (q_1)
+				edge node {\zero} (q_6)
+				(q_6) edge node {\uno} (q_1)
+				edge node {\zero} (q_7)
+				(q_7) edge node {\zero} (q_8)
+				edge [bend left = 25] node {\uno} (q_2)
+				(q_8) edge [bend left = 25] node {\uno} (q_4)
+				edge [bend left = 85] node {\zero} (q_0);
 			\end{tikzpicture}
 		\end{center}
 		faccio la tabella
@@ -1841,10 +1841,10 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state] (q_1) [right=of q_0] {$\{b,e,h\}$};
 				\node[state, accepting] (q_2) [below =of q_0] {$\{c,f,i\}$};
 				\path[->]
-				(q_0) edge node {0,1} (q_1)
-				(q_1) edge [bend left =25] node {0,1} (q_2)
-				(q_2) edge [bend left =25] node {1} (q_1)
-				edge node {0} (q_0);
+				(q_0) edge node {\zero,\uno} (q_1)
+				(q_1) edge [bend left =25] node {\zero,\uno} (q_2)
+				(q_2) edge [bend left =25] node {\uno} (q_1)
+				edge node {\zero} (q_0);
 			\end{tikzpicture}
 		\end{center}
 	\end{example}
@@ -1855,10 +1855,10 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state, initial, accepting] (q_0) {$a$};
 				\node[state] (q_1) [right=of q_0] {$b$};
 				\path[->]
-				(q_0) edge [bend left = 25] node {1} (q_1)
-				edge [loop above] node {0} ()
-				(q_1) edge [bend left = 25] node {0} (q_0)
-				edge [loop above] node {1} ();
+				(q_0) edge [bend left = 25] node {\uno} (q_1)
+				edge [loop above] node {\zero} ()
+				(q_1) edge [bend left = 25] node {\zero} (q_0)
+				edge [loop above] node {\uno} ();
 			\end{tikzpicture}
 		\end{center}
 		e $B$:
@@ -1868,12 +1868,12 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state, accepting] (q_1) [right=of q_0] {$d$};
 				\node[state] (q_2) [below =of q_0] {$e$};
 				\path[->]
-				(q_0) edge node {0} (q_1)
-				edge [bend right=25] node {1} (q_2)
-				(q_1) edge node {1} (q_2)
-				edge [loop above] node {0} ()
-				(q_2) edge [bend right =25] node {0} (q_0)
-				edge [loop below] node {1} ();
+				(q_0) edge node {\zero} (q_1)
+				edge [bend right=25] node {\uno} (q_2)
+				(q_1) edge node {\uno} (q_2)
+				edge [loop above] node {\zero} ()
+				(q_2) edge [bend right =25] node {\zero} (q_0)
+				edge [loop below] node {\uno} ();
 			\end{tikzpicture}
 		\end{center}
 		riduco $B$:
@@ -1894,10 +1894,10 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 				\node[state, initial, accepting] (q_0) {$\{c,d\}$};
 				\node[state] (q_1) [right=of q_0] {$e$};
 				\path[->]
-				(q_0) edge [bend left = 25] node {1} (q_1)
-				edge [loop above] node {0} ()
-				(q_1) edge [bend left = 25] node {0} (q_0)
-				edge [loop above] node {1} ();
+				(q_0) edge [bend left = 25] node {\uno} (q_1)
+				edge [loop above] node {\zero} ()
+				(q_1) edge [bend left = 25] node {\zero} (q_0)
+				edge [loop above] node {\uno} ();
 			\end{tikzpicture}
 		\end{center}
 		quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
@@ -1906,72 +1906,72 @@ costruisco $A=(Q_L\cup Q_M,\Sigma,\delta,q_L,F_L\cup F_M)$
 	\section{Pumping Lemma per i linguaggi regolari}
 	Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede per assurdo.\\
 	Partiamo da un esempio:
-	$$L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,...\}$$
+	$$L_{01}=\{\zero^n\uno^n|\,n\geq 1\}=\{\zero\uno,\zero\zero\uno\uno,...\}$$
 	supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).\\
-$0^k$ implica $k+1$ prefissi: $\varepsilon,0,00,000,...,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.\\
-	Formalmente si ha:
-	\begin{theorem}
-		Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
-		$$y\neq \varepsilon$$
-		$$|xy|\leq n$$
-		$$\forall k\geq 0\,\,\, zy^kz\in L$$
-		in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
-	\end{theorem}
-	\begin{proof}
-		essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2...a_n$ con $m\geq n$. Sia:
-		$$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,...a_i)\,\,\forall i=0,1,...,n$$
-		quindi:
-		$$p_0=q_0,p_1,...,p_n\to n+a\,\,stati$$
-		allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
-		$$x=a_1a_2...a_n$$
-		$$y=a_{i+1}a_{i+2}...a_j$$
-		$$z=a_{j+1}a_{j+2}...a_m$$
-		\begin{center}
-			\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
-				\node[state, initial] (q_0) {$p_0$};
-				\node[state] (q_1) [right=of q_0] {$p_i$};
-				\node[state, accepting] (q_2) [right =of q_1] {$\mbox{ }$} ;
-				\path[->]
-				(q_0) edge node {x} (q_1)
-				(q_1) edge node {z} (q_2)
-				edge [loop above] node {y} ();
-			\end{tikzpicture}
-		\end{center}
-	\end{proof}
-	\begin{example}
-		mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \varepsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
-		$$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$$
-		ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{w\in\{0,1\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?\\
-		suppongo per assurdo di sì, con $n$ costante del pumping lemma.\\
-		$w=0^n10^n$ quindi $x=0^{n-1}\,\,y=0\,\,z=10^n$.
-		Per $k=0$ si ha $xy^kz=0^{n-1}10^n\not\in L$, quindi non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{1^p|\, p\,\,primo\}=\{11,111,11111\}$ è regolare?\\
-		$w=1^p=1^{n-1}11^{p-n}$ con:
-		$$x=1^{n-1}\,\,y=1\,\,z=1^{p-n}$$
-		per $k=0$ si ha $1^{p-1}$ e $p-1$ non è , quindi non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{0^n1^m|\, n\leq m\}$ è regolare?\\
-		$w=0^{n-l}0^l1^{m}$ con:
-		$$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$$
-		con $|y|=l$ e $0<l\leq n$\\
-		quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
-		$$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$$
-		scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
-	\end{example}
-	\begin{example}
-		$L=\{0^n1^m|\, n\geq m\}$ è regolare?\\
-		$w=0^{n-l}0^l1^{m}$ con:
-		$$x=0^{n-l}\,\,y=0^l\,\,z=1^{m}$$
-		con $|zy|\leq n\,\,y\neq\varepsilon\,\,|y|=l$ e $0<l\leq n$\\
-		scelgo l tale che $n-l<m$ quindi non è regolare
-	\end{example}
-	\textbf{su appunti dispense altri esempi}
+$\zero^k$ implica $k+1$ prefissi: $\varepsilon,\zero,\zero\zero,\zero\zero\zero,...,\zero^k$ e quindi $\exists i,j$ tali che $\zero^i$ e $\zero^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $\zero^i\zero^j$ con $i\neq j$.\\
+Formalmente si ha:
+\begin{theorem}
+	Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
+	$$y\neq \varepsilon$$
+	$$|xy|\leq n$$
+	$$\forall k\geq 0\,\,\, zy^kz\in L$$
+	in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
+\end{theorem}
+\begin{proof}
+	essendo $L\in REG$ esiste un DFA $A$ tale che $L=L(A)$. Suppongo $|Q|=n$ e considero $w=a_1a_2...a_n$ con $m\geq n$. Sia:
+	$$p_i=\stackrel{\wedge}{\delta}(q_0,a_1,...a_i)\,\,\forall i=0,1,...,n$$
+	quindi:
+	$$p_0=q_0,p_1,...,p_n\to n+a\,\,stati$$
+	allora $\exists i,j$, con $0\leq i<j\leq n$ tali che $p_i=p_j$. Scompongo ora $w$ in $w=xyz$ con:
+	$$x=a_1a_2...a_n$$
+	$$y=a_{i+1}a_{i+2}...a_j$$
+	$$z=a_{j+1}a_{j+2}...a_m$$
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
+			\node[state, initial] (q_0) {$p_0$};
+			\node[state] (q_1) [right=of q_0] {$p_i$};
+			\node[state, accepting] (q_2) [right =of q_1] {$\mbox{ }$} ;
+			\path[->]
+			(q_0) edge node {x} (q_1)
+			(q_1) edge node {z} (q_2)
+			edge [loop above] node {y} ();
+		\end{tikzpicture}
+	\end{center}
+\end{proof}
+\begin{example}
+	mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=\zero^n\uno^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=\zero^n$, quindi $xy$ è formato da soli \zero. Poniamo $x=\zero^{n-1}\,\,y=\zero\neq \varepsilon\,\, z=\uno^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
+	$$xy^kz=\zero^{n-1}\zero^k\uno^n=\zero^{n+k-1}\uno^n\in L_{01}$$
+	ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
+\end{example}
+\begin{example}
+	$L=\{w\in\{\zero,\uno\}^*|\, w=w^R\}$, linguaggio delle stringhe palindrome, è regolare?\\
+	suppongo per assurdo di sì, con $n$ costante del pumping lemma.\\
+	$w=\zero^n\uno\zero^n$ quindi $x=\zero^{n-1}\,\,y=\zero\,\,z=\uno\zero^n$.
+	Per $k=0$ si ha $xy^kz=\zero^{n-1}\uno\zero^n\not\in L$, quindi non è regolare
+\end{example}
+\begin{example}
+	$L=\{\uno^p|\, p\,\,primo\}=\{\uno\uno,\uno\uno\uno,\uno\uno\uno\uno\uno\}$ è regolare?\\
+	$w=\uno^p=\uno^{n-1}\uno\uno^{p-n}$ con:
+	$$x=\uno^{n-1}\,\,y=\uno\,\,z=\uno^{p-n}$$
+	per $k=0$ si ha $\uno^{p-1}$ e $p-1$ non è , quindi non è regolare
+\end{example}
+\begin{example}
+	$L=\{\zero^n\uno^m|\, n\leq m\}$ è regolare?\\
+	$w=\zero^{n-l}\zero^l\uno^{m}$ con:
+	$$x=\zero^{n-l}\,\,y=\zero^l\,\,z=\uno^{m}$$
+	con $|y|=l$ e $0<l\leq n$\\
+	quindi $\forall k\geq 0$ si ha $xy^kz\in L=\zero^{n-l}\zero^{kl}\uno^{m}$ con:
+	$$x=\zero^{n-l}\,\,y=\zero^{kl}\,\,z=\uno^{m}$$
+	scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
+\end{example}
+\begin{example}
+	$L=\{\zero^n\uno^m|\, n\geq m\}$ è regolare?\\
+	$w=\zero^{n-l}\zero^l\uno^{m}$ con:
+	$$x=\zero^{n-l}\,\,y=\zero^l\,\,z=\uno^{m}$$
+	con $|zy|\leq n\,\,y\neq\varepsilon\,\,|y|=l$ e $0<l\leq n$\\
+	scelgo l tale che $n-l<m$ quindi non è regolare
+\end{example}
+\textbf{su appunti dispense altri esempi}
 
 %%% Local Variables:
 %%% mode: LaTeX
