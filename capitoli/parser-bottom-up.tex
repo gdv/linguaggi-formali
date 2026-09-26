@@ -19,12 +19,19 @@ processato dai passi di parsing eseguiti in precedenza.
 La coppia formata dalla  porzione di forma sentenziale che corrisponde al membro destro della produzione e dalla produzione  viene
 chiamata \keyword{maniglia}, mentre la sola porzione di forma sentenziale viene chiamata \keyword{segmento} della maniglia.
 Identificare la maniglia è l'operazione fondamentale che viene fatta da ogni parser bottom-up.
-Esattamente come per i parser top-down, anche in questo caso possiamo commettere degli errori quando indentifichiamo la
+Esattamente come per i parser top-down, anche in questo caso possiamo commettere degli errori quando individuiamo la
 maniglia: (1) la presenza di $\epsilon$-produzioni causa dei loop infiniti, perchè non ho limiti sul numero di
 $\epsilon$ produzioni che possiamo aggiungere senza modificare la forma sentenziale attuale, e perchè potrei avere più
 produzioni compatibili con il segmento o, ancora, segmenti compatibili ma sovrapposti.
 
 
+
+
+\subsection{Il parser shift-reduce}\label{sec:shift-reduce}
+
+\subsection{Costruzione della tabella LR}\label{sec:tabella-LR}
+
+\subsection{SLR, LR(1) e LALR}\label{sec:lr-famiglie}
 
 
 %%% Local Variables:

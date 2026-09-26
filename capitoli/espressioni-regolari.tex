@@ -20,14 +20,14 @@ insiemistico dei linguaggi regolari.
 		      all'unione, o alternanza, fra $E_1$ e $E_2$;
 		\item Se $E_1$ e $E_2$ sono due espressioni regolari, allora $E_1 E_2$ è un'espressione regolare corrispondente
 		      alla concatenazione di $E_1$ e $E_2$;
-		\item Se $E$ è un'espressione regolare, allora $E_1^{*}$ è un'espressione regolare corrispondente
+		\item Se $E$ è un'espressione regolare, allora $E^{*}$ è un'espressione regolare corrispondente
 		      alla chiusura di Kleene di $E$, ovvero alla ripetizione di $E$ un numero imprecisato (incluso $0$) di volte;
 		\item Se $E$ è un'espressione regolare, allora $(E)$ è un'espressione regolare.
 	\end{enumerate}
 \end{definition}
 
 Le operazioni hanno un ordine di precedenza di valutazione (a parità di precedenza, si valuta da sinistra a destra), in
-ordine descrescente di precedenza:
+ordine decrescente di precedenza:
 \begin{enumerate}
 	\item parentesi
 	\item chiusura di Kleene *
@@ -45,9 +45,9 @@ Abbiamo bisogno di introdurre il linguaggio associato ad un'espressione regolare
 		\item $L(\epsilon) = \{\epsilon\}$, $L(\emptyset) = \emptyset$;
 		\item Se $E$ consiste unicamente di un simbolo $\sigma\in\Sigma$, allora $L(E) = \{\sigma\}$;
 		\item Se $E=E_1 \cup E_2$, allora $L(E) = \{w\in \Sigma^{*} : w\in L(E_{1}) \vee  w\in L(E_{2})\}$;
-		\item Se $E=E_1E_2$, allora $L(E) = \{ w_{1}w_{2} : w\in L(E_1) L(E_2) \}$;
-		\item Se $E = E_1^{*}$, allora $L(E) = \{\epsilon\} \cup L(E_1) \bigcup_{k=1}^{*} \{w_1 \cdots w_{k}: w_{1}, \ldots, w_{k}\in L(E) \}$.
-		\item Se $E = (E_1)$, allora $L((E)) = L(E)$.
+		\item Se $E=E_1E_2$, allora $L(E) = \{ w_{1}w_{2} : w_1\in L(E_1) \wedge w_2\in L(E_2) \}$;
+		\item Se $E = E_1^{*}$, allora $L(E) = \{\epsilon\} \cup \bigcup_{k=1}^{\infty} \{w_1 \cdots w_{k}: w_{1}, \ldots, w_{k}\in L(E_1) \}$.
+		\item Se $E = (E_1)$, allora $L(E) = L(E_1)$.
 	\end{enumerate}
 \end{definition}
 
@@ -64,12 +64,12 @@ Se consideriamo due espressioni regolari identiche quando hanno lo stesso lingua
 		\item
 		      La concatenazione è associativa ma non è commutativa.
 		\item
-		      $\emptyset$ è identità per l'unione ($\emptyset+E=E+\emptyset=E$),
+		      $\emptyset$ è identità per l'unione ($\emptyset \cup E = E \cup \emptyset = E$),
 		\item
 		      $ \{\varepsilon \} $ è identità per la concatenazione
-		      ($\varepsilon E=E\varepsilon=L$).
+		      ($\varepsilon E=E\varepsilon=E$).
 		\item
-		      $\emptyset$ è l'annichilitore per la concatenazione ($\emptyset L=L\emptyset=\emptyset$).
+		      $\emptyset$ è l'annichilitore per la concatenazione ($\emptyset E=E\emptyset=\emptyset$).
 		\item
 		      $(E^{*})^{*}=E^{*}$,
 		\item
@@ -92,13 +92,17 @@ estensioni, dove $E$, $E_1$, $E_2$ sono tutte espressioni regolari:
 	\item $E^{+}$, corrispondente  alla ripetizione di $E$ un numero imprecisato, ma strettamente positivo,  di volte.
 	      È equivalente all'espressione $E E^{*}$;
 	\item $E\{n,m\}$, corrispondente  alla ripetizione di $E$ un numero di volte compreso fra $n$ ed $m$, estremi inclusi.
-	      L'espressione $E\{0,0\}$ è equivalente a $\epsilon$, $E\{0,m\}$ (con $m>0$) è equivalente a $E \cup E\{1,m\}$,
+	      L'espressione $E\{0,0\}$ è equivalente a $\epsilon$, $E\{0,m\}$ (con $m>0$) è equivalente a $\varepsilon \cup E\{1,m\}$,
 	      $E\{n,m\}$ (con $n>0$) è equivalente a $E E\{n-1,m-1\}$;
 	\item $[abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli indicati.
 	      L'espressione regolare equivalente è $a\cup b\cup c$;
 	\item $[\widehat{\,} abc]$, dove $a$, $b$, $c$ sono tutti simboli di $\Sigma$, corrisponde alla scelta fra i simboli \emph{non} indicati.
 	      L'espressione regolare equivalente è $\bigcup_{a_{1}\in \Sigma \setminus \{a,b,c\}} a_{1}$.
 \end{enumerate}
+
+
+\subsection{Espressioni regolari nella pratica}\label{sec:regex-pratica}
+
 
 
 
@@ -178,7 +182,7 @@ rispettivo potere espressivo.
 Quando vogliamo dimostrare che i due modelli $M_1$ e $M_2$ hanno lo stesso potere espressivo, possiamo simulare $M_1$
 con $M_2^{*}$ (mostrando quindi che tutto quello che può essere fatto con $M_1$ può essere fatto con $M_2^{*}$) e
 simulare $M_2$ con $M_1^{*}$.
-In questo caso, il fatto di potere usare due modelli estesi rende più semplice la dimostrazione di correttezza della simulazione.
+In questo caso, il fatto di poter usare due modelli estesi rende più semplice la dimostrazione di correttezza della simulazione.
 Al tempo stesso, studiare un modello ristretto, come $M_1$, rende più semplice dimostrare che qualcosa \emph{non} può
 essere realizzato da $M_1$.
 Sfrutteremo questa intuizione nel resto del libro.
@@ -186,7 +190,7 @@ Sfrutteremo questa intuizione nel resto del libro.
 
 \begin{example}\label{exa:01}
 	Si consideri il linguaggio su $\Sigma_{B}$ delle parole non nulle formate da  \zero e \uno alternati --- equivalentemente, nessuna
-	parola contiene la sottostringa  \zero\zero e \uno\uno ---
+	parola contiene la sottostringa \zero\zero né la sottostringa \uno\uno ---
 	Trovare un'espressione regolare che ha associato tale linguaggio.
 
 	Dividiamo le parole del linguaggio a seconda che abbiano lunghezza pari o dispari e che inizino per \zero e
@@ -366,10 +370,10 @@ Una grammatica è regolare se ha una delle seguenti due forme.
 
 \begin{definition}\label{def:grammatica-regolare-destra}
 	Sia \gramm una grammatica.
-	Allora $G$ è detta regolare destra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to Ba$, dove
-	$A, \in VB$  e $a\in T$.
-	Inoltre, $G$ è detta regolare sinistra se tutte le su produzioni sono nella forma $A \to a$ o nella forma $A \to aB$, dove
-	$A, \in VB$  e $a\in T$.
+	Allora $G$ è detta regolare destra se tutte le sue produzioni sono nella forma $A \to a$ o nella forma $A \to aB$, dove
+	$A, B \in V$  e $a\in T$.
+	Inoltre, $G$ è detta regolare sinistra se tutte le sue produzioni sono nella forma $A \to a$ o nella forma $A \to Ba$, dove
+	$A, B \in V$  e $a\in T$.
 \end{definition}
 
 
@@ -389,14 +393,14 @@ vedremo nella prossima sezione.
 \end{minipage}
 
 
-\section{Automi deterministico a stati finiti}\label{sec:DFA}
+\section{Automi deterministici a stati finiti}\label{sec:DFA}
 
 L'obiettivo di questa sezione è introdurre un modello di calcolo, ispirato ai diagrammi di transizione, che sia il più
 semplice possibile e in grado di riconoscere tutti i linguaggi regolari.
 Questo modello viene chiamato automa a stati finiti deterministico (\keyword{DFA}).
 
 \begin{definition}[automa deterministico a stati finiti]\label{def:DFA}
-	Un \keyword{automa deterministico a stati finiti} è una quintupla \dfa consiste nelle seguenti parti:
+	Un \keyword{automa deterministico a stati finiti} è una quintupla della forma \dfa che consiste nelle seguenti parti:
 	\begin{itemize}
 		\item $\Sigma$: alfabeto di input;
 		\item $Q$: insieme finito di \emph{stati};
@@ -423,16 +427,16 @@ Nell'ultimo caso denotiamo lo stato iniziale con una freccia entrante che non ha
 un doppio cerchio, e l'etichetta di un arco dallo stato $q_1$ allo stato $q_2$ è l'insieme di caratteri $c$ tali che
 $\delta(q_1, c) = q_2 $.
 \begin{example}
-	Consideriamo il linguaggio $L$ formato dalle strighe binarie che hanno la sottostringa \zero\uno.
+	Consideriamo il linguaggio $L$ formato dalle stringhe binarie che hanno la sottostringa \zero\uno.
 	Equivalentemente $L=\{ x\zero\uno y: x,y \in \Sigma_{B}^{*}\}$.
 	Leggendo la stringa in input, l'automa è in uno dei seguenti casi:
 	\begin{enumerate}
 		\item se ha "già visto" 01, accetterà qualsiasi input, indipendentemente dai caratteri che leggerà in futuro;
 		\item pur non avendo ancora visto 01, l'input più recente è stato 0.
 		      Se leggerà \uno, andrà nello stato accettante, altrimenti rimane nello stesso stato;
-		\item non ha ancora visto \zero, e rimane in questo stato finchè non legge \zero.
+		\item non ha ancora visto \zero, e rimane in questo stato finché non legge \zero.
 	\end{enumerate}
-	la terza condizione rappresenta lo stato iniziale. All'inizio bisogna vedere uno 0 e poi un 1. Ma se nello stato $q_0$ si vede per primo un 1 allora non abbiamo fatto alcun passo verso 01, e dunque dobbiamo permanere nello stato $q_0$, $\delta(q_0,1)=q_0$. D'altra parte se nello stato iniziale vedo 0 siamo nella seconda condizione, uso quindi $q_2$ per questa condizione, si avrà quindi $\delta(q_0,0)=q_2$. Vedo ora le transizoni di $q_2$, se vedo 0 ho che 0 è l'ultimo simbolo incontrato quindi uso nuovamente $q_2$, $\delta(q_2,0)=q_2$, in attesa di un 1. Se arriva 1 passo allo stato accertante $q_1$ corrispondente alla prima condizione, $\delta(q_2,1)=q_1$. Ora abbiamo incontrato 01 quindi può succedere qualsiasi cosa e dopo qualsiasi cosa accada potremo nuovamente aspettarci qualsiasi cosa, ovvero $\delta(q_1,0)=\delta(q_1,1)=q_1$. Si deduce quindi che:
+	la terza condizione rappresenta lo stato iniziale. All'inizio bisogna vedere uno 0 e poi un 1. Ma se nello stato $q_0$ si vede per primo un 1 allora non abbiamo fatto alcun passo verso 01, e dunque dobbiamo permanere nello stato $q_0$, $\delta(q_0,1)=q_0$. D'altra parte se nello stato iniziale vedo 0 siamo nella seconda condizione, uso quindi $q_2$ per questa condizione, si avrà quindi $\delta(q_0,0)=q_2$. Vedo ora le transizioni di $q_2$, se vedo 0 ho che 0 è l'ultimo simbolo incontrato quindi uso nuovamente $q_2$, $\delta(q_2,0)=q_2$, in attesa di un 1. Se arriva 1 passo allo stato accettante $q_1$ corrispondente alla prima condizione, $\delta(q_2,1)=q_1$. Ora abbiamo incontrato 01 quindi può succedere qualsiasi cosa e dopo qualsiasi cosa accada potremo nuovamente aspettarci qualsiasi cosa, ovvero $\delta(q_1,0)=\delta(q_1,1)=q_1$. Si deduce quindi che:
 	$Q=\{q_0,q_1,q_2\} \text{ e } F=\{q_1\}$
 	quindi:
 	$A=\{\{q_0,q_1,q_2\} ,\{0,1\}, \delta, q_0, \{q_1\} \}$
@@ -467,8 +471,15 @@ $\delta(q_1, c) = q_2 $.
 	\label{fig:dfa-sottostringa-01}
 \end{minipage}
 
+Per semplificare alcune dimostrazioni, possiamo generalizzare la funzione di transizione affinché abbia come
+argomento una stringa generica $w$ invece di un singolo simbolo dell'alfabeto.
 
-
+\begin{definition}[Funzione di transizione estesa]\label{def:transizione-estesa-dfa}
+Sia \dfa un DFA.
+Allora la corrispondente \keyword{funzione di transizione estesa} è $\hat{\delta}:Q\times\Sigma^{*}\to Q$ tale che: $\hat{\delta}(q, \epsilon)=q$
+per ogni stato $q\in Q$, $\hat{\delta}(q, c)=\delta(q, c)$ per ogni carattere $c\in\Sigma$,
+$\hat{\delta}(q, wa)=\delta(\hat{\delta}(q, w), a)$, per ogni $w\in \Sigma^{*}$ e $a\in\Sigma$.
+\end{definition}
 
 \begin{example}
 	Trovo automa per: $L=\{w\in\{a,b\}^*|\text{ w che contiene un numero pari di b}\}$
@@ -483,7 +494,7 @@ $\delta(q_1, c) = q_2 $.
 			edge [loop below] node {a} ();
 		\end{tikzpicture}
 	\end{center}
-	ovvero se da $q_0$ vado a $q_1$ sono obbligato ab generare due $b$, dato che il nodo accettnate è $q_0$. In entrambi i nodi posso generare quante $a$ voglio.
+	ovvero se da $q_0$ vado a $q_1$ sono obbligato a generare due $b$, dato che il nodo accettante è $q_0$. In entrambi i nodi posso generare quante $a$ voglio.
 \end{example}
 \begin{example}
 	Trovo automa per: $L=\{w\in\{a,b\}^*|\text{ w che contiene un numero dispari di b}\}$
@@ -498,7 +509,7 @@ $\delta(q_1, c) = q_2 $.
 			edge [loop below] node {a} ();
 		\end{tikzpicture}
 	\end{center}
-	ovvero se da $q_0$ vado a $q_1$ sono obbligato ab generare una sola $b$, dato che il nodo accettnate è $q_1$. In entrambi i nodi posso generare quante $a$ voglio e posso tornare da $q_1$ a $q_0$ per generare altre $b$.
+	ovvero se da $q_0$ vado a $q_1$ sono obbligato a generare una sola $b$, dato che il nodo accettante è $q_1$. In entrambi i nodi posso generare quante $a$ voglio e posso tornare da $q_1$ a $q_0$ per generare altre $b$.
 \end{example}
 \begin{example}
 	Trovo automa per: $L=\{w\in\{0,1\}^*| w= 0^n1^m\}$
@@ -596,7 +607,7 @@ $\delta(q_1, c) = q_2 $.
 \end{example}
 \begin{example}
 	Trovo automa per: $L=\{w\in\{a,b\}^*|\text{ w che contiene un numero pari di a seguito da uno dispari di b}\}$
-	$L=\{a^{2n}b^{2k+1}|j,k\geq 0\}$
+	$L=\{a^{2n}b^{2k+1}|n,k\geq 0\}$
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_{0}$};
@@ -720,11 +731,11 @@ $\delta(q_1, c) = q_2 $.
 
 
 \subsection{Automi non deterministici}
-Un automa a stati finiti non deterministici (\textit{NFA}) può trovarsi in diversi stati contemporaneamente. Come i DFA accettano linguaggi regolari e spesso sono più semplici da trattare rispetto ai DFA.
+Un automa a stati finiti non deterministico (\textit{NFA}) può trovarsi in diversi stati contemporaneamente. Come i DFA accettano linguaggi regolari e spesso sono più semplici da trattare rispetto ai DFA.
 Un NFA è definito come un DFA ma si ha un diverso tipo di transizione $\delta$, che ha sempre come argomenti uno stato e un simbolo di input ma restituisce zero o più stati.
 \begin{example}
-	Sia $L=\{x01|\,x\in\{o,1\}$ ovvero il linguaggio formato da tutte le stringhe binarie che terminano in 01.
-	Avremo il seguente automa determinsitico:
+	Sia $L=\{x\zero\uno\,|\,x\in\{\zero,\uno\}^{*}\}$ ovvero il linguaggio formato da tutte le stringhe binarie che terminano in 01.
+	Avremo il seguente automa deterministico:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_{0}$};
@@ -1042,7 +1053,7 @@ che diventa il seguente DFA:
 			\node[state, initial] (q_0) {$q_{0}$};
 			\node[state] (q_1) [right=of q_0] {$q_{1}$};
 			\node[state, accepting] (q_2) [right=of q_1] {$q_{2}$};
-			\node[state, accepting] (q_3) [right= of q_3] {$q_{3}$};
+			\node[state, accepting] (q_3) [right= of q_2] {$q_{3}$};
 			\node[state] (q_5) [below=of q_0] {$q_E$};
 			\path[->]
 			(q_0) edge  node [bend left = 25] {a} (q_1)
@@ -1104,7 +1115,7 @@ che diventa il seguente DFA:
 			\node[state] (q_1) [right=of q_0]{$q_1$};
 			\node[state] (q_2) [right=of q_1]{$q_2$};
 			\node[state, accepting] (q_3) [right=of q_2]{$q_3$};
-			\node[state,accepting] (q_4) [below=of q_3] {$q_3$};
+			\node[state,accepting] (q_4) [below=of q_3] {$q_4$};
 			\node[state] (q_5) [below=of q_4]{$q_5$};
 			\node[state] (q_6) [below=of q_5]{$q_6$};
 			\node[state] (q_e) [right=of q_3]{$q_E$};
@@ -1149,8 +1160,8 @@ che diventa il seguente DFA:
 	\end{center}
 	abbiamo quindi:
 	$\delta_D(\{q_0\},a)=\delta_N(q_0,a)=\{q_1,q_2\}$
-	$\delta_D(\{q_0\},b)=\delta_N(q_1,b)=\emptyset$
-	$\delta_D(\{q_1,q_2\},a)=\delta_N(q_1,a)\cup \delta_N(q_2,a)=\{q_1,q_2\}cup \emptyset=\{q_1,q_2\}$
+	$\delta_D(\{q_0\},b)=\delta_N(q_0,b)=\emptyset$
+	$\delta_D(\{q_1,q_2\},a)=\delta_N(q_1,a)\cup \delta_N(q_2,a)=\{q_1,q_2\}\cup \emptyset=\{q_1,q_2\}$
 	$\delta_D(\{q_1,q_2\},b)=\delta_N(q_1,b)\cup \delta_N(q_2,b)=\emptyset\cup \{q_1,q_3\}=\{q_1,q_3\}$
 	$\cdots$
 	ottengo quindi:
@@ -1221,7 +1232,7 @@ che diventa il seguente DFA:
 		\begin{tabular}{c|c|c|c}
 			             & a           & b           & c           \\
 			\hline
-			$to\,\{p\}$  & $\{p\}$     & $\{p,q\}$   & $\{p,q,r\}$ \\
+			$\to\,\{p\}$  & $\{p\}$     & $\{p,q\}$   & $\{p,q,r\}$ \\
 			\hline
 			$\{p,q\}$    & $\{p,q\}$   & $\{p,q,r\}$ & $\{p,q,r\}$ \\
 			\hline
@@ -1229,14 +1240,14 @@ che diventa il seguente DFA:
 		\end{tabular}
 	\end{center}
 	infatti, per esempio:
-	$\delta_D(\{p\}, a)= ECLOSE (\delta_(p,a))=ECLOSE (\{p\})=ECLOSE (p)=\{p\}$
+	$\delta_D(\{p\}, a)= ECLOSE (\delta(p,a))=ECLOSE (\{p\})=ECLOSE (p)=\{p\}$
 	$\delta_D(\{p,q\}, a)= ECLOSE (\delta_N(p,a)\cup \delta_N(q,a))=$
-	$ECLOSE (\{p\}\cup \{q\})=ECLOSE(P)\cup ECLOSE(q)=\{p\}\cup\{p,q\}=\{p,q\}$
+	$ECLOSE (\{p\}\cup \{q\})=ECLOSE(p)\cup ECLOSE(q)=\{p\}\cup\{p,q\}=\{p,q\}$
 	$\cdots$
 	si hanno quindi le seguenti rinominazioni:
 	\begin{itemize}
 		\item $A=\{p\}$
-		\item $b=\{p,q\}$
+		\item $B=\{p,q\}$
 		\item $C=\{p,q,r\}$
 	\end{itemize}
 	ovvero:
@@ -1294,7 +1305,6 @@ $|Q_D|=|2^{Q_N}|=2^{|Q_N|}$
 partiamo con un esempio:
 \begin{center}
 	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-		gin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 		\node[state,initial] (q_0)   {$q_0$};
 		\node[state] (q_1) [right=of q_0] {$q_1$};
 		\node[state] (q_2) [right=of q_1] {$\cdots$};
@@ -1308,8 +1318,8 @@ partiamo con un esempio:
 		(q_3) edge node {0,1} (q_4);
 	\end{tikzpicture}
 \end{center}
-che definisce un $L\subseteq\{0,1\}^*$ tale che $w\in L$ sse n-simo elemento della fine è 1. Si ha:
-$|Q_N|=n+1\to |Q_D|=2^n$
+che definisce un $L\subseteq\{0,1\}^*$ tale che $w\in L$ sse l'$n$-simo elemento dalla fine è 1. Si ha:
+$|Q_N|=n+1\to |Q_D|=2^{n+1}$
 Si ha che dato un $\epsilon$-NFA $E=(Q_E, \Sigma, \delta_E, q_{0_E}, F_E)$ che riconosce $L$ in un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ equivalenti con $Q_N=2^{Q_E}$ stati in $Q_E$ $\epsilon$-close: \textit{ECLOSE(S)=S} e $q_N=ECLOSE(q_E)$:
 $F_N\{S\in Q_F,\,\, S\subseteq Q_E | S\cap F_E\neq \emptyset\}$
 quindi:
@@ -1383,7 +1393,7 @@ Di conseguenza analizziamo prima i casi base: quelli in cui $E$ non contiene nes
 	      \begin{center}
 		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			      \node[state,initial] (q_0)   {$q_0$};
-			      \node[state, accepting] (q_1) [right=of q_0] {$q_1$}; ;
+			      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
 		      \end{tikzpicture}
 	      \end{center}
 	\item se $R=a$, dove $a$ è un carattere, allora  $L(R)=\{a\}$ e l'automa \nfa ha due stati: quello iniziale $q_{0}$ e
@@ -1404,16 +1414,17 @@ In tutti i casi base, è immediato notare che il linguaggio accettato dall'autom
 Passiamo adesso a considerare cosa accade quando l'espressione regolare $R$ corrisponda ad applicare un'operazione a due
 espressioni regolari $S$ e $T$.
 Per ipotesi induttiva, assumiamo di avere già costruito un automa
-$\mathcal A_{S} = \langle \Sigma, Q_{S}, q_{0,S}, F_{s}, \delta_{S}$ che riconosce il linguaggio $L(S)$ rappresentato da
+$\mathcal A_{S} = \langle \Sigma, Q_{S}, q_{0,S}, F_{S}, \delta_{S}\rangle$ che riconosce il linguaggio $L(S)$ rappresentato da
 $S$ e un automa
-$\mathcal A_{T} = \langle \Sigma, Q_{T}, q_{0,T}, F_{T}, \delta_{T}$ che riconosce il linguaggio $L(S)$ rappresentato da
-$S$.
+$\mathcal A_{T} = \langle \Sigma, Q_{T}, q_{0,T}, F_{T}, \delta_{T}\rangle$ che riconosce il linguaggio $L(T)$ rappresentato da
+$T$.
 Inoltre costruiremo sempre un automa con un solo stato finale.
 Sempre per ipotesi induttiva possiamo denotare con $q_{f,S}$ e  $q_{f,T}$ rispettivamente lo stato finale di
 $\mathcal A_{S}$ e  $\mathcal A_{T}$.
 In tutti i casi andremo a costruire un automa \nfa che accetta esattamente $L(R)$, partendo dall'automa che è l'unione
-di $\mathcal_{S}$ e  $\mathcal_{T}$, ovvero $Q$ è l'unione disgiunta di $Q_{S}$ e $Q_{T}$ e, per ogni stato $q\in Q$ e
-ogni carattere $c\in \Sigma \cup \{epsilon\}$, $\delta(q,c) = \delta_{S}(q,c)$ se $q\in Q_{S}$ e  $\delta(q,c) = \delta_{T}(q,c)$ se $q\in Q_{T}$.
+di $\mathcal A_{S}$ e  $\mathcal A_{T}$, ovvero $Q$ è l'unione disgiunta 
+di $Q_{S}$ e $Q_{T}$ e, per ogni stato $q\in Q$ e
+ogni carattere $c\in \Sigma \cup \{\varepsilon\}$, $\delta(q,c) = \delta_{S}(q,c)$ se $q\in Q_{S}$ e  $\delta(q,c) = \delta_{T}(q,c)$ se $q\in Q_{T}$.
 
 
 Se $R=S+T$, allora $L(R)=L(S)+L(T)$.
@@ -1421,7 +1432,7 @@ Intuitivamente, dobbiamo scegliere se la parola in input appartiene a $L(S)$ opp
 Per realizzare questa scelta, lo stato iniziale $q_{0}$ di $\mathcal A$ ha due $\epsilon$-transizioni: una verso
 $q_{0,S}$ e una verso $q_{0,T}$.
 Inoltre aggiungiamo a $Q$ un nuovo stato $q_{R}$ che sarà l'unico stato finale, e due  $\epsilon$-transizioni: una da
-$q_{S}$ a $q_{R}$ e una da $q_{0,T}$ a  a $q_{R}$.
+$q_{f,S}$ a $q_{R}$ e una da $q_{f,T}$ a $q_{R}$.
 Notiamo che l'automa descritto accetta il linguaggio $L(S) \cup L(T)$ e ha un solo stato finale.
 
 \begin{center}
@@ -1432,7 +1443,7 @@ Notiamo che l'automa descritto accetta il linguaggio $L(S) \cup L(T)$ e ha un so
 		\node[draw=none,fill=none] (Q_E) [right = of q_1] {$S$};
 		\node[draw=none,fill=none] (Q_F) [right = of q_2] {$T$};
 		\node[state] (q_3) [right=of Q_E] {$q_S$};
-		\node[state] (q_4) [right=of Q_F] {$q_T#$};
+		\node[state] (q_4) [right=of Q_F] {$q_T\#$};
 		\node[state, accepting] (q_5) [below right =of q_3] {$q_R$};
 		\path[->]
 		(q_0) edge node {$\epsilon$} (q_1)
@@ -1611,7 +1622,7 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 	      \begin{center}
 		      \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
 			      \node[state, initial] (q_0)   {$q_1$};
-			      \node[state, accepting] (q_1) [right=of q_1] {$q_k$};
+			      \node[state, accepting] (q_1) [right=of q_0] {$q_1$};
 			      \path[->]
 			      (q_0) edge [bend left =25]node {$S$} (q_1)
 			      (q_1) edge [bend left =25]node {$T$} (q_0)
@@ -1621,7 +1632,7 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 	      \end{center}
 	      rappresenta:
 	      $E_i=(R+SU^{*}T)^{*}SU^{*}$
-	\item se $q_0=q$:
+	\item se $q_0=q_1$:
 	      \begin{center}
 		      \begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
 			      \node[state, initial, accepting] (q_0)   {$q_1$};
@@ -1634,7 +1645,7 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 \end{itemize}
 
 \begin{example}
-	passo dall'automa a l'espressione regolare:
+	passo dall'automa all'espressione regolare:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			\node[state, initial] (q_0) {$A$};
@@ -1781,6 +1792,9 @@ quindi quando si ha uno stato iniziale $q_0$ e uno finale $q_1$:
 	$E=(1+(00+010^*1)(10+110^*1)^*0)^*$
 \end{example}
 
+\subsection{Il metodo dei derivati di Brzozowski}\label{sec:derivati-brzozowski}
+
+
 \section{Da espressioni regolari a ε-NFA}
 \label{sec:da-ER-a-eNFA}
 
@@ -1830,20 +1844,20 @@ Per gli esercizi che seguono, si suggerisce di usare la soluzione degli Esercizi
 \section{Pumping Lemma per i linguaggi regolari}
 \label{sec:pumping-lemma-RE}
 
-Il pumping lemma (e lemma dell'espansione) esplicita una proprietà dei linguaggi regolari: ogni parola sufficientemente
+Il pumping lemma (o lemma dell'espansione) esplicita una proprietà dei linguaggi regolari: ogni parola sufficientemente
 lunga può essere espansa, ovvero esiste una sua sottostringa che può essere ripetuta un numero arbitrario di volte,
 ottenendo sempre una nuova parola del linguaggio.
 
 \begin{lemma}[Lemma dell'espansione]\label{lem:pumping-lemma}
-	Sia $L$ un linguaggio regolare.
-	Allora esiste una costante $p$, detta costante di espansione, tale che per ogni parola $w\in L$ con $|w|\le p$, la parola $w$ può
-	essere decomposta come $w=xyz$ con $|xy|\le p$, $y\ne \epsilon$, e $xy^{i}z$ è una parola del linguaggio $L$ per ogni intero $i\ge 0$.
-
-	Notiamo immediatamente che questo lemma non permette di trarre conclusioni se il linguaggio $L$ non
-	è regolare.
-	In particolare, anche se $L$ non è regolare, potremmo avere una decomposizione $xyz$ di una parola tale che $xy^{i}z$
-	è sempre una parola di $L$.
+Sia $L$ un linguaggio regolare.
+Allora esiste una costante $p$, detta costante di espansione, tale che per ogni parola $w\in L$ con $|w|\ge p$, la parola $w$ può
+essere decomposta come $w=xyz$ con $|xy|\le p$, $y\ne \epsilon$ e $xy^{i}z$ è una parola del linguaggio $L$ per ogni intero $i\ge 0$.
 \end{lemma}
+
+Prima di discutere la dimostrazione, notiamo che questo lemma non permette di trarre conclusioni se il linguaggio $L$ non
+è regolare.
+In particolare esiste un linguaggio $L$ non regolare per cui una parola $w$ ha una decomposizione $xyz$ tale che $xy^{i}z$
+è sempre una parola di $L$.
 
 \begin{proof}
 	Siccome $L$ è un linguaggio regolare, allora esiste un \dfa che accetta esattamente $L$.
@@ -1852,13 +1866,13 @@ ottenendo sempre una nuova parola del linguaggio.
 	$r_{i} = \hat{\delta}(q_{0}, w[:i])$.
 	Siccome $|w|>p$, allora esistono $i,j$ tali che $r_{i}=r_{j}$ e $i<j$.
 	Allora definiamo $x$, $y$, $z$ rispettivamente come la sottostringa di $w$ che precede l'ingresso in $r_{i}$, che va da
-	$r_{i}$ a $r_{j}$, che segue $r_{j}$ --- formalmente $x= w[:i]$, $y= w[i+1:j]$,  $z= w[j+1:]$.
+	$r_{i}$ a $r_{j}$, che segue $r_{j}$ --- formalmente $x= w[:i]$, $y= w[i:j]$,  $z= w[j:]$.
 	È immediato notare che $xyz=w$ e $y\ne \epsilon$, perchè $j>i$.
-	Dalla definizione \gdv{TODO} di transizione estesa, $\hat{\delta}(q_{0}, w) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])$.
-	Siccome $r_{i}=r_{j}$,  $\hat{\delta}(r_{i}, w[i+1:j]) = r_{i}$,
-	$\hat{\delta}(q_{0}, xy^{i}z) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i+1:j]), w[j+1:])=\hat{\delta}(\hat{\delta}(q_{0}, w[:i]),  w[j+1:])$
+	Dalla definizione \gdv{TODO} di transizione estesa, $\hat{\delta}(q_{0}, w) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, w[:i]), w[i:j]), w[j:])$.
+	Siccome $r_{i}=r_{j}$,  $\hat{\delta}(r_{i}, w[i:j]) = r_{i}$,
+	$\hat{\delta}(q_{0}, xy^{i}z) = \hat{\delta}(\hat{\delta}(\hat{\delta}(q_{0}, x), y^{i}), z) = \hat{\delta}(\hat{\delta}(q_{0}, x), z)$
 	per ogni intero $i\ge 0$.
-	Siccome $w\in L$, allora $\hat{\delta}(q_{0}, xyz)\in F$: ciò implica che $\hat{\delta}(q_{0}, xy^{i}z)\in F$ per ogni intero $i>0$,
+        Siccome $w\in L$, allora $\hat{\delta}(q_{0}, xyz)\in F$: ciò implica che $\hat{\delta}(q_{0}, xy^{i}z)\in F$ per ogni intero $i$,
 	completando la dimostrazione.
 \end{proof}
 
@@ -1881,7 +1895,7 @@ Riscriviamo quindi il \Cref{lem:pumping-lemma} come la sua contronominale.
 
 \begin{lemma}[Lemma dell'espansione --- contronominale]\label{lem:pumping-lemma-2}
 	Sia $L$ un linguaggio.
-	Se per ogni costante $p$ esiste una parola $w\in L$ con $|w|\le p$, tale che per ogni decomposizione di $w$ come $xyz$, con
+	Se per ogni costante $p$ esiste una parola $w\in L$ con $|w|\ge p$, tale che per ogni decomposizione di $w$ come $xyz$, con
 	$|xy|\le p$, $y\ne \epsilon$, esiste un intero $i\ge 0$ tale che $xy^{i}z\notin L$, allora $L$ non è regolare.
 \end{lemma}
 
@@ -1890,20 +1904,20 @@ Questo lemma serve a dimostrare che un linguaggio L non è regolare. Si procede 
 Partiamo da un esempio:
 $L_{01}=\{0^n1^n|\,n\geq 1\}=\{01,0011,\cdots\}$
 supponiamo che questo linguaggio sia rappresentabile da un DFA $A$ con $k$ stati ($L(A)=L_{01}$).
-$0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^i0^j$ con $i\neq j$.
+$0^k$ implica $k+1$ prefissi: $\epsilon,0,00,000,\cdots,0^k$ e quindi $\exists i,j$ tali che $0^i$ e $0^j$ finiscono nello stesso stato. Allora l'automa è ingannabile e accetterebbe $0^j1^i$ con $i\neq j$.
 Formalmente si ha:
 \begin{theorem}
 	Sia $L\in REG$ allora $\exists n$ che dipende da $L$ tale che $\forall w\in L$ con $|w|\geq n$, $w$ può essere scomposta in tre stringhe $w=xyz$ in modo che:
 	$y\neq \epsilon$
 	$|xy|\leq n$
-	$\forall k\geq 0\,\,\, zy^kz\in L$
+	$\forall k\geq 0\,\,\, xy^kz\in L$
 	in altre parole posso sempre trovare una stringa non vuota $y$ non troppo distante dall'inizio di $w$, da $replicare$ da ripetere o cancellare ($k=0$) senza uscire dal linguaggio $L$
 \end{theorem}
 
 
 
 \begin{example}
-	mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $|xy|=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
+	mostriamo che L01 non è regolare. Suppongo per assurdo che sia regolare, allora vale il pumping lemma. Sia $n\in\mathbb{N}$ la costante del pumping lemma. Pongo $w=0^n1^n=xyz$ tale che $|xy|=n$, ovvero $xy=0^n$, quindi $xy$ è formato da soli 0. Poniamo $x=0^{n-1}\,\,y=0\neq \epsilon\,\, z=1^n$. Però per il pumping lemma $\forall k\geq 0\,\,\ xy^kz\in L_{01}$.
 	$xy^kz=0^{n-1}0^k1^n=0^{n+k-1}1^n\in L_{01}$
 	ma se $k\neq 1$ ciò non è vero e quindi il linguaggio non è regolare
 \end{example}
@@ -1920,7 +1934,7 @@ Formalmente si ha:
 	con $|y|=l$ e $0<l\leq n$
 	quindi $\forall k\geq 0$ si ha $xy^kz\in L=0^{n-l}0^{kl}1^{m}$ con:
 	$x=0^{n-l}\,\,y=0^{kl}\,\,z=1^{m}$
-	scelgo $k$ tale che $b-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
+	scelgo $k$ tale che $n-l+kl=n+(k-1)l>m\to k> 1+\frac{m-n}{l}$ quindi non è regolare
 \end{example}
 
 
@@ -2004,7 +2018,7 @@ Il linguaggio dell'Esercizio~\ref{exe:pump-parentesi} è anche chiamato il lingu
 	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
 \end{Exercise}
 
-\begin{Exercise}\label{exe:pump-1l0k1n}
+\begin{Exercise}\label{exe:pump-1l0k1n-bis}
 	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}\uno^{n}$, tale che $l=k$ oppure $k=n$,
 	determinare se è
 	regolare.
@@ -2035,7 +2049,7 @@ Il linguaggio dell'Esercizio~\ref{exe:pump-parentesi} è anche chiamato il lingu
 
 
 
-\section{Chiusura di un Linguaggio regolare}
+\section{Chiusura di un linguaggio regolare}
 Sia $REG$ la classe dei linguaggi regolari (ovvero ogni linguaggio regolare su un alfabeto finito non vuoto). Si ha la seguente proprietà:
 $L,M\in REG\to L\cup M\in REG$
 si può dimostrare in due maniere:
@@ -2044,7 +2058,7 @@ si può dimostrare in due maniere:
 	      $L,M\in REG \to \exists R, S \text{ ER tali che } L(R)=L \text { e } L(S)=M$
 	      $L\cup M=L(R+S) \text{ e quindi appartenente a } REG$
 	\item \textbf{con gli automi:}
-	      $\text{se }L,M\in REG\to \exists \epsilon-NFA \text{ che con L e M va dallo stato iniziale a quello finale}$:
+	      $\text{se }L,M\in REG \to \exists \epsilon\text{-NFA che riconosce } L\cup M$:
 	      \begin{center}
 		      \begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
 			      \node[state,initial] (q_0)   {$q_0$};
@@ -2064,7 +2078,7 @@ si può dimostrare in due maniere:
 	      \end{center}
 	      accetta $L\cup M$ che quindi è $REG$
 \end{itemize}
-Inoltre siano due i due alfabeti $\Sigma\subseteq\Gamma$, si ha che:
+Inoltre siano i due alfabeti $\Sigma\subseteq\Gamma$, si ha che:
 $\text{se L è regolare su }\Sigma\to \text{L è regolare su }\Gamma$
 inoltre:
 $\text{se L è REG su }\Sigma_1, \text{ M è REG su }\Sigma_2, \text{ allora } L\cup M \text{ è REG su }\Sigma_1\cup\Sigma_2$
@@ -2082,8 +2096,8 @@ $\text{se L è REG su }\Sigma_1, \text{ M è REG su }\Sigma_2, \text{ allora } L
 si osserva che:
 $L\in REG\,\,su\,\, \Sigma\,\,e\,\, \Sigma\subseteq \Gamma$
 inoltre:
-$\overline{L}=\Sigma^*-L\,\,oppure\,\, \overline{L}=\Gamma^*-L$
-\textit{Se ho un espressione regolare per L e voglio ottenere un'espressione regolare per }$\overline{L}$\textit{ devo ottenere un }$\epsilon-NFA$\textit{ che devo convertire in DFA. A quel punto complemento con F e ottengo un'espressione regolare per }$\overline{L}$.
+$\overline{L}=\Sigma^*-L$ oppure $\overline{L}=\Gamma^*-L$
+\textit{Se ho un'espressione regolare per $L$ e voglio ottenere un'espressione regolare per }$\overline{L}$\textit{ devo ottenere un }$\epsilon-NFA$\textit{ che devo convertire in DFA. A quel punto complemento con F e ottengo un'espressione regolare per }$\overline{L}$.
 Passiamo ora all'intersezione:
 \begin{theorem}
 	se $L$ e $M$ sono regolari allora la loro intersezione è regolare
@@ -2117,10 +2131,10 @@ Passiamo ora all'intersezione:
 		%}
 	\end{center}
 \end{proof}
-Passiamo al problema della \textbf{chiusura dei linguaggi regolari rispetto all'intersezione}, ovvero che due automi che usano entrambi contemporaneamente una certa stringa in input, il ché non è possibile. Si risolve usando l'\textbf{automa prodotto}:
-$A=(Q_L\times Q_M,\Sigma, \delta, (q_{OL},q_{OM}).F_L\times F_M)$
+Passiamo al problema della \textbf{chiusura dei linguaggi regolari rispetto all'intersezione}, ovvero che due automi che usano entrambi contemporaneamente una certa stringa in input, il che non è possibile. Si risolve usando l'\textbf{automa prodotto}:
+$A=(Q_L\times Q_M,\Sigma, \delta, (q_{OL},q_{OM}),F_L\times F_M)$
 con:
-$\delta(p,q),a)=(\delta_L(p,a),\delta_M(q,a))$
+$\delta((p,q),a)=(\delta_L(p,a),\delta_M(q,a))$
 $A_L=(Q_L,\Sigma,\delta_L,q_{OL},F_L)$
 $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 \begin{example}
@@ -2164,7 +2178,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 			(q_3) edge [loop below] node {0,1} ();
 		\end{tikzpicture}
 	\end{center}
-	$\delta((p,r),0)=(\delta_L(p,o),\delta_M8r,o))=(q,r)$
+	$\delta((p,r),0)=(\delta_L(p,0),\delta_M(r,0))=(q,r)$
 \end{example}
 
 \begin{example}
@@ -2327,7 +2341,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 \end{example}
 
 
-\begin{Exercise}\label{exe:pump-tanti-0}
+\begin{Exercise}\label{exe:pump-tanti-0-bis}
 	Dimostrare che il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\zero^n\uno^m$ con $n\geq m$
 	non è regolare.
 \end{Exercise}
@@ -2342,7 +2356,7 @@ $A_M=(Q_M,\Sigma,\delta_M,q_{OM},F_M)$
 
 
 \begin{Exercise}\label{exe:pump-01entrodoppio}
-	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le 2k$,
+	Dato il linguaggio $L\in\Sigma_{B}\kleene$ delle parole nella forma $\uno^{l}\zero^{k}$, tale che $l\le k\le 2l$,
 	determinare se è
 	regolare.
 	In  caso affermativo, dare un'espressione regolare equivalente a $L$, altrimenti dimostrare che non è regolare.
@@ -2391,6 +2405,13 @@ Da questo, verificare se due espressioni regolari rappresentano lo stesso lingua
 Verificare se un'espressione regolare rappresenta $\Sigma\kleene$.
 
 
+\subsection{Problema dell'appartenenza}\label{sec:appartenenza-ER}
+
+\subsection{Problema della vuotezza}\label{sec:vuotezza-ER}
+
+\subsection{Problema dell'equivalenza}\label{sec:equivalenza-ER}
+
+
 \section{Minimizzazione}
 definiamo la \textbf{relazione di equivalenza tra stati}:
 \begin{definition}
@@ -2404,7 +2425,7 @@ quindi si ha una \textbf{relazione di equivalenza} e quindi si hanno le tre prop
 \begin{itemize}
 	\item \textbf{riflessività:} $\forall p\in Q, p\approx p$
 	\item \textbf{simmetricità:} $\forall p,q\in Q, p\approx q\to q\approx p$
-	\item \textbf{transitività:} $\forall p,q,r\in Q, p\approx q\vee q\approx r\to p\approx r$
+	\item \textbf{transitività:} $\forall p,q,r\in Q, p\approx q\wedge q\approx r\to p\approx r$
 \end{itemize}
 e quindi \textbf{in ogni classe di equivalenza ci sono stati tra loro equivalenti}
 due stati, uno finale e uno non finale, sono sicuramente distinguibili, basti pensare alla stringa vuota.
@@ -2589,9 +2610,9 @@ Procedo così:
 	\item si rimuovono gli stati non raggiungibili
 	\item applico la tabella per scoprire le tabelle di equivalenza, gli stati del nuovo automa sono le classi di equivalenza
 \end{enumerate}
-si ha che lo stato iniziale è la classe di equivalenza dello stato finale e gli stati finali sono le classi di equivalenza degli stati finali.
+si ha che lo stato iniziale è la classe di equivalenza dello stato iniziale e gli stati finali sono le classi di equivalenza degli stati finali.
 La minimizzazione si dimostra per assurdo:
-Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)=L(N)\,|Q_N|<|Q_M|$. I due stati iniziali sono indistinguibili. Sia $p\in M\,\,q\in N$ tali $p\approx q\,\, \forall a\in\Sigma$ quindi: $\delta p,a)=\delta(q,a)$, Ogni stato $p\in Q_;$è quindi indistinguibile da almeno uno stato di $N$. Avendo però $N$ meno stati si avranno almeno due stati di $M$ indistinguibili dallo stesso di $N$ ma non sono indistinguibili per la tabella. SI ha un assurdo.
+Sia $M$ il DFA ottenuto dalla tabella. Supponiamo che esista un DFA $N$ tale che $L(A)=L(N)$ e $|Q_N|<|Q_M|$. Lo stato iniziale di $M$ e quello di $N$ sono indistinguibili. Sia $p\in Q_M$ e sia $q\in Q_N$ un suo stato indistinguibile: per ogni $a\in\Sigma$ si ha allora $\delta(p,a)=\delta(q,a)$. Ogni stato $p\in Q_M$ è quindi indistinguibile da almeno uno stato di $N$; avendo però $N$ meno stati di $M$, esistono due stati di $M$ indistinguibili dallo stesso stato di $N$, ma per la tabella essi sono distinguibili. Si ha un assurdo.
 \begin{example}
 	Si ha il seguente automa:
 	\begin{center}
@@ -2634,7 +2655,7 @@ Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)
 			\hline
 			c & x & x & / & / & / & / & / & / \\
 			\hline
-			d &   & z & x & / & / & / & / & / \\
+			d &   & x & x & / & / & / & / & / \\
 			\hline
 			e & x &   & x & x & / & / & / & / \\
 			\hline
@@ -2655,7 +2676,7 @@ Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)
 	$b\approx e\approx h$
 	$c\approx f\approx i$
 
-	e quindi ottengo, l'automa minimizzato:
+	e quindi ottengo l'automa minimizzato:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=4cm,on grid,auto]
 			\node[state, initial] (q_0) {$\{a,d,g\}$};
@@ -2721,10 +2742,13 @@ Sia $M$ il DFA ottenuto dalla tabella. Suppongo esista un DFA $N$ tale che $L(A)
 			edge [loop above] node {1} ();
 		\end{tikzpicture}
 	\end{center}
-	quindi $A$ è $B$ minimizzato, per questo riconoscevano lo stesso linguaggio
+	quindi $A$ è il minimizzato di $B$, per questo riconoscono lo stesso linguaggio
 \end{example}
 La tabella non funziona ovviamente per gli NFA
 
+
+
+\subsection{Il teorema di Myhill–Nerode}\label{sec:myhill-nerode}
 
 
 \newpage

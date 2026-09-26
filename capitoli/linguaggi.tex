@@ -1,7 +1,7 @@
 \chapter{Linguaggi e Grammatiche}\label{cha:linguaggi+grammatiche}
 
 \section{Linguaggi}
-iIniziamo con le definizioni di base che saranno fondamentali in tutto il testo.
+Iniziamo con le definizioni di base che saranno fondamentali in tutto il testo.
 
 Un \textbf{simbolo} o \textbf{carattere} è un qualsiasi oggetto.
 
@@ -34,6 +34,10 @@ Normalmente usiamo le ultime lettere dell'alfabeto latino (ad esempio $w$, $x$,
 $y$, $z$) per rappresentare parole.
 La \keyword{lunghezza} di una parola è il numero di simboli nella sequenza.
 La lunghezza della parola $z$ viene indicata con $|z|$.
+
+
+\subsection{Prefissi, suffissi e sottostringhe}\label{sec:prefissi-suffissi}
+
 
 Alcuni simboli sono speciali perchè hanno un significato particolare e non fanno parte di nessun alfabeto $\Sigma$.
 Il primo simbolo speciale che vediamo è $\epsilon$ e rappresenta la stringa vuota,
@@ -90,8 +94,8 @@ La nozione di  concatenazione non si applica solo ai caratteri, ma anche a strin
 \begin{definition}[Concatenazione]\label{def:concatenazione-parole}
 	Siano $w$ e $x$ due parole.
 	La loro \keyword{concatenazione} $wx$ è ottenuta prendendo $w$ e facendo seguire a questa la stringa  $x$.
-	Più formalmente, se $w=a_{1}\cdots a_{|w|}$ e $x=b_{1}\cdots b_{|w|}$, allora la loro concatenazione $wx$ è la stringa
-	$a_{1}\cdots a_{|w|} b_{1}\cdots b_{|w|}$.
+	Più formalmente, se $w=a_{1}\cdots a_{|w|}$ e $x=b_{1}\cdots b_{|x|}$, allora la loro concatenazione $wx$ è la stringa
+	$a_{1}\cdots a_{|w|} b_{1}\cdots b_{|x|}$.
 \end{definition}
 
 \begin{definition}[Concatenazione di linguaggi]\label{def:concatenazione-linguaggi}
@@ -111,8 +115,8 @@ Si noti anche che l'alfabeto del linguaggio $L_1 L_2$ è $\Sigma_{1} \cup \Sigma
 	$k$ parole, non necessariamente distinte, del linguaggio $L$.
 \end{definition}
 
-Per convenzione, si indica con $L^{0} = \{ epsilon \}$.
-Quindi possiamo vedere $L^{1} =L$, mentre $L^{k} = L^{k-1} \Sigma$ se $k>1$.
+Per convenzione, si indica con $L^{0} = \{\varepsilon\}$.
+Quindi possiamo vedere $L^{1} =L$, mentre $L^{k} = L^{k-1} L$ se $k>1$.
 Una variante della \cref{def:concatenazione-linguaggi} consiste nella definizione di potenza di un alfabeto.
 
 \begin{definition}\label{def:potenza-alfabeto}
@@ -155,13 +159,12 @@ tali che $B$ sia un punto fisso per $\phi$.
 
 \begin{proposition}\label{prop:kleene-punto-fisso}
 	Sia $\Sigma$ un alfabeto.
-	Allora $\Sigma^{*}$ è il minimo punto fisso di $\Sigma \cup \{\epsilon\}$ rispetto alla funzione
-	chiusura di Kleene come minimo punto fisso di $L\cup \{\epsilon\}$ rispetto alla funzione $\phi$ che mappa ogni
-	linguaggio $L$ in $\phi(L) = L^{2}$.
+	Allora $\Sigma^{*}$ è il minimo punto fisso, che contiene $\Sigma \cup \{\epsilon\}$, rispetto alla funzione
+	$\phi$ che mappa ogni linguaggio $L$ in $\phi(L) = L^{2}$.
 \end{proposition}
 
 \begin{example}\label{exa:chiusura-kleene}
-	$\Sigma_{B}^{*} = \{\mathtt{\epsilon},\zero,\uno,\zero\zero,\zero\uno,\uno\zero,\uno\zero\zero,\zero\zero\zero,\ldots \}$.
+	$\Sigma_{B}^{*} = \{\epsilon,\zero,\uno,\zero\zero,\zero\uno,\uno\zero,\uno\zero\zero,\zero\zero\zero,\ldots \}$.
 \end{example}
 
 Adesso possiamo introdurre la notazione più utilizzata per specificare un linguaggio costruito su un determinato alfabeto.
@@ -173,7 +176,7 @@ Adesso possiamo introdurre la notazione più utilizzata per specificare un lingu
 \end{observation}
 
 Siccome ogni linguaggio è un insieme, il simbolo $\emptyset$ denota anche il \keyword{linguaggio vuoto} (notare che
-$\emptyset\in\Sigma^k,\,|\emptyset|=0$), che è
+$|\emptyset|=0$), che è
 diverso dal linguaggio $\{\epsilon\}$ che consiste esattamente della stringa vuota.
 Infatti $|\{\varepsilon\}|=1$.
 Infine si noti che $\Sigma^*$ è sempre un insieme infinito.
@@ -185,7 +188,7 @@ Vediamo adesso alcuni esempi di linguaggi sull'alfabeto $\Sigma_{B}$.
 	$\{\varepsilon,\zero\uno,\zero\zero\uno\uno,\zero\zero\zero\uno\uno\uno,\ldots\}$.
 \end{example}
 
-\begin{example}\label{exa:0=1}
+\begin{example}\label{exa:01-stesso-numero}
 	le stringhe con un uguale numero di \zero{} e di \uno{}:
 	$\{\varepsilon,\zero\uno,\uno\zero,\zero\zero\uno\uno,\zero\uno\uno\zero,\zero\uno\zero\uno,\uno\zero\zero\uno,\ldots\}$.
 \end{example}
@@ -213,6 +216,9 @@ Notiamo che tutti gli esempi di linguaggi che abbiamo dato in questa sezione son
 proprietà che è vera per tutte e sole le parole del linguaggio.
 Questo vuole dire che stiamo considerando una visione \emph{insiemistica} dei linguaggi.
 Vedremo presto che questa non è l'unica visione possibile.
+
+
+\subsection{Operazioni sui linguaggi}\label{sec:operazioni-linguaggi}
 
 
 \section{Grammatiche}\label{sec:grammatiche}
@@ -284,10 +290,10 @@ applicazioni di produzione:
 \[\mathsf{S} \sprod{\mathsf{S}\to \mathsf{Z}\mathsf{U}} \mathsf{Z}\mathsf{U}  \sprod{\mathsf{Z}\to \mathsf{Z}\zero} \mathsf{Z}\zero\mathsf{U} \sprod{\mathsf{U}\to \uno} \mathsf{Z}\zero\uno \sprod{\mathsf{Z}\to \zero} \zero\zero\uno \]
 
 Questa derivazione non è l'unica possibile per generare la stringa \zero\zero\uno e la grammatica $G$ che abbiamo
-descritto non è l'unica in grado di generare il linguaggio $G$.
+descritto non è l'unica in grado di generare il linguaggio $L$.
 Possiamo adesso dare la definizione formale di applicazione di una produzione.
 
-\begin{definition}Applicazione di una produzione\label{def:applicazione-produzione}
+\begin{definition}[Applicazione di una produzione]\label{def:applicazione-produzione}
 	Siano $\alpha$, $\beta$, $\gamma$, $\delta$ stringhe su alfabeto $V\cup T$.
 	Sia $\gramm$ una grammatica e sia \prodgen una sua produzione (quindi $\alpha\neq\epsilon$).
 	L'\keyword{applicazione} della produzione \prodgen alla stringa $\gamma\alpha\delta$ è denotata con
@@ -305,7 +311,7 @@ produzione estesa.
 	Sia $\gramm$ una grammatica e siano $\alpha$, $\beta$ due forme sentenziali di $G$.
 	Allora possiamo scrivere $\alpha \eprod{G} \beta$ se esiste una sequenza
 	$\langle \gamma_{1}, \ldots, \gamma_{n}\rangle $ di $n$ forme sentenziali tali che $\alpha = \gamma_{1}$,
-	$\beta = \gamma_{n}$, e $\gamma_{i} \sprod{G} \gamma_{i+1}$ per ogni $1\le k< n$.
+	$\beta = \gamma_{n}$, e $\gamma_{i} \sprod{G} \gamma_{i+1}$ per ogni $1\le i< n$.
 	In questo caso diciamo che $\beta$ è il risultato dell'\keyword{applicazione estesa} di produzioni di $G$ alla stringa $\alpha$.
 \end{definition}
 
@@ -315,6 +321,10 @@ produzione estesa.
 	Il \keyword{linguaggio generato} da $G$, denotato con $L(G)$ è l'insieme $L(G)= \{ w\in T^{*}: S \eprod{G} w\}$.
 \end{definition}
 
+
+\subsection{Derivazioni canoniche}\label{sec:derivazioni-canoniche}
+
+
 Inoltre la definizione di grammatica è estremamente poco vincolata, rendendo difficile capire quali sia il linguaggio
 che una grammatica genera. Per questo motivo sono interessanti studiare grammatiche ristrette dove valgono proprietà più
 stringenti di interesse sia per studiare le proprietà dei linguaggi generati che per risolvere più efficientemente il
@@ -322,16 +332,20 @@ problema di appartenenza.
 Una prima classificazione delle grammatiche corrisponde alla gerarchia di Chomsky che classifica le grammatiche in tipo
 0, 1, 2, 3.
 
+
+\subsection{La gerarchia di Chomsky}\label{sec:gerarchia-chomsky}
+
+
 \begin{definition}\label{def:tipo-0}
 	Ogni grammatica \gramm definita secondo la \cref{def:grammatica} è di tipo 0.
 \end{definition}
 
 \begin{definition}\label{def:tipo-1}
-	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni hanno lunghezza almeno pari a alla testa è di tipo 1.
+	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni in ogni produzione $\alpha\to\beta$ il corpo $\beta$ è lungo almeno quanto la testa $\alpha$ è di tipo 1.
 	Queste grammatiche sono anche dette \keyword{grammatiche dipendenti dal contesto}.
 \end{definition}
 
-Chiaramente le grammatiche di tipo 1 sono incluse in quelle di tipo 1 e si dimostra facilmente che l'inclusione è stretta.
+Chiaramente le grammatiche di tipo 1 sono incluse in quelle di tipo 0 e si dimostra facilmente che l'inclusione è stretta.
 Noi trascureremo queste grammatiche perchè quasi tutti i linguaggi artificiali, quali i linguaggi di programmazione,
 sono generati da una grammatica più ristretta.
 Le grammatiche di tipo 1 sono invece utilizzate nell'analisi dei linguaggi naturali.
@@ -339,7 +353,7 @@ Le grammatiche di tipo 1 sono invece utilizzate nell'analisi dei linguaggi natur
 
 \begin{definition}\label{def:tipo-2}\label{def:CFG}
 	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni hanno testa formata da esattamente una variabile e per
-	coda una forma sentenziale non vuota è di tipo 2.
+	corpo una forma sentenziale non vuota è di tipo 2.
 	Queste grammatiche sono anche dette \keyword{grammatiche libere dal contesto}.
 \end{definition}
 
@@ -348,7 +362,7 @@ studio estensivo in questo testo.
 Spesso però siamo interessati ad ulteriori restrizioni.
 
 \begin{definition}\label{def:tipo-3}
-	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni sono forma $A\to aB$ o $A\to a$, dove $A$ e $B$ sono
+	Ogni grammatica \gramm di tipo 0 per cui tutte le sue produzioni sono della forma $A\to aB$ o $A\to a$, dove $A$ e $B$ sono
 	variabili e $a$ è un terminale, è di tipo 3.
 	Queste grammatiche sono anche dette \keyword{grammatiche regolari}.
 \end{definition}

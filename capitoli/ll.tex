@@ -19,7 +19,7 @@ fortemente l'insieme delle possibili scelte, riducendo i tempi di calcolo.
 
 Se desideriamo aumentare ulteriormente l'efficienza del parsing, possiamo calcolare una tabella, chiamata
 \keyword{tabella di parsing}, che associa ad ogni coppia variable-terminale le produzioni che hanno tale variabile come
-testa e il cui corporation's inizia con il terminale.
+testa e il cui corpo inizia con il terminale.
 
 Notiamo che la tabella di parsing è sufficiente per determinare tutto il parsing, perchè l'algoritmo semplicemente
 guarderà il carattere attuale dell'input per determinare quali produzioni siano applicabili.
@@ -60,7 +60,7 @@ In questo caso, ogni $TP[\cdot]$ è un sottoinsieme di tutte le produzioni della
 \label{alg:costruzione-tabella-parsing-da-first}
 \tcp{$c$ è un terminale, $A$ è una variabile}
 \ForEach{$A\in V, c\in T$}{$TP[A,c]=\emptyset$}
-\ForEach{produzione $A\to \alpha V$}{%
+\ForEach{produzione $A\to \alpha$}{%
   \eIf{$\alpha$ inizia con il terminale $c$}{%
     Aggiungiamo $\alpha$ all'insieme $TP[A,c]$
   }{\ForEach{$c\in\First(\alpha)$}{%
@@ -163,6 +163,11 @@ generare la stringa vuota, allora $\First(\alpha\Follow(A)) = \First(\alpha)$.
   }
 \Return $TP$
 \end{algorithm}
+
+
+\subsection{Grammatiche LL(k)}\label{sec:llk}
+
+\subsection{Rilevamento e recupero degli errori}\label{sec:errori-ll}
 
 
 %%% Local Variables:

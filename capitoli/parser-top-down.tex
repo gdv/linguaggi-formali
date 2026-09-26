@@ -2,7 +2,7 @@
 
 
 
-Un parser analizza il risultato dell'analizzatore lessicale e costruire l'albero di derivazione che ha prodotto il testo.
+Un parser analizza il risultato dell'analizzatore lessicale e costruisce l'albero di derivazione che ha prodotto il testo.
 In realtà nulla impedisce di avere solo un parser che agisca sul testo, evitando di avere un analizzatore lessicale
 separato e, sempre più spesso, è quello che viene fatto in pratica, soprattutto per linguaggi relativamente semplici.
 La motivazione principale per distinguere un passo di analisi lessicale è l'efficienza: un lexer sarà basato su
@@ -53,7 +53,7 @@ Negli ultimi anni si vede invece una tendenza verso i parser top-down, in quanto
 sia da descrivere che da implementare, sebbene non abbiano le stesse garanzie di efficienza di alcuni parser bottom-up.
 
 Consideriamo l'esempio della grammatica che genera espressioni aritmetiche.
-Quindi un esempio di stringa del linguaggio generato sarà \verb/([]){}/.
+Quindi un esempio di stringa del linguaggio generato sarà \verb/2*(7+8)+4/.
 La grammatica che utilizzeremo sarà
 \begin{example}\label{exa:parse-espressioni}
 Sia \gramm, con $V=\{S,P, A, D, M, N\}$, $T=\left\{ 0-9, +, -, *, /, (,)\right\}$ e le seguenti regole:

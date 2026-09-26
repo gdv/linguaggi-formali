@@ -1,7 +1,8 @@
 \chapter{Macchine di Turing}\label{cha:macchine-di-turing}
 
-Nascono in risposta al problema di Hilbert, che si chiedeva se esiste un algoritmo per dimostrare teoremi. Non ci sono comunque funzioni non calcolabili con le macchine di Turing:
-$f:\mathbb{N}\to\{0,1\}\,\,s^{|\mathbb{N}}|>\mathbb{N}$
+Nascono in risposta al problema di Hilbert, che si chiedeva se esiste un algoritmo per dimostrare teoremi.
+Esistono comunque funzioni non calcolabili con le macchine di Turing:
+$|\{ f:\mathbb{N}\to\{0,1\} \}| > |\mathbb{N}|$, ovvero ci sono più funzioni che macchine di Turing.
 Siamo interessati a studiare la calcolabilità (computabilità).
 Esiste un programma che calcola una certa funzione? Se non esiste, $f$ è indecidibile. Se sì, in quanto tempo è calcolabile (complessità computazionale), quante mosse e quante celle del nastro sono necessarie?\\
 vediamo due esempi:
@@ -9,7 +10,7 @@ vediamo due esempi:
 data una CFG $G=(V,T,P,S)$ stabilire se è ambigua. Questo problema è indecidibile, cioè non esiste nessun algoritmo che dia una risposta.
 \end{example}
 \begin{example}
-Problema "ciao mondo": dato un sorgente di un programma in C/Java/ , i primi undici caratteri
+Problema "ciao mondo": dato un sorgente di un programma in C o Java, i primi undici caratteri
 stampati dal programma sono "ciao, mondo"?
 Consideriamo il seguente algoritmo, che prende in input un numero intero N e stampa "ciao mondo" sse
 $\exists x,y,z\in \mathbb{N}$ tali che
@@ -45,8 +46,11 @@ Ma questo è assurdo: perché $H_2$ dice si quando in realtà stampa ciao mondo 
 non funziona. Ma allora in conclusione H non può esistere (perché i passaggi da H a $H_1$ e da $H_1$ a
 $H_2$ sono leciti) e quindi il problema non è decidibile.
 \end{proof}
+\subsection{La tesi di Church–Turing}\label{sec:church-turing}
+
+
 \section{Riduzioni}
-Supponiamo $P_2$ indicibile. Considerato un nuovo problema $P_2$, vorrei stabilire se anch'esso è
+Supponiamo $P_1$ indecidibile. Considerato un nuovo problema $P_2$, vorrei stabilire se anch'esso è
 indecidibile. Vorremmo quindi fare una "riduzione" da $P_1$ a $P_2$:
 \includegraphics{2025-01-16_15-12.png}
 
@@ -60,7 +64,7 @@ $P_2$ (Problema della chiamata): dato un programma $Q$, esso chiama il metodo $m
 \item rinominiamo tutte le istanze di $m$ in qualcosa d'altro
 \item aggiungiamo un metodo m che non verrà quindi mai chiamato
 \item modifichiamo questo programma in modo che salvi in un array i primi 11 caratteri che stampa a video
-\item modifichiamo questo programma in modo che se sfora gli 11 caratteri e controlla tali caratteri. Se sono esattamente "ciao mondo", chiama m
+\item modifichiamo questo programma in modo che se supera gli 11 caratteri, controlla tali caratteri. Se sono esattamente "ciao mondo", chiama m
 \end{itemize}
 quindi anche questo problema è indecidibile
 \end{example}
@@ -68,7 +72,7 @@ quindi anche questo problema è indecidibile
 staremmo mostrando che se $P_1$ è decidibile allora $P_2$ è decidibile. Ma sappiamo che $P_1$ è
 indecidibile, quindi non staremmo dimostrando niente.
 Nel caso contrario stiamo invece dicendo che se $P_2$ è decidibile allora $P_1$ è decidibile. Ma essendo
-$P_1$ indecidibile, allora l'antecedente è falsa e quindi $P_2$ non può essere decidibile, quindi è
+$P_1$ indecidibile, allora l'antecedente è falso e quindi $P_2$ non può essere decidibile, quindi è
 indecidibile.\\
 Diamo ora la definizione formale della Macchina di Turing:
 \begin{definition}
@@ -85,7 +89,7 @@ con:
 \item $F\subseteq Q$ insieme di stati finali
 \end{itemize}
 inoltre si ha che:
-$$\Sigma\subseteq \Gamma\,\,\,e\,\,\,\Gamma\cap\Sigma\neq\emptyset$$
+$$\Sigma\subsetneq \Gamma\,\,\,e\,\,\,\Gamma\setminus\Sigma\neq\emptyset$$
 quindi si ha per esempio questa rappresentazione, per l'input $x_1,\ldots ,x_n\in\Sigma^*$:
 \begin{center}
 \includegraphics{2025-01-16_15-13.png}
@@ -146,21 +150,21 @@ quindi si ha per esempio questa rappresentazione, per l'input $x_1,\ldots ,x_n\i
 \newpage
 Questa era una definizione deterministica, passiamo ora ad una definizione \textit{istantanea}:
 \begin{definition}
-suppongo di avere lo stato $q$, il nastro $x_1,\ldots ,x_n$ con la testina $x_i$. SI ha:
-$$ID:\,\,x_1x_2,\ldots qx_ix_{i+1}\ldots x_n$$
+suppongo di avere lo stato $q$, il nastro $x_1,\ldots ,x_n$ con la testina $x_i$. Si ha:
+$$ID:\,\,x_1x_2\ldots qx_ix_{i+1}\ldots x_n$$
 e suppongo $Q\cap\Gamma=\emptyset$ senza perdere generalità e uso la simbologia dei $\vdash$ introdotta coi PDA. \\
 Se $\delta(q,x_i)=(p,y,L)$ allora $\vdash\,\, x_1x_2\ldots x_{i-2}px_{i-1}yx_{i+1}\ldots x_n$.\\
 Si hanno dei casi particolari:
 \begin{itemize}
 \item se $i=1$ si ha $qx_1x_2\ldots x_n\vdash pByx_2\ldots x_n$
-\item se $i=n\,\,y=B$ si ha $qx_1x_2\ldots qx_n\vdash x_1x_2\ldots x_{n-2}px_{n-1}$
+\item se $i=n\,\,y=B$ si ha $qx_1x_2\ldots x_n\vdash x_1x_2\ldots x_{n-2}px_{n-1}$
 \end{itemize}
 a destra abbiamo invece:
-Se $\delta(q,x_i)=(p,y,R)$ allora $\vdash\,\, x_1x_2\ldots x_{i-1}Ypx_{i+1}\ldots x_n$.\\
+Se $\delta(q,x_i)=(p,y,R)$ allora $\vdash\,\, x_1x_2\ldots x_{i-1}ypx_{i+1}\ldots x_n$.\\
 Si hanno dei casi particolari:
 \begin{itemize}
-\item se $i=1$ si ha $q_1x_2\ldots x_{n-1}\vdash ypB$
-\item se $i=n\,\,y=B$ si ha $qx_1x_2\ldots qx_n\vdash px_2\ldots x_n$
+\item se $i=1$ si ha $qx_1x_2\ldots x_n\vdash ypx_2\ldots x_n$
+\item se $i=n\,\,y=B$ si ha $qx_1x_2\ldots x_n\vdash px_2\ldots x_n$
 \end{itemize}
 \end{definition}
 \begin{example}
@@ -205,12 +209,12 @@ edge [loop below] node [align=center] {$y/y\rightarrow$} ()
 \end{tikzpicture}
 \end{center}
 e per l'input 0010 si hanno i seguenti passi:
-$$q_0010\vdash xq_1010\vdash x0q_110\vdash xq_20y0\vdash  q_2x0y0$$
+$$q_0\,0010\vdash xq_1010\vdash x0q_110\vdash xq_20y0\vdash q_2x0y0$$
 $$\vdash xxq_2y0\vdash xxyq_10\vdash xxy0q_1B$$
 \end{example}
-definiamo quini il linguaggio accettato da una macchina di Turing:
+definiamo quindi il linguaggio accettato da una macchina di Turing:
 $$M=(Q,\Sigma,\Gamma,\delta,q_0,B,F)$$
-$$L(M)=\{w\in\Sigma^*|q_0w\stackrel{*}{\vdash}\alpha p\beta\,\,p\in F\,\,\alpha,\beta\in\Gamma^*\}$$
+$$L(M)=\{w\in\Sigma^*\,|\,q_0w\stackrel{*}{\vdash}\alpha p\beta,\,\, p\in F,\,\,\alpha,\beta\in\Gamma^*\}$$
 La classe dei linguaggi accettati dalle MdT sono i ricorsivamente enumerabili (RE).
 Le MdT possono anche calcolare le funzioni:
 \begin{example}
@@ -220,7 +224,7 @@ $$f(n,m)=m-n=max(m-n,0)=\begin{cases}
 \end{cases}$$
 quindi se l'input fosse $0^m10^n$ si avrebbe in output $0^{m-n}$
 \end{example}
-si ha che se la MdT accetta, allora si ferma e che se la MdT non accetta, allora non si può dire se si ferma oppure no. Se non si ferma: linguaggi ricorsivamente enumerabili. Se si ferma sempre, otteniamo una sottoclasse che sono i linguaggi ricorsivi. Inoltre il problema dell'arresto, \textbf{halting problem}, è indecidibile e quindi i linguaggi ricorsivamente enumerabili sono quindi semidecibili.\\
+si ha che se la MdT accetta, allora si ferma e che se la MdT non accetta, allora non si può dire se si ferma oppure no. Se non si ferma: linguaggi ricorsivamente enumerabili. Se si ferma sempre, otteniamo una sottoclasse che è la classe dei linguaggi ricorsivi. Inoltre il problema dell'arresto, \textbf{halting problem}, è indecidibile e quindi i linguaggi ricorsivamente enumerabili sono quindi semidecibili.\\
 Si possono avere delle estensioni della macchina di Turing:
 \begin{itemize}
 \item macchina non deterministica; anziché una sequenza di ID avremmo un albero. Non si aggiunge comunque potenza di calcolo, perché posso simulare una nondet con una det che esplora questo albero
@@ -313,6 +317,9 @@ Se Mn è una NTM (Nondeterministic Turing Machine) allora esiste una DTM
 (Deterministic Turing Machine) tale che il linguaggio accettato dalla NTM è uguale a quello accettato
 dalla DTM
 \end{theorem}
+\subsection{Riducibilità many-one e linguaggi completi}\label{sec:riducibilita}
+
+
 \section{Restrizioni delle macchine di Turing}
 Consideriamo una MdT con nastro semiinfinito (ovvero è infinito solo da un lato):
 \begin{center}
@@ -582,7 +589,7 @@ quindi, insiemisticamente:
 \end{center}
 \begin{example}
 vediamo un linguaggio non ricorsivamente enumerabile.\\
-$w\in\{o,1\}^*$ biiezione tra stringhe e numeri:
+$w\in\{0,1\}^*$ biiezione tra stringhe e numeri:
 \begin{center}
 \begin{tabular}{c c c c c c c}
   $w_1$         & $w_2$ & $w_3$ & $w_4$ & $w_5$ & $w_6$ & \ldots  \\
@@ -590,7 +597,7 @@ $w\in\{o,1\}^*$ biiezione tra stringhe e numeri:
   $\varepsilon$ & 0     & 1     & 00    & 01    & 10    & ..
 \end{tabular}
 \end{center}
-Consideriamo però le due stringe 00101 e 0101: se le leggessi come numeri binari sono entrambi
+Consideriamo però le due stringhe 00101 e 0101: se le leggessi come numeri binari sono entrambi
 5, quindi abbiamo perso la biiezione.
 Forziamo quindi l'interpretazione delle stringhe mettendoci davanti un 1.
 Codifichiamo anche una MdT in binario:
@@ -598,8 +605,8 @@ $$M=(Q,\{0,1\},\Gamma,\delta,q_1,B,\{q_2\})$$
 $$Q=\{q_1,\ldots ,q_r\}$$
 $$\Gamma=\{x_1,\ldots ,x_s\}=\{0,1,B,\ldots \}$$
 $$direzioni:\,\,L\to D_1\,\,R\to D_2$$
-$$\underbrace{\delta(q_i,x_j)=(q_k,x_1,D_m}_{0^i10^j10^k10^l10^m}$$
-$$Cod_111Cod_211Cod_3\\\ldots =Cpd(\delta)$$
+$$\underbrace{\delta(q_i,x_j)=(q_k,x_l,D_m)}_{0^i10^j10^k10^l10^m}$$
+$$Cod_1\,11\,Cod_2\,11\,Cod_3\,11\ldots =Cod(\delta)$$
 \end{example}
 
 \section{Enumerazione delle Macchine di Turing}
@@ -617,20 +624,20 @@ In altre parole, viene utilizzata una rappresentazione \emph{unaria} dove il sim
 
 
 \begin{example}
-sia $M=(\{q_1,q_2,q_3\},\{o,1\}.\{0,1,B\},\delta,q_1,B,q_2)$ con:
+sia $M=(\{q_1,q_2,q_3\},\{0,1\},\{0,1,B\},\delta,q_1,B,\{q_2\})$ con:
 $$\overbrace{0}^{q_1}1\overbrace{00}^{x_2}1\overbrace{000}^{q_3}1\overbrace{0}^{x_1}1\overbrace{00}^{D_2}$$
 $$\delta(q_1,1)=(q_3,0,R)$$
 $$\delta(q_3,0)=(q_1,1,R)$$
 $$\delta(q_3,1)=(q_2,0,R)$$
 $$\delta(q_3,B)=(q_3,1,L)$$
-Quindi ora possiamo dire che M è Mi, ovvero l'i-esima macchina di Turing.
+Quindi ora possiamo dire che $M$ è $M_i$, ovvero l'$i$-esima macchina di Turing.
 
 Si ha però un problema: io posso permutare le delta, ottenendo numeri diversi, pur descrivendo la stessa
 macchina. Quindi la stessa macchina compare più volte nella sequenza infinita. Inoltre, data una
 stringa, non è detto che rappresenti una MdT. Inoltre:
 $$Cod((M,W))=Cod(M)111Cod(W)$$
 definisco quindi $L_d$
-$$L_d=\{w_i\in\{0,1\}^*|\,w_L\in L(M_i)\}$$
+$$L_d=\{w_i\in\{0,1\}^*\,|\,w_i\in L(M_i)\}$$
 e considero la tabella infinita:
 \begin{center}
 \begin{tabular}{c c|c c c c c c}
@@ -656,7 +663,7 @@ Se L è ricorsivo, allora il complementare di L è ricorsivo.
 \end{theorem}
 \begin{proof}
 Se L è ricorsivo, allora esiste una MdT M tale che $L = L(M)$. Costruiamo $M^{'}$ tale che
-$L(M^{'}$ = complementare di L.
+$L(M^{'})$ = complementare di $L$.
 \end{proof}
 \begin{theorem}
 $$L,\overline{L}\in RE\to L,\overline{L}\in RIC$$
@@ -664,10 +671,10 @@ se un linguaggio e il suo complementare sono ricorsivamente enumerabili allora q
 \end{theorem}
 \begin{proof}
 $$L\in RE\to \exists M_L\to L=L(M_L)$$
-$$\overbrace{L}\in RE\to \exists M_{\overline{L}}\to \overline{L}=L(M_L)$$
+$$\overline{L}\in RE\to \exists M_{\overline{L}}\to \overline{L}=L(M_{\overline{L}})$$
 \end{proof}
 Poiché ogni stringa o appartiene a L o al complemento di L, costruiamo una nuova macchina M che
-simula $M_L$ e $M_{\overline{L}}$˛\\Prima o poi una delle due macchina deve fermarsi. Allora possiamo accettare o rifiutare.\\
+simula $M_L$ e $M_{\overline{L}}$.\\Prima o poi una delle due macchine deve fermarsi. Allora possiamo accettare o rifiutare.\\
 Si ha quindi la seguente tabella per i vari casi:
 \begin{center}
 \begin{tabular}{c c c c }
@@ -688,7 +695,7 @@ Si ha quindi la seguente tabella per i vari casi:
 \section{Macchina di Turing Universale}
 Abbiamo già visto che si può codificare in binario una MdT, possiamo codificare anche la coppia
 MdT con il suo input:
-$$Cod(M)111Cod(M)\,\,[M111W]$$Possiamo quindi pensare a una MdT universale che sappia simulare qualsiasi altra MdT specificata come da codifica:
+$$Cod(M)111Cod(W)\,\,[M111W]$$Possiamo quindi pensare a una MdT universale che sappia simulare qualsiasi altra MdT specificata come da codifica:
 \includegraphics{2025-01-16_15-22.png}
 
 % \begin{center}
@@ -707,7 +714,7 @@ $$Cod(M)111Cod(M)\,\,[M111W]$$Possiamo quindi pensare a una MdT universale che s
 % \end{pspicture}
 % }
 % \end{center}
-$$L_U\{(M,W)|W\in L(M)\}$$
+$$L_U=\{(M,W)\,|\,W\in L(M)\}$$
 La macchina universale corrisponde alla nostra idea di computer programmabile. Descriviamo
 questa macchina universale, che ha quattro nastri:
 \begin{itemize}
@@ -775,14 +782,17 @@ La riduzione è descritta da questo schema:
 $$L_{ne}\not\in RIC$$
 \end{theorem}
 \begin{proof}
-infatti essendo $l_e$ il complementare di $l_{ne}$, per i teoremi visti in precedenza  $l_e$ non può essere ricorsivo
-né può essere ricorsivamente enumerabile. Segue che  $l_e$ è non RE
+infatti essendo $L_e$ il complementare di $L_{ne}$, per i teoremi visti in precedenza  $L_e$ non può essere ricorsivo
+né può essere ricorsivamente enumerabile. Segue che  $L_e$ è non RE
 \end{proof}
 \begin{example}
 considero:
 $$L_e=\{M|\,L(M)=\emptyset\}$$
-$$L_{ne}=\{M|\,L(M)=\emptyset\}$$
+$$L_{ne}=\{M\,|\,L(M)\neq\emptyset\}$$
 \end{example}
+
+\subsection{Il teorema di Rice}\label{sec:rice}
+
 
 %%% Local Variables:
 %%% mode: LaTeX

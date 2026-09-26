@@ -3,8 +3,8 @@
 \section{Grammatiche Context-Free}\label{sec:CFG}
 
 \begin{example}
-	Sia $G=(V,T,O,E)$, con $V=\{E,I\}$ e $T=\{a,b,\zero,\uno,(,),+,*\}$
-	quindi ho le seguenti regole, è di tipo 3:
+	Sia $G=(V,T,P,E)$, con $V=\{E,I\}$ e $T=\{a,b,\zero,\uno,(,),+,*\}$
+	quindi ho le seguenti regole, è di tipo 2:
 	\begin{enumerate}
 		\item $E\to I$
 		\item $E\to E+E$
@@ -19,8 +19,8 @@
 	\end{enumerate}
 	voglio ottenere $a*(a+b\zero\zero)$
 	sostituisco sempre a destra (right most derivation)
-	$$E\to E*E\to E*(E)\to E*(E+E)\to E*(E+I)\to E+(E+I\zero)$$
-	$$\to R+(I+b\zero\zero)\to E*(a+b\zero\zero)\to I*(a+b\zero\zero)\to a*(a+b\zero\zero)$$
+	$$E\to E*E\to E*(E)\to E*(E+E)\to E*(E+I)\to E*(E+I\zero)\to E*(E+I\zero\zero)\to E*(E+b\zero\zero)$$
+	$$\to E*(I+b\zero\zero)\to E*(a+b\zero\zero)\to I*(a+b\zero\zero)\to a*(a+b\zero\zero)$$
 
 	usiamo ora \textit{l'inferenza ricorsiva}:
 	\begin{center}
@@ -50,7 +50,7 @@
 \end{example}
 definisco formalmente la derivazione $\to$:
 \begin{definition}
-	Prendo una grammatica $G=(V,T,P,S)$, grammatica CFG. Se $\alpha A \beta$ è una stringa tale che $\alpha,\beta\in (V\cup T)^*$, appartiene sia a variabili che terminali. Sia $A\in V$ e sia $a\to \gamma$ una produzione di $G$. Allora
+	Prendo una grammatica $G=(V,T,P,S)$, grammatica CFG. Se $\alpha A \beta$ è una stringa tale che $\alpha,\beta\in (V\cup T)^*$, appartiene sia a variabili che terminali. Sia $A\in V$ e sia $A\to \gamma$ una produzione di $G$. Allora
 	scriviamo:
 	$$\alpha A \beta \to \alpha\gamma\beta$$
 	con $\gamma\in (V\cup T)^*$.\\
@@ -63,12 +63,12 @@ definisco formalmente la derivazione $\to$:
 		\item la base dice che  $\forall \alpha\in (V\cup T)^*,\, \alpha\to * \,\alpha$
 		\item il passo è: se $\alpha\to_{G_*} \,\beta $ e $ \beta \to_{G_*} \,\gamma$ allora $\alpha\to_* \,\gamma$
 	\end{itemize}
-	Si può anche dire che $\alpha\to_{G_*}\, \beta$ sse esiste una sequenza di stringhe $\gamma_1,...,\gamma_n$ con $n\geq 1$ tale che $\alpha=\gamma_1$, $\beta=\gamma_n$ e $\forall i,\, 1<i<n-1$ si ha che $\gamma_1\to \gamma_{i+1}$
-	la derivazione in 0 o più passi è la chiusura transitiva della derivazione
+	Si può anche dire che $\alpha\to_{G_*}\, \beta$ sse esiste una sequenza di stringhe $\gamma_1,...,\gamma_n$ con $n\geq 1$ tale che $\alpha=\gamma_1$, $\beta=\gamma_n$ e $\forall i,\, 1\le i< n$ si ha che $\gamma_i\to \gamma_{i+1}$
+	la derivazione in 0 o più passi è la chiusura riflessiva e transitiva della derivazione
 \end{definition}
 \begin{definition}
 	avendo ora definito questi simboli possiamo definire una forma sentenziale. Infatti è una stringa $\alpha$ tale che:
-	$$\forall \alpha\in (V\cup T)^* \mbox{ tale che }S\to_{G_*}\, \alpha$$
+	$$\exists \alpha\in (V\cup T)^* \mbox{ tale che }S\to_{G}^{*}\, \alpha$$
 \end{definition}
 \begin{definition}
 	data $G=(V,T,P,S)$ si ha che $L(G)=\{w\in T^* |\, S\to_{G_*}\, w\}$ ovvero composto da stringhe terminali che sono derivabili o 0 o più passi.
@@ -82,7 +82,7 @@ definisco formalmente la derivazione $\to$:
 	il nostro caso base sarà la stringa $\zero\uno$, Poi si ha:
 	$G=(V,T,P,S)$, $T=\{\zero,\uno\}$, $V=\{S\}$, il caso base $S\to \zero\uno$  e $S\to \zero S\uno$
 	il caso passo è quindi: se $w= \zero^{n-1}\uno^{n-1}\in L$ allora $\zero w\uno\in L$.\\
-	Ora voglio dimostare che $\zero\zero\zero\uno\uno\uno\in L$, ovvero $S\to*\, \zero\zero\zero\uno\uno\uno$:\\
+	Ora voglio dimostrare che $\zero\zero\zero\uno\uno\uno\in L$, ovvero $S\to*\, \zero\zero\zero\uno\uno\uno$:\\
 	$$S\to\, \zero S\uno \to \zero\zero S\uno\uno\to \zero\zero\zero S\uno\uno\uno$$
 \end{example}
 \begin{theorem}
@@ -309,15 +309,15 @@ Quindi se ho $w\in L1, L2$, ovvero appartenente ad una concatenazione di linguag
 	\end{itemize}
 \end{example}
 
-\section{Alberi Sintatici}
+\section{Alberi sintattici}
 \begin{definition}
 	Data una grammatica CFG, $G=\{V,T,P,S\}$ un \textbf{albero sintattico} per $G$ soddisfa le seguenti condizioni:
 	\begin{itemize}
 		\item ogni nodo interno è etichettato con una variabile in $V$
 		\item ogni foglia è anch'essa etichettata con una variabile o col simbolo di terminale T o con la stringa vuota $\varepsilon$ (in questo caso la foglia è l'unico figlio del padre)
-		\item se un nodo interno è etichettato con A i suoi figli saranno etichettati con X1, ..., Xk e $A\to  X1, ..., Xk$ sarà una produzione di $G$ in $P$. Se un $X_i$ è $\varepsilon$ sarà l'unica figlio e $A\to \varepsilon$ sarà comunque una produzione di $G$
+		\item se un nodo interno è etichettato con A i suoi figli saranno etichettati con X1, ..., Xk e $A\to  X1, ..., Xk$ sarà una produzione di $G$ in $P$. Se un $X_i$ è $\varepsilon$ sarà l'unico figlio e $A\to \varepsilon$ sarà comunque una produzione di $G$
 	\end{itemize}
-	La concatenazione in ordine delle foglie viene detto \textbf{prodotto dell'albero}
+	La concatenazione in ordine delle foglie viene detta \textbf{prodotto dell'albero}
 \end{definition}
 \newpage
 \begin{example}
@@ -545,10 +545,21 @@ Possono esserci più derivazioni di una stringa ma l'importante è che non ci si
 	si possono avere due derivazioni:
 	\begin{enumerate}
 		\item $S\to_{lm}AB\to_{lm} aAbB\to_{lm} aabbB\to_{lm}aabbcBd\to_{lm}aabbccdd$
-		\item $S\to_{lm} C\to_{lm} aCd\to_{lm}aaBdd\to_{lm}aabBcdd\to_{lm}aabbccdd$
+		\item $S\to_{lm} C\to_{lm} aCd\to_{lm}aaDdd\to_{lm}aabDcdd\to_{lm}aabbccdd$
 	\end{enumerate}
-	a generare problemi sono le stringhe con n=m perché possono essere prodotte in due modi diversi da entrambi i sottolinguaggi. Dato che l'intersezione tra i due sottolinguaggi non è buota si ha che $L$ è ambiguo
+	a generare problemi sono le stringhe con n=m perché possono essere prodotte in due modi diversi da entrambi i sottolinguaggi. Dato che l'intersezione tra i due sottolinguaggi non è vuota si ha che $L$ è ambiguo
 \end{example}
+\subsection{Forma normale di Chomsky}\label{sec:cnf}
+
+\subsection{Algoritmo di Cocke--Younger--Kasami}\label{sec:cyk}
+
+\subsection{Lemma di pumping per i linguaggi liberi dal contesto}\label{sec:pumping-cfl}
+
+\subsection{Proprietà di chiusura dei linguaggi liberi dal contesto}\label{sec:chiusura-cfl}
+
+\subsection{Problemi di decisione per i linguaggi liberi dal contesto}\label{sec:decisioni-cfl}
+
+
 \section{Grammatiche Regolari}
 Sono le grammatiche che generano i linguaggi regolari (quelli del terzo tipo) che sono casi particolari dei CFL.\\
 Si ha la solita grammatica $G = (V, T, P, S)$ con però vincoli su $P$:
@@ -569,7 +580,7 @@ Si ha la solita grammatica $G = (V, T, P, S)$ con però vincoli su $P$:
 	definisco quindi un'altra grammatica (con una nuova categoria sintattica):
 	$$I\to aJ|\, bJ$$
 	$$J\to a|\,b|\,aJ|\,bJ|\,\zero J|\,\uno J$$
-	che però non mi permette di terminare le stringhe con \zero\ e \uno, la modifico ancora otterdendo:
+	che però non mi permette di terminare le stringhe con \zero\ e \uno, la modifico ancora ottenendo:
 	$$I\to aJ|\, bJ$$
 	$$J\to a|\,b|\,aJ|\,bJ|\,\zero J|\,\uno J|\,\zero|\,\uno$$
 	e questo è il modo corretto per passare da lineare sinistra a lineare destra
@@ -715,10 +726,10 @@ con;
 	\item $\Gamma$: alfabeto di simboli di stack
 	\item $q_0\in Q$: stato iniziale
 	\item $z_0\in \Gamma\backslash \Sigma$: simbolo iniziale dello stack
-	\item $F\in Q$: insieme degli stati accettanti o finali
+	\item $F\subseteq Q$: insieme degli stati accettanti o finali
 \end{itemize}
 si ha che:
-$$\delta:Q\times(\Sigma\cup\{\varepsilon\}\times \Gamma\to 2^{Q\times \Gamma^*}$$
+$$\delta:Q\times(\Sigma\cup\{\varepsilon\})\times \Gamma\to 2^{Q\times \Gamma^*}$$
 quindi:
 $$\delta(q_0,a,X)=\{(p_1,X_1),(p_2,X_2),...\}\,insieme\,\,\,finito\,\,p_i\in Q\,\,X_i\in \Gamma^*$$
 si hanno dei casi particolari:
@@ -727,7 +738,7 @@ si hanno dei casi particolari:
 	\item se $\Gamma=\varepsilon$ si ha il pop di $X$ dallo stack
 	\item se $\Gamma=X$ si lascia lo stack invariato
 	\item se $\Gamma=Y\neq X$ si ha la sostituzione di $X$ con $Y$ in cima allo stack
-	\item se $\Gamma$ è una stringa di simboli si ha il la rimozione di $X$ dallo stack e l'aggiunta a uno a uno dei simboli nello stack
+	\item se $\Gamma$ è una stringa di simboli si ha la rimozione di $X$ dallo stack e l'aggiunta a uno a uno dei simboli nello stack
 \end{itemize}
 
 \begin{example}
@@ -743,8 +754,8 @@ si hanno dei casi particolari:
 	descriviamo formalmente l'automa con la funzione di transizione $\delta$.
 	PDA $P=(\{q_0,q_1,q_2\},\{\zero,\uno\}, \{o,\uno,z_0\},\delta,q_0,z_0,\{q_2\})$
 	ovvero:
-	$$\delta(q_0,\zero,z_0)=\{(q_0,\uno z_0)\}$$
-	$$\delta(q_0,\uno,z_0)=\{(q_0,\zero z_0)\}$$
+	$$\delta(q_0,\zero,z_0)=\{(q_0,\zero z_0)\}$$
+	$$\delta(q_0,\uno,z_0)=\{(q_0,\uno z_0)\}$$
 	$$\delta(q_0,\zero,\zero)=\{(q_0,\zero\zero)\}$$
 	$$\delta(q_0,\zero,\uno)=\{(q_0,\zero\uno)\}$$
 	$$\delta(q_0,\uno,\zero)=\{(q_0,\uno\zero)\}$$
@@ -785,7 +796,7 @@ $$ID:(q,w,\gamma)$$
 con $q\in Q$ stato attuale $w\in\Sigma^*$ input rimanente e $\gamma\in\Gamma^*$ contenuto attuale dello stack.\\
 Definiamo ora il concetto di \textbf{mossa in un passo}
 dato $P=(Q,\Sigma,\Gamma,\delta,q_0,z_0,F)$ la mossa è una relazione $\vdash_p$:
-$$(p,\alpha)\in\delta(q,a,X)\,\,allora\,\,\forall w\in\Sigma^*\,\,e\,\, \forall\beta\in\Gamma^*\to (q,aw,X\beta)\vdash(p,w,\alpha\beta$$
+$$(p,\alpha)\in\delta(q,a,X)\,\,allora\,\,\forall w\in\Sigma^*\,\,e\,\, \forall\beta\in\Gamma^*\to (q,aw,X\beta)\vdash(p,w,\alpha\beta)$$
 e
 $$(p,\alpha)\in\delta(q,\varepsilon,X)\,\,allora\,\,\forall w\in\Sigma^*\,\,e\,\, \forall\beta\in\Gamma^*\to (q,w,X\beta)\vdash(p,w,\alpha\beta)$$
 \newpage
@@ -872,20 +883,20 @@ In realtà si ha che la classe di linguaggi accettati dai PDA per stato finale �
 \end{theorem}
 \begin{proof}
 	Sia $x_0\in\Gamma$, che indica la fine dello stack di $P_F$. Si ha:
-	$$\delta(p_0,\varepsilon,x_0)=\{(q_0,z_0x_0\}$$
+	$$\delta(p_0,\varepsilon,x_0)=\{(q_0,z_0x_0)\}$$
 	e:
 	$$\forall q\in Q,\,\forall a\in\Sigma\cup\{\varepsilon\},,\forall y\in\Sigma:\,\,\delta_F(q,a,y)\mbox{ contiene tutte le coppie di }\delta_N(q,a,y)$$
-	$$\forall q\in Q,\delta_F(q,\varepsilon,x_0)=\{(P_F,\varepsilon)\}$$
+	$$\forall q\in Q,\delta_F(q,\varepsilon,x_0)=\{(p,\varepsilon)\}$$
 	quindi graficamente:
 
 	\includegraphics{2025-01-16_15-03.png}
-	Bisogna dimostrare che effettivamente $w\in L(P_F)\longleftrightarrow\in N(P_N)$.\\
+	Bisogna dimostrare che effettivamente $w\in L(P_F)\longleftrightarrow w\in N(P_N)$.\\
 	se $w\in N(P_N)$ $\exists$ una sequenza di $ID\,\,\,(q_0,w,z_0)\vdash_{P_N}^*(q,\varepsilon,\varepsilon)$ per un qualche $q\in Q$:
 	$$(q_0,w,z_0x_0)\vdash_{P_N}^*(q,\varepsilon,x_0)$$
 	inoltre:
 	$$(q_0,w,z_0x_0)\vdash_{P_F}^*(q,\varepsilon,x_0)$$
 	e quindi:
-	$$(p_0,w,x_0)\vdash_{P_F}(q_0,w,z_0x_0)\vdash_{P_F}^*(q,\varepsilon,x_0)\vdash_{P_F}(P_F,\varepsilon,\varepsilon)$$
+	$$(p_0,w,x_0)\vdash_{P_F}(q_0,w,z_0x_0)\vdash_{P_F}^*(q,\varepsilon,x_0)\vdash_{P_F}(p,\varepsilon,\varepsilon)$$
 	solo se togliendo il primo e l'ultimo passo di $P_F$ ripercorro all'indietro quanto scritto sopra.
 \end{proof}
 \begin{example}
@@ -910,7 +921,7 @@ In realtà si ha che la classe di linguaggi accettati dai PDA per stato finale �
 			\node[state] (q_1) [right=of q_0] {$q$};
 			\node[state, accepting] (q_2) [right =of q_1] {$r$} ;
 			\path[->]
-			(q_0) edge  node [align=center] {$\varepsilon x_0/zx_0$} (q_1)
+			(q_0) edge  node [align=center] {$\varepsilon x_0/Zx_0$} (q_1)
 			(q_1) edge node {$\varepsilon,x_0/\varepsilon$} (q_2)
 			edge [loop above] node [align=center] {$i,Z/ZZ$\\$e,Z/\varepsilon$} ();
 		\end{tikzpicture}
@@ -928,12 +939,12 @@ In realtà si ha che la classe di linguaggi accettati dai PDA per stato finale �
 Si può anche effettuare la trasformazione inversa:
 \begin{theorem}
 	Sia $P_F=(Q,\Sigma,\Gamma,\delta_f,q_0,Z_0,F)$.\\
-	Si aggiunge una transizione $\varepsilon$  a un nuovo stato $p$ da ogni accettante di $P_F$. quando si ha $p$ $P_N$ svuota lo stack senza consumare input. Quindi se $P:F$ entra in uno stato accettante dopo aver consumato l'input $w$, $P_N$ svuota lo stack dopo aver consumato $w$. Per evitare che si svuoti lo stack per una stringa non accettata uso $x_0$ per indicare il fondo dello stack. Il nuovo $P_N$ parte da $p_0$ che ha il solo scopo di inserire il simbolo iniziale di $P_F$ e passare al suo stato iniziale. Si ottiene quindi:
+	Si aggiunge una transizione $\varepsilon$  a un nuovo stato $p$ da ogni accettante di $P_F$. quando si ha $p$ $P_N$ svuota lo stack senza consumare input. Quindi se $P_F$ entra in uno stato accettante dopo aver consumato l'input $w$, $P_N$ svuota lo stack dopo aver consumato $w$. Per evitare che si svuoti lo stack per una stringa non accettata uso $x_0$ per indicare il fondo dello stack. Il nuovo $P_N$ parte da $p_0$ che ha il solo scopo di inserire il simbolo iniziale di $P_F$ e passare al suo stato iniziale. Si ottiene quindi:
 	\begin{center}
 		\includegraphics{2025-01-16_15-04.png}
 	\end{center}
 	e si ha formalmente:
-	$$P_F=(Q\cup\{p_0,p\}, \Sigma,\Gamma\cup\{x_0\},\delta_N,p_0,x_0)$$
+	$$P_N=(Q\cup\{p_0,p\}, \Sigma,\Gamma\cup\{x_0\},\delta_N,p_0,x_0)$$
 	dove $\delta_N$ è così definita:
 	\begin{enumerate}
 		\item $\delta_N(p_0,\varepsilon,x_0)=\{(q_0,Z_0x_0)\}$ inserisce il simbolo iniziale di $P_F$ nello stack e va allo stato iniziale di $P_F$
@@ -945,10 +956,10 @@ Si può anche effettuare la trasformazione inversa:
 	$$w\in L(P_F)\to w\in N(P_N)$$
 	e quindi ho le seguenti mosse:
 	$$(q_0,w,z_0)\vdash_{P_F}^*(q,\varepsilon,\alpha)\,\,q\in F,\,\,\alpha\in\Gamma^*$$
-	$$(p_o,w,x_0)\vdash(q_0,w,z_0x_0)\vdash_{P_N}^*(q,\varepsilon,\alpha,x_0)\vdash_{P_N}^*(p,\varepsilon,\varepsilon)$$
+	$$(p_o,w,x_0)\vdash(q_0,w,z_0x_0)\vdash_{P_N}^*(q,\varepsilon,\alpha x_0)\vdash_{P_N}^*(p,\varepsilon,\varepsilon)$$
 \end{theorem}
 \begin{example}
-	si ha una CFG $G=(\{i,e\},\{a,b,0,1,*,+,(,)\},P,E)$
+	si ha una CFG $G=(\{E,I\},\{a,b,0,1,*,+,(,)\},P,E)$
 	con:
 	$$P:I\to a|b|Ia|Ib|I0|I1$$
 	$$\,\,E\to E+E|E*E|(E)$$
@@ -980,7 +991,7 @@ questo esempio è generalizzabile ad ogni CFG
 	sia $G=(V,T,P,S)$ una CFG:
 	$$\exists\,\, PDA\,\,Q=(\{q\},T,V\cup T,\delta,q,S)\mbox{ tale che }N(Q)=L(G)$$
 	$$\forall A\in V\,\,\delta(q,\varepsilon,A)=\{(q,\beta)|\,A\to B\mbox{ e' una produzione di G}\}$$
-	$$\forall a\in T\,\,\delta(q,a,a)=\{(a,\varepsilon)\}$$
+	$$\forall a\in T\,\,\delta(q,a,a)=\{(q,\varepsilon)\}$$
 \end{theorem}
 Questo dimostra che ogni CFL può essere accettato da un PDA accettante per stack vuoto. Per il teorema visto in
 precedenza, posso sempre costruire un altro PDA accettante per stati finale. I PDA accettano tutti e soli i
@@ -1020,7 +1031,7 @@ Un PDA $P=(Q,\Sigma,\Gamma,\delta,q_0,z_0,F)$ è deterministico se:
 \end{enumerate}
 \begin{example}
 	abbiamo il linguaggio $L_{wcw^R}=\{wcw^R|\,w\in\{0,1\}^*\}$\\
-	Gli automi a pila deterministici non riconosco tutti i CFL, ma solo una classe strettamente più piccola. Ad esempio non potrebbero riconoscere il linguaggio delle palindrome senza "il segnalibro" c. SI ha quindi:
+	Gli automi a pila deterministici non riconoscono tutti i CFL, ma solo una classe strettamente più piccola. Ad esempio non potrebbero riconoscere il linguaggio delle palindrome senza "il segnalibro" c. SI ha quindi:
 	\begin{center}
 		\begin{tikzpicture}[shorten >=1pt,node distance=3cm,on grid,auto]
 			\node[state, initial] (q_0) {$q_0$};
@@ -1060,7 +1071,7 @@ si ha infatti il seguente teorema:
 \begin{proof}
 	$$L\in REG\to\exists DFA\,\,A=(Q,\Sigma,\delta_A,q_0,F)\,\,tale\,\,che\,\, L=L(A)$$
 	costruisco il DPDA $P=(Q,\Sigma,\{z_0\},\delta_p,q_0,z_0,F)$ con:
-	$$\delta_p(q,a,z_0)=\{p,z_0\}\,\,\forall p,q\in Q\,\,tali\,\,che\,\,\delta_A(q,a)=0$$
+	$$\delta_p(q,a,z_0)=\{(p,z_0)\}\,\,\forall p,q\in Q\,\,tali\,\,che\,\,\delta_A(q,a)=0$$
 	vale:
 	$$(q_0,w,z_0)\stackrel{A}{\vdash_p}(p,\varepsilon,z_0)\longleftrightarrow \stackrel{\wedge}{\delta_A}(q_0,w)=p$$
 \end{proof}
@@ -1070,7 +1081,7 @@ si ha inoltre il seguente teorema:
 \end{theorem}
 definiamo così la proprietà di prefisso:
 $$\not\exists x,y\in L\,\,tali\,\,che\,\,x\neq y\,\,e\,\, x \mbox{ è prefisso di } y$$
-per esempio $L=\{0\}^0=\{\varepsilon,0,00,000,...\}$ non ha la proprietà di prefisso. Osserviamo che se la stringa vuota appartiene al linguaggio, tale stringa è prefissa di tutte le altre e quindi il linguaggio non può avere la proprietà di prefisso. Affermiamo che L è regolare, quindi è accettato da un DPDA per stati finali ma non da uno per stack vuoto. Completiamo il diagramma precedente sulle classi di
+per esempio $L=\{0\}^*=\{\varepsilon,0,00,000,...\}$ non ha la proprietà di prefisso. Osserviamo che se la stringa vuota appartiene al linguaggio, tale stringa è prefissa di tutte le altre e quindi il linguaggio non può avere la proprietà di prefisso. Affermiamo che L è regolare, quindi è accettato da un DPDA per stati finali ma non da uno per stack vuoto. Completiamo il diagramma precedente sulle classi di
 linguaggi:
 \begin{center}
 	\includegraphics{2025-01-16_15-07.png}
@@ -1108,7 +1119,7 @@ dimostriamo il secondo:
 \end{proof}
 Vogliamo scoprire se è vero il viceversa: per ogni L che ha una CFG non ambigua è vero che L è
 accettato da un DPDA? No, mostriamo infatti un controesempio:\\
-$S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
+$S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA deterministico
 
 \begin{Exercise}
 	Costruire un PDA per il linguaggio $L=\{\zero^{n} \uno^{n}:  n\geq 1\}$
@@ -1128,7 +1139,7 @@ $S\to 0S0|1S1|\varepsilon$ produce $L_{ww^R}$ che non è accettato da alcun PDA
 	Osserviamo che questo è un DPDA e L è accettato sia per stato finale che per stack vuoto.
 	Osserviamo anche che L ha la proprietà di prefisso:
 	$$y=0^n1^n\in L,x\neq y$$
-	e $x$ è prefissa di y e quindi x ha un numero di 0 diverso da quelli di 1 e quindi $x\not\in L$
+	e $x$ è prefisso di y e quindi x ha un numero di 0 diverso da quelli di 1 e quindi $x\not\in L$
 \end{Answer}
 
 \begin{Exercise}

@@ -22,9 +22,9 @@ ancora da elaborare.
 
 Ad ogni iterazione andremo a sostituire la variabile più a sinistra della forma sentenziale con la parte destra di una
 produzione che forma la nostra \keyword{predizione}: infatti non possiamo essere sicuri di avere individuato la
-regola di produzione: corretta.
+regola di produzione corretta.
 Consideriamo adesso la regola di produzione: da sinistra verso destra: per ogni terminale controlliamo che sia identico al
-corrispondente carattere della string in input.
+corrispondente carattere della stringa in input.
 Se ciò non è vero, dobbiamo rifiutare la regola di produzione e passare ad un'altra produzione.
 Per ogni variabile della predizione dobbiamo fare una nuova predizione: siccome le variabili vengono analizzate da
 sinistra a destra, il risultato finale sarà una derivazione sinistra.
@@ -42,9 +42,9 @@ In ogni momento terremo traccia di quattro componenti che formano la \keyword{de
 \section{Problemi con i parser depth-first}
 \label{sec:no-ricorsione-sinistra}
 
-I parser depth-first non possono gestire grammatice ricorsive a sinistra o produzioni che hanno come membro destro
+I parser depth-first non possono gestire grammatiche ricorsive a sinistra o produzioni che hanno come membro destro
 $\varepsilon$ ($\varepsilon$-produzioni).
-Formalmente una grammatica libera da contesto è \keyword{ricorsiva a sinistra} se $A\eprod{} A\alpha$ per una variable
+Formalmente una grammatica libera da contesto è \keyword{ricorsiva a sinistra} se $A\eprod{} A\alpha$ per una variabile
 $A$ e una forma sentenziale $\alpha$.
 Talvolta si distingue fra ricorsione diretta a sinistra se esiste una passo di derivazione $A\sprod{} A\alpha$ e ricorsione
 indiretta a sinistra se sono necessarie almeno due produzioni per ottenere una forma sentenziale $A\alpha$.\lepo{Dire
@@ -88,7 +88,7 @@ Fortunatamente possiamo trasformare una grammatica ricorsiva a sinistra in una r
 procedimento meccanico.
 Siano $A\eprod{} A\alpha_{1}| \cdots | A\alpha_{n}|\beta_{1}| \cdots | \beta_{m}$ le  produzioni ricorsive a sinistra
 che hanno la variabile $A$ come membro sinistro, dove nessuna delle $\alpha_{i}$ è uguale a $\varepsilon$: le forme
-sentenziali risultanti che non hanno la variable $A$ all'inizio sono nella forma
+sentenziali risultanti che non hanno la variabile $A$ all'inizio sono nella forma
 $\beta_{i}\alpha_{k_{1}}\cdots \alpha_{k_{l}}$, con $l\ge 0$.
 Un insieme di produzioni che porta alle stesse forme sentenziali è:\lepo{serve un esempio}
 
@@ -112,6 +112,9 @@ A_{i} \to \alpha_{1}\alpha| \cdots | \alpha_{m}\alpha
 dove $A_{j} \to \alpha_{1}| \cdots | \alpha_{m}$ sono le produzioni che hanno $A_{j}$ come membro sinistro.
 È obbligatorio procedere a queste sostituzioni dopo avere eliminato tutte le produzioni ricorsive dirette a sinistra per
 per valori di $j$ crescenti, altrimenti potremmo introdurre nuove produzioni nella forma $A_{k} \to A_{h}\alpha$ con $h<k$.
+
+\subsection{Fattorizzazione a sinistra}\label{sec:left-factoring}
+
 
 \section{Parser a discesa ricorsiva}\label{sec:recursive-descent}
 

@@ -25,16 +25,16 @@ La differenza più importante tra PEG e CFG risiede nella semantica dell'operato
 almeno una delle due scelte.
 Nelle PEG l'operatore \( / \) è \emph{ordinato}: viene tentata prima l'espressione di sinistra e, solo se essa fallisce,
 si passa a valutare quella di destra.
-Tale ordine ordine elimina le ambiguità, perché per ogni input viene selezionata al più una alternativa.
+Tale ordine elimina le ambiguità, perché per ogni input viene selezionata al più una alternativa.
 
-Inoltre non è possibile ricostruire alberi di derivazione che presentano ricorsione sinistra, sia immediata che indiretta.
+Inoltre non è possibile ricostruire alberi di derivazione che presentino ricorsione sinistra, sia immediata che indiretta.
 
 Un altro aspetto peculiare delle PEG è fornito dalla regola $A \gets \zero / \zero\uno$ con input \zero\uno.
 In questo caso la priorità viene data alla prima scelta, pertanto l'albero di derivazione presenta l'arco $A \gets \zero$
 e la scelta \zero\uno non viene mai seguita.
 In altre parole, la regola $A \gets \zero / \zero\uno$ è equivalente alla regola $A \gets \zero$.
 Si noti che la regola $A \gets \zero\uno / \zero$ ha un comportamento diverso dalla regola $A \gets \zero / \zero\uno$.
-Infatti, quando l'input è $\zero\uno$, la regola $A \to \zero\uno / \zero$ porterebbe ad avere l'arco $A \gets \zero\uno$.
+Infatti, quando l'input è $\zero\uno$, la regola $A \gets \zero\uno / \zero$ porterebbe ad avere l'arco $A \gets \zero\uno$.
 
 L'operatore $\&$ permette di scrivere con facilità un riconoscitore per costrutti che sarebbero più complessi
 utilizzando solo CFG.
@@ -57,17 +57,17 @@ Infine analizziamo l'insieme di regole dell'\Cref{exa:peg-no-cfg}.
 Le regole 2 e 3 sono tipiche delle CFG e riconoscono rispettivamente i linguaggi $\zero^{n}\uno^{n}$ e
 $\uno^{n}\due^{n}$, con $n\ge 0$.
 Analizziamo adesso la seconda parte della regola 1, ovvero $\zero\kleene B !.$: questa riconosce le stringhe nella forma
-$\zero^{m}\uno^{n}\due^{n}$, con $n,m \ge 0$, in quanto $\zero\kleene$ consiste in un numero arbitratio di $\zero$,
+$\zero^{m}\uno^{n}\due^{n}$, con $n,m \ge 0$, in quanto $\zero\kleene$ consiste in un numero arbitrario di $\zero$,
 mentre la forma $!.$ è equivalente alla fine della stringa di input ($!$ è la negazione e il punto $.$ è qualsiasi carattere).
 La prima parte della regola 1 è $\&(A !\uno)$ che, per effetto dell'operatore $\&$ viene eseguita senza spostare la
-posizione del carattere attuale (ovvero, non consuma input) e riconosce le stringhe $\uno^{n}\due^{n}$, con $n\ge 0$, che
+posizione del carattere attuale (ovvero, non consuma input) e riconosce le stringhe $\zero^{n}\uno^{n}$, con $n\ge 0$, che
 non sono seguite dal carattere $\uno$.
 L'operatore $\&$ porta a riconoscere solo le stringhe che soddisfano entrambe le parti della regola: per questo motivo
 viene chiamato operatore \textsf{and}.
 Quindi possiamo chiederci quali stringhe $\zero^{m}\uno^{n}\due^{n}$ sono riconosciute anche dalla prima parte della
 regola: devono iniziare con la stringa $\zero^{n}\uno^{n}$ e non possono iniziare con il prefisso $\zero^{n}\uno^{n+1}$.
 Combinando queste due parti si ottiene che le stringhe riconosciute sono tutte e sole le stringhe nella forma
-$\zero^{n}\uno^{n}\due^{n}$ con $n\ge 0$, che sappiamo non essere libero da contesto \Cref{exa:0n1n2n-no-cfg}.
+$\zero^{n}\uno^{n}\due^{n}$ con $n\ge 0$, che sappiamo non essere libero da contesto (\Cref{exa:peg-no-cfg}).
 
 La conseguenza finale è che PEG permettono di riconoscere una classe di  linguaggi che non è confrontabile con i
 linguaggi liberi dal contesto.
@@ -76,7 +76,7 @@ richiedere tempo esponenziale, è estremamente efficiente in pratica: questa cla
 
 Un packrat parser prevede di costruire, la tabella $T[e,i]$ dove $e$ è una porzione di espressione che appare nelle
 regole della PEG, $i$ è una posizione della stringa $I$ in  input, e $T[e,i]$ è la lunghezza della sottostringa di $I$
-che inizia in posizione $i$ che viene riconosciuta dalla sottoepressione $e$.
+che inizia in posizione $i$ che viene riconosciuta dalla sottoespressione $e$.
 In altre parole, se la sottoespressione $e$ riconosce la stringa $I[i:j]$ allora $T[e,i] = j-i+1$.
 Un elemento fondamentale di questa strategia di parsing è che i valori della tabella $T$ vengono letti, invece di essere
 calcolati nuovamente, quando sono già disponibili perchè calcolati in precedenza.
@@ -87,8 +87,11 @@ $A$, $(\zero A \uno)?$, $A$, $(\zero A \uno)$, \uno,
 $B$, $(\uno B \due)?$, $\uno B \due$, $B$.
 
 Il parsing cerca di calcolare il valore $T[S,1]$: ciò richiede di calcolare $T[A !\uno, 1]$.
-Rappresentiamo questa situazione con la Local.
+Rappresentiamo questa situazione con il diagramma delle chiamate ricorsive.\lepo{Completare con il diagramma delle chiamate ricorsive}
 
+
+
+\subsection{Proprietà di chiusura dei linguaggi riconosciuti dalle PEG}\label{sec:peg-chiusura}
 
 
 %%% Local Variables:
