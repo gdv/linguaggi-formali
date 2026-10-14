@@ -6,6 +6,11 @@ on:
   push:
     branches: ["main"]
 
+  # Rebuild after a new book or slides release, so links point to the latest one
+  workflow_run:
+    workflows: ["Compila il libro", "Compila le slide"]
+    types: [completed]
+
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -24,6 +29,7 @@ concurrency:
 jobs:
   # Build job
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

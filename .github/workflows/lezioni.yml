@@ -2,15 +2,13 @@ name: Compila le slide
 on:
   push:
     branches:
-      - "**"
-    tags:
-      - "v*"
+      - main
     paths:
-      - "lezioni/*.tex"
       - "lezioni/**/*.tex"
+  workflow_dispatch:
 permissions:
   contents: write
-  
+
 jobs:
   build_latex:
     runs-on: ubuntu-latest
@@ -23,10 +21,16 @@ jobs:
           root_file: "*.tex"
           working_directory: lezioni
           continue_on_error: true
-          latexmk_use_lualatex: true      
+          latexmk_use_lualatex: true
+      - name: Compute release tag
+        id: tag
+        run: echo "name=lezioni-$(date -u +%Y%m%dT%H%M%S)" >> "$GITHUB_OUTPUT"
       - name: Release PDF file
-        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v3
         with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          target_commitish: ${{ github.sha }}
+          name: Slide ${{ steps.tag.outputs.name }}
           files: "lezioni/*.pdf"
-
+          fail_on_unmatched_files: true
+          make_latest: false

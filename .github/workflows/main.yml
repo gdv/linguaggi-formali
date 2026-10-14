@@ -1,15 +1,21 @@
 name: Compila il libro
 on:
   push:
-    tags:
-      - "libro-*"
+    branches:
+      - main
+    paths:
+      - "**.tex"
+      - "!lezioni/**"
+  workflow_dispatch:
+permissions:
+  contents: write
 
 jobs:
   build_latex:
     runs-on: ubuntu-latest
     steps:
       - name: Install Liberation Mono font
-        run: apt install fonts-liberation
+        run: sudo apt-get install -y fonts-liberation
       - name: Set up Git repository
         uses: actions/checkout@v7
       - name: GitHub Action for LaTeX
@@ -18,9 +24,15 @@ jobs:
           root_file: "libro-linguaggi.tex"
           continue_on_error: true
           pre_compile: "cd img && latexmk *.tex && cd .."
-          latexmk_use_lualatex: true      
+          latexmk_use_lualatex: true
+      - name: Compute release tag
+        id: tag
+        run: echo "name=libro-$(date -u +%Y%m%dT%H%M%S)" >> "$GITHUB_OUTPUT"
       - name: Release PDF file
         uses: softprops/action-gh-release@v3
         with:
+          tag_name: ${{ steps.tag.outputs.name }}
+          target_commitish: ${{ github.sha }}
+          name: Libro ${{ steps.tag.outputs.name }}
           files: "libro-linguaggi.pdf"
-
+          fail_on_unmatched_files: true
