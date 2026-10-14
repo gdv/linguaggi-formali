@@ -1,0 +1,52 @@
+---
+---
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Linguaggi formali — materiale del corso</title>
+<style>
+  :root { color-scheme: light dark; }
+  body { font-family: system-ui, sans-serif; line-height: 1.5; max-width: 40rem;
+         margin: 0 auto; padding: 2rem 1rem; min-height: 100vh; box-sizing: border-box;
+         display: flex; flex-direction: column; }
+  main { flex: 1; }
+  h1 { font-size: 1.6rem; }
+  h2 { font-size: 1.2rem; margin-top: 2rem; }
+  ul { padding-left: 1.2rem; }
+  small { opacity: .7; }
+  footer { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid currentColor;
+           font-size: .85rem; opacity: .7; }
+</style>
+</head>
+<body>
+<main>
+  <h1>Linguaggi formali</h1>
+  <p>Materiale del corso: il libro e le slide delle lezioni.</p>
+
+  <h2>Libro</h2>
+  {% if site.data.artifacts.book_url %}
+  <ul>
+    <li><a href="{{ site.data.artifacts.book_url }}">libro-linguaggi.pdf</a>
+        <small>(release {{ site.data.artifacts.book_tag }})</small></li>
+  </ul>
+  {% else %}
+  <p>Nessuna release del libro disponibile.</p>
+  {% endif %}
+
+  <h2>Slide</h2>
+  {% if site.data.artifacts.slides %}
+  <ul>
+    {% for slide in site.data.artifacts.slides %}
+    <li><a href="{{ slide.url }}">Lezione {{ slide.name | remove: ".pdf" }}</a></li>
+    {% endfor %}
+  </ul>
+  <p><small>Release {{ site.data.artifacts.slides_tag }}</small></p>
+  {% else %}
+  <p>Nessuna release delle slide disponibile.</p>
+  {% endif %}
+</main>
+<footer>Ultimo aggiornamento: {{ site.data.artifacts.last_commit }}</footer>
+</body>
+</html>
