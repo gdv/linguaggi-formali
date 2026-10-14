@@ -27,16 +27,52 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v6
+      - name: Generate site data
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          mkdir -p docs/_data
+
+          releases=$(curl -sSfL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/releases?per_page=100")
+
+          # Newest release carrying the book PDF, and newest one carrying the slides.
+          book_tag=$(jq -r '[.[] | select(any(.assets[]?; .name == "libro-linguaggi.pdf"))][0].tag_name // ""' <<<"$releases")
+          book_url=$(jq -r '[.[] | select(any(.assets[]?; .name == "libro-linguaggi.pdf"))][0].assets[]? | select(.name == "libro-linguaggi.pdf") | .browser_download_url' <<<"$releases")
+          slides_tag=$(jq -r '[.[] | select(any(.assets[]?; .name | test("^[0-9]+\\.pdf$")))][0].tag_name // ""' <<<"$releases")
+          slides=$(jq -r '[.[] | select(any(.assets[]?; .name | test("^[0-9]+\\.pdf$")))][0].assets[]? | select(.name | test("^[0-9]+\\.pdf$")) | "\(.name)\t\(.browser_download_url)"' <<<"$releases")
+
+          last_commit=$(git log -1 --date=format-local:'%Y-%m-%d %H:%M %Z' --format=%cd)
+
+          {
+            printf 'book_tag: "%s"\n' "$book_tag"
+            printf 'book_url: "%s"\n' "$book_url"
+            printf 'slides_tag: "%s"\n' "$slides_tag"
+            printf 'last_commit: "%s"\n' "$last_commit"
+            printf 'slides:\n'
+            while IFS=$'\t' read -r name url; do
+              if [ -n "$name" ]; then
+                printf '  - name: "%s"\n    url: "%s"\n' "$name" "$url"
+              fi
+            done <<<"$slides"
+          } > docs/_data/artifacts.yml
+
+          cat docs/_data/artifacts.yml
       - name: Build with Jekyll
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./docs/
           destination: ./_site
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: ./_site
 
   # Deployment job
   deploy:
@@ -48,4 +84,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
