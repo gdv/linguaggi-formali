@@ -223,7 +223,7 @@ Vedremo presto che questa non è l'unica visione possibile.
 
 \section{Grammatiche}\label{sec:grammatiche}
 
-Mentre la \ref{def:linguaggio} vede un linguaggio come un insieme, in questa sezione andiamo ad introdurre il concetto
+Mentre la \Cref{def:linguaggio} vede un linguaggio come un insieme, in questa sezione andiamo ad introdurre il concetto
 di grammatica: ciò ci porterà a vedere come sia possibile \emph{generare} tutte e sole le parole appartenenti ad un linguaggio.
 
 
@@ -260,7 +260,8 @@ Convenzionalmente, per evitare ambiguità, il simbolo di produzione $\to$ non ap
 
 
 Ad ogni grammatica $G=\langle V, T, P, S \rangle$ possiamo associare il linguaggio generato da $G$.
-Intuitivamente, si parte dal simbolo iniziale $S$ e si applica ripetutamente una produzione.
+Intuitivamente, si parte dal simbolo iniziale $S$ e si applicano alcune produzioni (incluso zero produzioni e
+produzioni ripetute).
 L'applicazione di una produzione $\alpha\to\beta$ consiste nell'individuare $\alpha$ nella sottostringa attuale e
 sostituirla con $\beta$.
 Dopo ogni applicazione si ottiene una nuova stringa attuale e il processo può ripetersi, anche applicando una produzione
@@ -298,28 +299,32 @@ Possiamo adesso dare la definizione formale di applicazione di una produzione.
 	Sia $\gramm$ una grammatica e sia \prodgen una sua produzione (quindi $\alpha\neq\epsilon$).
 	L'\keyword{applicazione} della produzione \prodgen alla stringa $\gamma\alpha\delta$ è denotata con
 	$\gamma\alpha\delta \sprod{\prodgen} \gamma\beta\delta$ e rappresenta il fatto che $\alpha$ viene sostituita con $\beta$.
-	Se la produzione \prodgen è facilmente identificabile, oppure se non ci interessa specificare la produzione usata, possiamo denotare l'applicazione indicando solo la grammatica $G$
-	con $\gamma\alpha\delta \sprod{G} \gamma\beta\delta$.
-	Se anche la grammatica coinvolta non è ambigua, possiamo ometterla usando la scrittura $\gamma\alpha\delta \sprod{} \gamma\beta\delta$.
 \end{definition}
 
+Se la produzione \prodgen è facilmente identificabile, oppure se non ci interessa specificare la produzione usata, possiamo denotare l'applicazione indicando solo la grammatica $G$
+con $\gamma\alpha\delta \sprod{G} \gamma\beta\delta$.
+Se anche la grammatica coinvolta non è ambigua, possiamo ometterla usando la scrittura $\gamma\alpha\delta \sprod{} \gamma\beta\delta$.
 Per denotare in modo compatto l'effetto di una sequenza di applicazioni di produzioni, e definire il linguaggio generato
 da una grammatica, introduciamo il concetto di
-produzione estesa.
+derivazione.
 
-\begin{definition}[Applicazione estesa di una produzione]\label{def:applicazione-produzione-estesa}
-	Sia $\gramm$ una grammatica e siano $\alpha$, $\beta$ due forme sentenziali di $G$.
-	Allora possiamo scrivere $\alpha \eprod{G} \beta$ se esiste una sequenza
-	$\langle \gamma_{1}, \ldots, \gamma_{n}\rangle $ di $n$ forme sentenziali tali che $\alpha = \gamma_{1}$,
-	$\beta = \gamma_{n}$, e $\gamma_{i} \sprod{G} \gamma_{i+1}$ per ogni $1\le i< n$.
-	In questo caso diciamo che $\beta$ è il risultato dell'\keyword{applicazione estesa} di produzioni di $G$ alla stringa $\alpha$.
+\begin{definition}[Derivazione]\label{def:applicazione-produzione-estesa}\label{def:derivazione}
+Sia $\gramm$ una grammatica e siano $\alpha$, $\beta$ due forme sentenziali di $G$.
+Allora possiamo scrivere $\alpha \eprod{G} \beta$ se esiste una sequenza
+$\langle \gamma_{1}, \ldots, \gamma_{n}\rangle $ di $n$ forme sentenziali tali che $\alpha = \gamma_{1}$,
+$\beta = \gamma_{n}$, e $\gamma_{i} \sprod{G} \gamma_{i+1}$ per ogni $1\le i< n$.
+In questo caso diciamo che $\beta$ è il risultato della'\keyword{derivazioni} di produzioni di $G$ a partire dalla stringa $\alpha$.
 \end{definition}
 
 
 \begin{definition}[linguaggio generato]\label{def:linguaggio-generato}
-	Sia \gramm una grammatica.
-	Il \keyword{linguaggio generato} da $G$, denotato con $L(G)$ è l'insieme $L(G)= \{ w\in T^{*}: S \eprod{G} w\}$.
+Sia \gramm una grammatica.
+Il \keyword{linguaggio generato} da $G$, denotato con $L(G)$ è l'insieme $L(G)= \{ w\in T^{*}: S \eprod{G} w\}$.
 \end{definition}
+
+In altre parole, il linguaggio generato dalla grammatica $G$ è l'insieme delle parole di soli terminali che sono
+derivabili a partire dal simbolo iniziale.
+Notiamo che $L(G)$ può essere infinito, finito, oppure vuoto.
 
 
 \subsection{Derivazioni canoniche}\label{sec:derivazioni-canoniche}
@@ -373,6 +378,35 @@ includono strettamente quelle di tipo 3.
 
 Con un leggero abuso di linguaggio, talvolta diremo che un linguaggio è di tipo 0, 1, 2, 3 se è generato da una
 grammatica di tipo 0, 1, 2, 3.
+
+\begin{example}\label{exa:grammatica1}
+$S \to ZU | U$\\
+$U \to \uno$\\
+$Z\to Z\zero | \zero | \epsilon$.
+Linguaggio $\zero^{*}\uno$
+\end{example}
+
+
+\begin{example}\label{exa:grammatica2}
+$S \to  \zero S | \uno$.
+Linguaggio $\zero^{*}\uno$
+\end{example}
+
+
+\begin{example}\label{exa:grammatica1}
+$S \to \zero S\zero | \uno S\uno | \zero | \uno| \epsilon$.
+Linguaggio parole palindrome
+\end{example}
+
+
+\begin{example}\label{exa:grammatica1}
+$S \to S + S | N$\\
+$N \to \uno N | \zero N |\zero | \uno$.
+Sommatorie.
+Grammatica ambigua.
+
+\end{example}
+
 
 \section{Automi}\label{sec:automi}
 

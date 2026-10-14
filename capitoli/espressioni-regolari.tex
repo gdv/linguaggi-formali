@@ -897,7 +897,7 @@ con:
 	      per esempio:
 	      $\delta_D(\{q_0,q_1,q_2\},0)=\delta_N(q_0,0)\cup \delta_N(q_1,0) \cup\delta_N(q_2,0) $
 \end{itemize}
-Si definisce l'$\epsilon-NFA$, l'automa astati finiti non deterministici con $\epsilon$ transizioni. Con la transizione $\epsilon$ posso saltare i nodi, ovvero avanza senza aggiungere caratteri
+Si definisce l'$\epsilon-NFA$, l'automa a stati finiti non deterministici con $\epsilon$ transizioni. Con la transizione $\epsilon$ posso saltare i nodi, ovvero avanza senza aggiungere caratteri
 \begin{example}
 	Si ha $ER=a^*b^*c^*$, che genera:
 	$L=\{a^nb^mc^k|\,n,m,k\geq 0\}$
@@ -1302,24 +1302,48 @@ $F_D=\{S\subseteq Q_N\,|\, S\cap F_n\neq \emptyset\}$
 con $\delta_D(S,a)=\cup \delta_N(p,a)$
 Si ha che:
 $|Q_D|=|2^{Q_N}|=2^{|Q_N|}$
-partiamo con un esempio:
-\begin{center}
-	\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
-		\node[state,initial] (q_0)   {$q_0$};
-		\node[state] (q_1) [right=of q_0] {$q_1$};
-		\node[state] (q_2) [right=of q_1] {$\cdots$};
-		\node[state] (q_3) [right=of q_2] {$q_{n-1}$};
-		\node[state, accepting] (q_4) [right=of q_3] {$q_n$};
-		\path[->]
-		(q_0) edge  node {1} (q_1)
-		edge [loop above] node {0,1} ()
-		(q_1) edge  node {0,1} (q_2)
-		(q_2) edge node {0,1} (q_3)
-		(q_3) edge node {0,1} (q_4);
-	\end{tikzpicture}
-\end{center}
-che definisce un $L\subseteq\{0,1\}^*$ tale che $w\in L$ sse l'$n$-simo elemento dalla fine è 1. Si ha:
-$|Q_N|=n+1\to |Q_D|=2^{n+1}$
+\begin{example}\label{exa:nfa-esponenziale}
+	Si consideri il linguaggio $L_n\subseteq\Sigma_{B}$ delle parole il cui $n$-esimo simbolo a partire dalla fine è
+	\uno, ovvero
+	$$L_n=\{w\uno x\,|\, w\in\Sigma_{B}^{*},\, x\in\Sigma_{B}^{n-1}\}.$$
+	Il seguente \nfa riconosce $L_n$ con $n+1$ stati: lo stato $q_0$ resta in $q_0$ su ogni simbolo e, in
+	corrispondenza di un \uno, può anche passare a $q_1$; da $q_i$ si passa a $q_{i+1}$ su qualunque simbolo, per
+	$1\leq i<n$, e $q_n$ è l'unico stato accettante.
+	\begin{center}
+		\begin{tikzpicture}[shorten >=1pt,node distance=2cm,on grid,auto]
+			\node[state,initial] (q_0)   {$q_0$};
+			\node[state] (q_1) [right=of q_0] {$q_1$};
+			\node[state] (q_2) [right=of q_1] {$\cdots$};
+			\node[state] (q_3) [right=of q_2] {$q_{n-1}$};
+			\node[state, accepting] (q_4) [right=of q_3] {$q_n$};
+			\path[->]
+			(q_0) edge  node {\uno} (q_1)
+			edge [loop above] node {\zero,\uno} ()
+			(q_1) edge  node {\zero,\uno} (q_2)
+			(q_2) edge node {\zero,\uno} (q_3)
+			(q_3) edge node {\zero,\uno} (q_4);
+		\end{tikzpicture}
+	\end{center}
+	L'\nfa è non deterministico in un solo punto: dopo aver letto un \uno, $q_0$ può sia restare in $q_0$ sia passare
+	a $q_1$, ovvero scommettere che quel \uno sia l'$n$-esimo simbolo a partire dalla fine della parola. Se la
+	scommessa è sbagliata, il ramo che ha attraversato $q_1$ muore senza raggiungere $q_n$, mentre il ramo rimasto in
+	$q_0$ può tentare di nuovo.
+
+	Applichiamo ora la costruzione dei sottoinsiemi. Dopo aver letto una parola $w$, l'insieme degli stati
+	raggiungibili è
+	$$\{q_0\}\cup\{q_i\,|\,1\leq i\leq n,\, |w|\geq i \text{ e l'$i$-esimo simbolo di $w$ a partire dalla fine è \uno}\}.$$
+	In particolare, per ogni sottoinsieme $S\subseteq\{q_1,\cdots,q_n\}$ esiste una parola di lunghezza $n$ che
+	raggiunge esattamente $\{q_0\}\cup S$: è sufficiente che il suo $i$-esimo simbolo a partire dalla fine sia \uno\ se
+	e solo se $q_i\in S$. Quindi il \dfa\ ottenuto ha $2^n$ stati raggiungibili, a fronte degli $n+1$ stati
+	dell'\nfa.
+
+	Questo \dfa\ è anche minimo: le $2^n$ parole di lunghezza $n$ sono a due a due distinguibili. Infatti, se due
+	parole $u$ e $v$ di lunghezza $n$ differiscono in posizione $i$ a partire dalla fine, con $u$ che ha \uno\ e $v$
+	che ha \zero, allora il suffisso $x=\uno^{i-1}$ è tale che $ux\in L_n$ mentre $vx\notin L_n$: poiché $|x|=i-1$,
+	l'$n$-esimo simbolo a partire dalla fine di $ux$ è l'$i$-esimo simbolo a partire dalla fine di $u$, e
+	analogamente per $vx$. Per il teorema di Myhill--Nerode, discusso nella \Cref{sec:myhill-nerode}, il \dfa\ minimo
+	ha quindi almeno $2^n$ stati.
+\end{example}
 Si ha che dato un $\epsilon$-NFA $E=(Q_E, \Sigma, \delta_E, q_{0_E}, F_E)$ che riconosce $L$ in un NFA $N=(Q_N, \Sigma, \delta_N, q_{0_N}, F_N)$ equivalenti con $Q_N=2^{Q_E}$ stati in $Q_E$ $\epsilon$-close: \textit{ECLOSE(S)=S} e $q_N=ECLOSE(q_E)$:
 $F_N\{S\in Q_F,\,\, S\subseteq Q_E | S\cap F_E\neq \emptyset\}$
 quindi:
