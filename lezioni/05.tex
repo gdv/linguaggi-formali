@@ -1,15 +1,112 @@
 \include{common/header}
+\title{Linguaggi e Computabilità, Lezione 05.
+  $\epsilon$-NFA}
 
 \begin{document}
 
 
-\begin{frame}[fragile]
-	\frametitle{Linguaggi e Computabilità: Lezione 05}
-\begin{enumerate}
-\item
-Passaggio Espressioni regolari a $\epsilon$-NFA
-\end{enumerate}
+\begin{frame}
+	\titlepage
 \end{frame}
+
+
+\tikzset{
+  enfa/.style={->, >=Stealth, shorten >=1pt, auto, node distance=2.2cm,
+    semithick, initial text=, every state/.style={minimum size=8mm},
+    accepting/.style={double=bg, double distance=2pt}},
+}
+
+
+
+\begin{frame}
+        \frametitle{Esempio 1}
+	\begin{center}
+		\begin{tikzpicture}[enfa]
+			\node[state, initial]   (q0)               {$q_0$};
+			\node[state]            (q1) [right=of q0] {$q_1$};
+			\node[state]            (q2) [right=of q1] {$q_2$};
+			\node[state, accepting] (q3) [right=of q2] {$q_3$};
+                        \path (q0) edge                node       {$\varepsilon$}          (q1)
+                                   edge [bend left=45] node       {\zero}          (q2)
+			      (q1) edge [loop above]   node       {\uno}          ()
+                                   edge                node       {\zero} (q2)
+                              (q2) edge                node       {\uno}         (q3)
+                                   edge [bend left=45] node       {\zero}          (q0);
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esempio 2}
+	\begin{center}
+		\begin{tikzpicture}[enfa]
+			\node[state, initial]   (q0)                     {$q_0$};
+			\node[state]            (q1) [above right=1cm and 2cm of q0] {$q_1$};
+			\node[state]            (q3) [below right=1cm and 2cm of q0] {$q_3$};
+			\node[state, accepting] (q2) [right=of q1]       {$q_2$};
+			\node[state, accepting] (q4) [right=of q3]       {$q_4$};
+			\path (q0) edge node       {$\varepsilon$} (q1)
+                              (q0) edge node[swap] {\uno} (q3)
+                              (q1) edge node       {\uno}  (q2)
+                              (q2) edge                node       {$\varepsilon$}         (q3)
+                              (q3) edge node       {\zero}  (q4);
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esempio 3}
+	\begin{center}
+		\begin{tikzpicture}[enfa, node distance=3cm]
+			\node[state, initial, accepting] (q0)               {$q_0$};
+			\node[state, accepting]          (q1) [right=of q0] {$q_1$};
+			\path (q0) edge [loop above] node {$\mathtt{0}$}  ()
+			           edge              node {$\varepsilon$} (q1)
+			      (q1) edge [loop above] node {$\mathtt{1}$}  ();
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+
+
+\begin{frame}
+        \frametitle{Esempio 4}
+	\begin{center}
+		\begin{tikzpicture}[enfa, node distance=3cm]
+			\node[state, initial]   (q0)               {$q_0$};
+			\node[state]            (q1) [right=of q0] {$q_1$};
+			\node[state, accepting] (q2) [right=of q1] {$q_2$};
+			\path (q0) edge              node {$\mathtt{+}, \mathtt{-}, \varepsilon$} (q1)
+                              (q1) edge              node {\zero, \uno}       (q2)
+                              (q2) edge [loop above] node {\zero, \uno}       ();
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+\begin{frame}
+        \frametitle{Esempio 5}
+	\begin{center}
+		\begin{tikzpicture}[enfa]
+			\node[state, initial, accepting] (q0)               {$q_0$};
+			\node[state]                     (q1) [right=of q0] {$q_1$};
+			\node[state]                     (q2) [right=of q1] {$q_2$};
+			\node[state]                     (q3) [above right=1cm and 2cm of q2] {$q_3$};
+			\node[state, accepting]          (q4) [below right=1cm and 2cm of q2] {$q_4$};
+			\path (q0) edge                 node       {\uno}          (q1)
+			      (q1) edge                 node       {\zero}         (q2)
+			      (q2) edge [bend right=45] node[swap] {$\varepsilon$} (q0)
+			           edge                 node       {\uno}          (q3)
+			           edge                 node[swap] {\uno}          (q4)
+			      (q3) edge [bend left=30]  node       {\zero}         (q4)
+			           edge [bend right=30] node[swap] {\uno}          (q4)
+			           edge [bend right=30] node[swap] {\zero}         (q2)
+			      (q4) edge [bend left=30]  node       {\uno}          (q1);
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
 
 
 \end{document}

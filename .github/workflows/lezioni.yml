@@ -1,8 +1,13 @@
 name: Compila le slide
 on:
   push:
+    branches:
+      - "**"
     tags:
       - "v*"
+    paths:
+      - "lezioni/*.tex"
+      - "lezioni/**/*.tex"
 permissions:
   contents: write
   
@@ -20,6 +25,7 @@ jobs:
           continue_on_error: true
           latexmk_use_lualatex: true      
       - name: Release PDF file
+        if: startsWith(github.ref, 'refs/tags/')
         uses: softprops/action-gh-release@v3
         with:
           files: "lezioni/*.pdf"

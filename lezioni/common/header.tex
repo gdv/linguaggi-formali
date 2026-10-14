@@ -92,6 +92,14 @@ fontsize=\normalsize
 \usepackage{transparent}
 \graphicspath{{img/}}
 
+\newcommand{\zero}{\ensuremath{\mathtt{0}}\xspace}
+\newcommand{\uno}{\ensuremath{\mathtt{1}}\xspace}
+\newcommand{\due}{\ensuremath{\mathtt{2}}\xspace}
+\newcommand{\tre}{\ensuremath{\mathtt{3}}\xspace}
+\newcommand{\kleene}{\ensuremath{{}^{\ast}}\xspace}
+\xspaceaddexceptions{\zero \uno \due \tre \kleene}
+
+
 \newcommand{\simplebox}[1]{
       \begin{tikzpicture}
               \node[text centered, rectangle, draw=black, thick, text width=\linewidth,align=center, rounded corners, minimum height=1em] (C) {#1};
