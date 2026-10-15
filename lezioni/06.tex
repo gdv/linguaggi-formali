@@ -7,8 +7,48 @@
 	\frametitle{Linguaggi e Computabilità: Lezione 06}
 \begin{enumerate}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
+Espressioni regolari
 \end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 1}
+Scrivere un'espressione regolare per il linguaggio delle stringhe su alfabeto $\Sigma_{B}$ con al massimo una coppia
+di \uno consecutivi.
+% Soluzione: (0+10)*(eps+1) + (0+10)*11(0+01)*
+% (0+10)*(eps+1): stringhe senza 11; nel secondo termine prima di 11 non c'e' un 1 finale
+% e dopo 11 non c'e' un 1 iniziale, quindi 111 non e' ammessa (contiene due coppie)
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 2}
+Scrivere un'espressione regolare per il linguaggio delle stringhe su alfabeto $\Sigma_{B}$ con almeno uno \zero e
+almeno un \uno.
+% Soluzione: (0+1)*(01+10)(0+1)*
+% c'e' almeno un punto in cui il simbolo cambia
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 3}
+Scrivere un'espressione regolare per il linguaggio delle stringhe su alfabeto $\Sigma_{B}$ con un numero di \uno
+multiplo di tre.
+% Soluzione: 0*(10*10*10*)*
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 4}
+Scrivere un'espressione regolare per il linguaggio delle stringhe su alfabeto $\Sigma_{B}$ che non contengono
+\uno\zero\uno.
+% Soluzione: 0*(1+000*)*(eps+0)
+% tra due 1 ci sono zero 0 oppure almeno due 0
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 5}
+Scrivere un'espressione regolare per il linguaggio delle stringhe su alfabeto $\Sigma_{B}$ in cui ogni istanza di
+\zero\zero compare prima di ogni istanza di \uno\uno.
+% Soluzione: (0+10)*(eps+1)(1+01)*(eps+0)
+% prefisso senza 11 seguito da suffisso senza 00 (si spezza prima del primo 11)
 \end{frame}
 
 
