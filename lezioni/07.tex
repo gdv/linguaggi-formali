@@ -7,9 +7,99 @@
 	\frametitle{Linguaggi e Computabilità: Lezione 07}
 \begin{enumerate}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
+Esercizi su Espressioni regolari
 \end{enumerate}
 \end{frame}
+
+\begin{frame}
+\frametitle{Nota}
+Espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ che non contengono la stringa \uno\uno
+
+\[(\zero+\uno\zero)\kleene(\epsilon+\uno)\]
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Esercizio 1}
+Scrivere un'espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ che non contengono
+\uno\zero\uno.
+% Soluzione: 0*(1+000*)*(eps+0)
+% Soluzione 0*(11*000*)*1*
+% tra due 1 ci sono zero 0 oppure almeno due 0
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 2}
+Scrivere un'espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ che non contengono
+\uno\uno\zero.
+% Soluzione: (0+10)*1*
+% appena compaiono due 1 consecutivi, non puo' piu' comparire uno 0:
+% prima di quel punto ogni 1 e' seguito da uno 0, poi solo 1
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 3}
+Scrivere un'espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ che contengono
+esattamente due occorrenze di \zero\zero (le due occorrenze possono essere disgiunte oppure sovrapposte).
+% Soluzione: (1+01)*000(1+10)* + (1+01)*00 (11*0)*11* 00(1+10)*
+% Due casi, 000 o due occorrenze di 00 senza sovrapposizione
+% Soluzione: (1+01)*00(0+1(1+01)*00)(1+10)*
+% prima della prima occorrenza: parola senza 00 vuota o che termina con 1, cioe' (1+01)*;
+% dopo l'ultima: parola senza 00 vuota o che inizia con 1, cioe' (1+10)*.
+% In mezzo: occorrenze sovrapposte -> 000;
+% occorrenze disgiunte -> 00 w 00 con w senza 00 che inizia e termina con 1, cioe' 1(1+01)*
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Esercizio 4}
+Scrivere un'espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ in cui ogni istanza di
+\zero\zero compare prima di ogni istanza di \uno\uno.
+% Soluzione: (0+10)*(eps+1)(1+01)*(eps+0)
+% prefisso senza 11 seguito da suffisso senza 00 (si spezza prima del primo 11)
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 5}
+Scrivere un'espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ in cui:
+\begin{enumerate}
+\item il numero di \zero è uguale al numero di \uno
+\item in ogni prefisso, la differenza fra il numero di \zero e il numero di \uno è al massimo $1$
+\end{enumerate}
+% Soluzione: (01+10)*
+% le due condizioni insieme: i prefissi di lunghezza pari hanno differenza 0,
+% quelli di lunghezza dispari differenza +-1, quindi la parola si spezza in
+% blocchi di lunghezza 2 con uno 0 e un 1, cioe' 01 oppure 10.
+% Nota: la sola condizione 1 non e' regolare (pumping lemma su 0^n 1^n);
+% la sola condizione 2 (in valore assoluto) e' (01+10)*(eps+0+1)
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 6}
+Scrivere un'espressione regolare per il linguaggio delle parole su alfabeto $\Sigma_{B}$ con
+un numero di \uno multiplo di tre e un numero di \zero multiplo di due.
+% Soluzione: si spezza la parola in un prefisso di soli 0 seguito da blocchi
+% con esattamente tre 1, ciascuno della forma 10^a 10^b 10^c (come in 0*(10*10*10*)*,
+% che pero' non controlla la parita' degli 0).
+% Abbreviazioni:
+%   Z  = (00)*          sequenza pari di 0
+%   Ue = 1Z             un 1 seguito da un numero pari di 0
+%   Uo = 10Z            un 1 seguito da un numero dispari di 0
+%   Te = UeUeUe + UeUoUo + UoUeUo + UoUoUe   blocco con un numero pari di 0
+%   To = UoUoUo + UoUeUe + UeUoUe + UeUeUo   blocco con un numero dispari di 0
+% Soluzione: (Z + 0Z Te* To)(Te + To Te* To)*
+% il prefisso di 0 e' pari, oppure e' dispari e viene compensato dal primo To;
+% poi i blocchi To devono comparire a coppie
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 7}
+Scrivere un DFA per il linguaggio delle parole su alfabeto $\Sigma_{B}$ con
+un numero di \uno multiplo di tre e un numero di \zero multiplo di due.
+% Soluzione: 0*(10*10*10*)*
+\end{frame}
+
+
 
 
 \end{document}
