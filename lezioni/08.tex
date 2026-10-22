@@ -7,8 +7,81 @@
 	\frametitle{Linguaggi e Computabilità: Lezione 08}
 \begin{enumerate}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
+Da DFA a espressioni regolari
 \end{enumerate}
+\end{frame}
+
+
+\tikzset{
+  enfa/.style={->, >=Stealth, shorten >=1pt, auto, node distance=2.2cm,
+    semithick, initial text=, every state/.style={minimum size=8mm},
+    accepting/.style={double=bg, double distance=2pt}},
+}
+
+
+\begin{frame}
+        \frametitle{Esercizio}
+	Ottenere l'espressione regolare che esprime il linguaggio rappresentato dall'automa
+	\begin{center}
+		\begin{tikzpicture}[enfa, node distance=2.5cm and 4cm]
+			\node[state, initial]   (pp)                {$q_{PP}$};
+			\node[state]            (dp) [right=of pp]  {$q_{DP}$};
+			\node[state]            (pd) [below=of pp]  {$q_{PD}$};
+			\node[state, accepting] (dd) [right=of pd]  {$q_{DD}$};
+			\path (pp) edge [bend left=15] node       {\zero} (dp)
+			           edge [bend left=15] node       {\uno}  (pd)
+			      (dp) edge [bend left=15] node       {\zero} (pp)
+			           edge [bend left=15] node       {\uno}  (dd)
+			      (pd) edge [bend left=15] node       {\zero} (dd)
+			           edge [bend left=15] node       {\uno}  (pp)
+			      (dd) edge [bend left=15] node       {\zero} (pd)
+			           edge [bend left=15] node       {\uno}  (dp);
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio}
+	Ottenere l'espressione regolare che esprime il linguaggio rappresentato dall'automa
+	\begin{center}
+		\begin{tikzpicture}[enfa, node distance=3.5cm]
+			\node[state, initial, accepting] (q0)               {$q_0$};
+			\node[state]                     (q1) [right=of q0] {$q_1$};
+			\node[state]                     (q2) [right=of q1] {$q_2$};
+			\path (q0) edge [loop above]        node {\zero} ()
+			           edge [bend left=15]      node {\uno}  (q1)
+			      (q1) edge [bend left=15]      node {\uno}  (q0)
+			           edge [bend left=15]      node {\zero} (q2)
+			      (q2) edge [bend left=15]      node {\zero} (q1)
+			           edge [loop above]        node {\uno}  ();
+		\end{tikzpicture}
+	\end{center}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio}
+	Ottenere l'espressione regolare che esprime il linguaggio rappresentato dall'automa
+	\begin{center}
+		\begin{tikzpicture}[enfa, node distance=1.2cm and 3.5cm]
+			\node[state, initial]   (q0)                     {$q_0$};
+			\node[state]            (q1) [above right=of q0] {$q_1$};
+			\node[state]            (q2) [below right=of q0] {$q_2$};
+			\node[state, accepting] (q3) [right=of q1]       {$q_3$};
+			\node[state, accepting] (q4) [right=of q2]       {$q_4$};
+			\path (q0) edge                     node       {\zero} (q1)
+			           edge [bend left=15]      node       {\uno}  (q2)
+			      (q1) edge [loop above]        node       {\zero} ()
+			           edge                     node       {\uno}  (q3)
+			      (q2) edge [bend left=15]      node       {\uno}  (q0)
+			           edge                     node[swap] {\zero} (q4)
+			      (q3) edge                     node[swap,pos=0.3] {\zero} (q2)
+			           edge [bend left=15]      node       {\uno}  (q4)
+			      (q4) edge [bend left=15]      node       {\zero} (q3)
+			           edge [loop below]        node       {\uno}  ();
+		\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 
