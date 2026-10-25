@@ -8,10 +8,53 @@
 \begin{enumerate}
 \item
 Pumping Lemma
-\item
-Dimostrare che un linguaggio non è regolare
 \end{enumerate}
 \end{frame}
 
+\begin{frame}
+\frametitle{Esercizio 1}
+Determinare se il linguaggio $L = \{ \zero^{n}  \uno^{n} \; \vert \; n \ge 1 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: non regolare. Sia p la costante del pumping lemma, z = 0^p 1^p.
+% Con |uv| <= p e |v| >= 1, v = 0^k con k >= 1: u v^2 w = 0^{p+k} 1^p non in L.
+\end{frame}
 
+\begin{frame}
+\frametitle{Esercizio 2}
+Determinare se il linguaggio $L = \{ \zero^{n}  \uno^{n-1} \; \vert \; n \ge 1 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: non regolare. Sia p la costante del pumping lemma, z = 0^{p+1} 1^p.
+% Con |uv| <= p e |v| >= 1, v = 0^k con k >= 1: u v^2 w = 0^{p+1+k} 1^p non in L.
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 3}
+Determinare se il linguaggio $L = \{ \zero^{2n}  \uno^{2m} \; \vert \; n,m \ge 1 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: regolare.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Esercizio 4}
+Determinare se il linguaggio $L = \{ \zero^{n}  \uno \zero^{n} \; \vert \; n \ge 1 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: non regolare.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Esercizio 5}
+Determinare se il linguaggio $L = \{ \zero^{2^{n}}  \uno  \; \vert \; n \ge 0 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: non regolare.
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 6}
+Determinare se il linguaggio $L = \{ ww^{R} \; \vert \; w\in \Sigma_{B}\kleene \}$ è regolare,
+dove $w^{R}$ è la parola $w[|w|]w[|w|-1]\cdots w[2]w[1]$.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: non regolare.
+\end{frame}
 \end{document}
