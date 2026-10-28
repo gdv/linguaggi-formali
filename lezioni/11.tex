@@ -13,5 +13,33 @@ Proprietà di chiusura dei linguaggi regolari
 \end{enumerate}
 \end{frame}
 
+\begin{frame}
+\frametitle{Esercizio 1}
+Determinare se il linguaggio $L = \{ \zero^{m}  \uno^{n} \; \vert \; m\ge n \ge 1 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+% Soluzione: L non è regolare.
+% Supponiamo per assurdo che L sia regolare e sia p la costante del pumping lemma.
+% Scegliamo z = 0^p 1^p: z appartiene a L (m = n = p >= 1) e |z| = 2p >= p.
+% Per ogni decomposizione z = uvw con |uv| <= p e |v| >= 1, uv è un prefisso
+% di 0^p, quindi u = 0^j, v = 0^k con k >= 1, w = 0^{p-j-k} 1^p.
+% Pompando verso il basso (i = 0): u v^0 w = uw = 0^{p-k} 1^p.
+% Poiché k >= 1, il numero di 0 (p-k) è minore del numero di 1 (p),
+% quindi m < n e uw non appartiene a L: contraddizione.
+% Nota: pompare verso l'alto (i >= 2) non funziona, perché 0^{p+(i-1)k} 1^p
+% ha m >= n e appartiene ancora a L.
+% Per espandere verso i>=2, prendere il reverse del linguaggio.
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 2}
+Determinare se il linguaggio $L = \{ \zero^{m}  \uno^{n} \; \vert \; m\neq n, m,n \ge 0 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+\end{frame}
+
+\begin{frame}
+\frametitle{Esercizio 3}
+Determinare se il linguaggio $L = \{ \zero^{m}  \uno^{n} \zero^{n-m}\; \vert \; n\ge m \ge 0 \}$ è regolare.
+In caso affermativo indicare un'espressione regolare che lo denota, altrimenti dimostrare che non è regolare usando il pumping lemma.
+\end{frame}
 
 \end{document}

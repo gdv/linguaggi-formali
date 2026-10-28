@@ -102,6 +102,12 @@ fontsize=\normalsize
 \newcommand{\kleene}{\ensuremath{{}^{\ast}}\xspace}
 \xspaceaddexceptions{\zero \uno \due \tre \kleene}
 
+\tikzset{
+  enfa/.style={->, >=Stealth, shorten >=1pt, auto, node distance=2.2cm,
+    semithick, initial text=, every state/.style={minimum size=8mm},
+    accepting/.style={double=bg, double distance=2pt}},
+}
+
 
 \newcommand{\simplebox}[1]{
       \begin{tikzpicture}
