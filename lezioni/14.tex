@@ -7,8 +7,89 @@
 	\frametitle{Linguaggi e Computabilità: Lezione 14}
 \begin{enumerate}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
+Introduzione ai linguaggi liberi dal contesto (CFL) e alle grammatiche libere dal contesto (CFG)
 \end{enumerate}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio 0}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+                L = \{ \zero^{n} \uno^{n} \; \vert \; n \ge 0 \}
+	\]
+	sull'alfabeto $\Sigma_{B}$.
+% Soluzione: S -> 0 S 1 1 | epsilon
+% Ogni applicazione di S -> 0S11 aggiunge uno 0 a sinistra e due 1 a destra.
+\end{frame}
+
+
+
+\begin{frame}
+	\frametitle{Esercizio 1}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+		L = \{ \zero^{n} \uno^{2n} \; \vert \; n \ge 0 \}
+	\]
+	sull'alfabeto $\Sigma_{B}$.
+% Soluzione: S -> 0 S 1 1 | epsilon
+% Ogni applicazione di S -> 0S11 aggiunge uno 0 a sinistra e due 1 a destra.
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 2}
+	Scrivere una grammatica context-free che genera il linguaggio delle
+	\emph{palindrome} sull'alfabeto $\Sigma_{B}$, cioè
+	\[
+		L = \{ w \in \Sigma_{B}\kleene \; \vert \; w = w^{R} \}
+	\]
+	dove $w^{R}$ è la parola $w$ letta da destra a sinistra.
+% Soluzione: S -> 0 S 0 | 1 S 1 | 0 | 1 | epsilon
+% Le produzioni S -> 0 | 1 generano le palindrome di lunghezza dispari,
+% S -> epsilon quelle di lunghezza pari.
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 3}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+		L = \{ \zero^{n} \uno^{m} \due^{m} \tre^{n} \; \vert \; n, m \ge 0 \}
+	\]
+	sull'alfabeto $\{\zero, \uno, \due, \tre\}$.
+% Soluzione:
+% S -> 0 S 3 | A
+% A -> 1 A 2 | epsilon
+% S genera le coppie esterne 0...3, poi A genera le coppie interne 1...2.
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 4}
+	Scrivere una grammatica context-free che genera il linguaggio delle
+	parentesi \emph{bilanciate} sull'alfabeto $\{ (, ) \}$.
+
+	\bigskip
+	Esempi: $\varepsilon$, $()$, $(())()$, $((()())())$ appartengono al linguaggio;
+	$)($, $(()$, $())($ non appartengono al linguaggio.
+% Soluzione: S -> ( S ) S | epsilon
+% Ogni parola non vuota bilanciata si scompone in modo unico come (x)y,
+% dove ( e ) sono una coppia corrispondente e x, y sono bilanciate.
+% Alternativa (ambigua): S -> S S | ( S ) | epsilon
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 5}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+		L = \{ w \in \Sigma_{B}\kleene \; \vert \; w \text{ contiene lo stesso numero di \zero e di \uno} \}
+	\]
+% Soluzione: S -> 0 S 1 S | 1 S 0 S | epsilon
+% Una parola non vuota di L inizia con 0 oppure con 1. Se inizia con 0,
+% sia 1 il primo simbolo in cui il numero di 0 e di 1 nel prefisso si
+% eguaglia: la parola è 0 x 1 y con x, y in L. Analogamente se inizia con 1.
 \end{frame}
 
 
