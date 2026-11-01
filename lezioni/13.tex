@@ -12,4 +12,144 @@ Passaggio Espressioni regolari a $\epsilon$-NFA
 \end{frame}
 
 
+\begin{frame}
+	\frametitle{Esercizio 1: minimizzare il DFA}
+	\begin{center}
+		\begin{tikzpicture}[enfa]
+			\node[state, initial]   (q0) at (0,0)  {$q_0$};
+			\node[state]            (q1) at (3,0)  {$q_1$};
+			\node[state, accepting] (q2) at (6,0)  {$q_2$};
+			\node[state, accepting] (q3) at (0,-3) {$q_3$};
+			\node[state]            (q4) at (3,-3) {$q_4$};
+			\node[state]            (q5) at (6,-3) {$q_5$};
+			\path (q0) edge [loop above]        node       {\uno}  ()
+			           edge                     node       {\zero} (q1)
+			      (q1) edge [bend left=20]      node       {\zero} (q4)
+			           edge [bend left=20]      node       {\uno}  (q2)
+			      (q2) edge [bend left=20]      node       {\zero} (q1)
+			           edge                     node       {\uno}  (q5)
+			      (q3) edge [bend left=20]      node       {\zero} (q4)
+			           edge                     node       {\uno}  (q0)
+			      (q4) edge [bend left=20]      node       {\zero} (q1)
+			           edge [bend left=20]      node       {\uno}  (q3)
+			      (q5) edge                     node       {\zero} (q4)
+			           edge [loop below]        node       {\uno}  ();
+		\end{tikzpicture}
+	\end{center}
+% Soluzione.
+% Tutti gli stati sono raggiungibili.
+% Partizione iniziale: {q2, q3} (finali), {q0, q1, q4, q5}.
+% Con 1: q1 -> q2 e q4 -> q3 (finali), q0 -> q0 e q5 -> q5 (non finali).
+% Partizione: {q0, q5}, {q1, q4}, {q2, q3}, che è stabile.
+% DFA minimo (3 stati): A = {q0, q5} iniziale, B = {q1, q4}, C = {q2, q3} finale.
+% A: 0 -> B, 1 -> A;  B: 0 -> B, 1 -> C;  C: 0 -> B, 1 -> A.
+% Riconosce le parole che terminano con 01.
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 2: minimizzare il DFA}
+	\begin{center}
+		\begin{tikzpicture}[enfa]
+			\node[state, initial, accepting] (q0) at (0,0)  {$q_0$};
+			\node[state]            (q1) at (3,0)    {$q_1$};
+			\node[state, accepting] (q4) at (6,0)    {$q_4$};
+			\node[state]            (q2) at (0,-3)   {$q_2$};
+			\node[state]            (q3) at (3,-3)   {$q_3$};
+			\node[state]            (q5) at (6,-3)   {$q_5$};
+			\node[state]            (q6) at (9,-1.5) {$q_6$};
+			\path (q0) edge                     node       {\zero} (q1)
+			           edge [bend left=20]      node       {\uno}  (q2)
+			      (q1) edge [bend left=20]      node       {\zero} (q4)
+			           edge [bend left=20]      node       {\uno}  (q3)
+			      (q4) edge [bend left=20]      node       {\zero} (q1)
+			           edge [bend left=20]      node       {\uno}  (q5)
+			      (q2) edge                     node[swap] {\zero} (q3)
+			           edge [bend left=20]      node       {\uno}  (q0)
+			      (q3) edge [bend left=20]      node       {\zero} (q5)
+			           edge [bend left=20]      node       {\uno}  (q1)
+			      (q5) edge [bend left=20]      node       {\zero} (q3)
+			           edge [bend left=20]      node       {\uno}  (q4)
+			      (q6) edge                     node[swap] {\zero} (q4)
+			           edge                     node       {\uno}  (q5);
+		\end{tikzpicture}
+	\end{center}
+% Soluzione.
+% q6 non è raggiungibile da q0: si elimina.
+% Partizione iniziale: {q0, q4} (finali), {q1, q2, q3, q5}.
+% Con 0: q1 -> q4 (finale), q2 -> q3, q3 -> q5, q5 -> q3 (non finali).
+% Con 1: q2 -> q0, q5 -> q4 (finali), q1 -> q3, q3 -> q1 (non finali).
+% Partizione: {q0, q4}, {q1}, {q2, q5}, {q3}, che è stabile.
+% DFA minimo (4 stati): A = {q0, q4} iniziale e finale, B = {q1}, C = {q2, q5}, D = {q3}.
+% A: 0 -> B, 1 -> C;  B: 0 -> A, 1 -> D;  C: 0 -> D, 1 -> A;  D: 0 -> C, 1 -> B.
+% Riconosce le parole con un numero pari di 0 e un numero pari di 1.
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 3: minimizzare il DFA}
+	\begin{center}
+		\begin{tikzpicture}[enfa]
+			\node[state, initial]   (q0) at (0,0)  {$q_0$};
+			\node[state]            (q1) at (3,0)  {$q_1$};
+			\node[state, accepting] (q2) at (6,0)  {$q_2$};
+			\node[state, accepting] (q3) at (6,-3) {$q_3$};
+			\node[state]            (q4) at (0,-3) {$q_4$};
+			\node[state]            (q5) at (3,-3) {$q_5$};
+			\path (q0) edge                     node       {\uno}  (q1)
+			           edge                     node[swap] {\zero} (q4)
+			      (q1) edge [loop above]        node       {\uno}  ()
+			           edge [bend left=20]      node       {\zero} (q2)
+			      (q2) edge [bend left=20]      node       {\uno}  (q1)
+			           edge                     node       {\zero} (q3)
+			      (q3) edge [loop right]        node       {\zero} ()
+			           edge                     node       {\uno}  (q1)
+			      (q4) edge [bend left=20]      node       {\zero} (q5)
+			           edge [loop below]        node       {\uno}  ()
+			      (q5) edge [bend left=20]      node       {\zero} (q4)
+			           edge [loop below]        node       {\uno}  ();
+		\end{tikzpicture}
+	\end{center}
+% Soluzione.
+% Tutti gli stati sono raggiungibili.
+% Partizione iniziale: {q2, q3} (finali), {q0, q1, q4, q5}.
+% Con 0: q1 -> q2 (finale), q0 -> q4, q4 -> q5, q5 -> q4 (non finali).
+% Partizione: {q0, q4, q5}, {q1}, {q2, q3}.
+% Con 1: q0 -> q1, mentre q4 -> q4 e q5 -> q5.
+% Partizione: {q0}, {q1}, {q2, q3}, {q4, q5}, che è stabile.
+% DFA minimo (4 stati): A = {q0} iniziale, B = {q1}, C = {q2, q3} finale,
+% D = {q4, q5} (stato pozzo).
+% A: 0 -> D, 1 -> B;  B: 0 -> C, 1 -> B;  C: 0 -> C, 1 -> B;  D: 0 -> D, 1 -> D.
+% Riconosce le parole che iniziano con 1 e terminano con 0.
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 4: minimizzare il DFA}
+	Stato iniziale $q_0$, stati finali $q_0, q_3, q_6$.
+	\begin{center}
+		\begin{tabular}{c|cc}
+			         & \zero  & \uno  \\
+			\hline
+                        $\to *q_0$    & $q_3$  & $q_1$ \\
+			$q_1$    & $q_4$  & $q_2$ \\
+			$q_2$    & $q_5$  & $q_3$ \\
+                        $*q_3$    & $q_0$  & $q_4$ \\
+			$q_4$    & $q_1$  & $q_5$ \\
+			$q_5$    & $q_2$  & $q_6$ \\
+                        $*q_6$    & $q_6$  & $q_1$ \\
+			$q_7$    & $q_0$  & $q_7$ \\
+		\end{tabular}
+	\end{center}
+% Soluzione.
+% q7 non è raggiungibile da q0: si elimina.
+% Partizione iniziale: {q0, q3, q6} (finali), {q1, q2, q4, q5}.
+% Con 1: q2 -> q3 e q5 -> q6 (finali), q1 -> q2 e q4 -> q5 (non finali).
+% Partizione: {q0, q3, q6}, {q1, q4}, {q2, q5}, che è stabile.
+% DFA minimo (3 stati): A = {q0, q3, q6} iniziale e finale, B = {q1, q4}, C = {q2, q5}.
+% A: 0 -> A, 1 -> B;  B: 0 -> B, 1 -> C;  C: 0 -> C, 1 -> A.
+% Riconosce le parole in cui il numero di 1 è multiplo di 3.
+\end{frame}
+
+
 \end{document}
