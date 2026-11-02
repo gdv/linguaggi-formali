@@ -7,222 +7,89 @@
 	\frametitle{Linguaggi e Computabilità: Lezione 15}
 \begin{enumerate}
 \item
-Esercizi riepilogativi su linguaggi regolari.
+Introduzione ai linguaggi liberi dal contesto (CFL) e alle grammatiche libere dal contesto (CFG)
 \end{enumerate}
 \end{frame}
 
-\begin{frame}
-	\frametitle{Esercizio 1}
-        Disegnare un DFA che riconosca il linguaggio delle parole su alfabeto $\{ \zero, \uno, \due, \tre\}$ che
-        iniziano con \zero, finiscono con \due\zero, e contengono la sottostringa \uno\uno.
 
-	\bigskip
-        Esempi: \zero\uno\uno\due\zero, \zero\tre\uno\uno\due\due\zero, \zero\tre\uno\uno\tre\uno\due\zero
-        appartengono al linguaggio;
-        \uno\uno\due\zero, \zero\uno\zero\due\zero, \zero\uno\uno\zero\due, \zero\uno\uno\zero, \zero\due\zero
-        non appartengono al linguaggio.
-% Soluzione (7 stati). Stati:
-% s  iniziale;
-% d  pozzo (il primo simbolo non è 0);
-% a0 iniziata con 0, senza 11, ultimo simbolo diverso da 1;
-% a1 iniziata con 0, senza 11, ultimo simbolo 1;
-% b  visto 11, ultimo simbolo diverso da 2 e non si termina con 20;
-% b2 visto 11, ultimo simbolo 2;
-% f  visto 11 e si termina con 20 (unico stato finale).
-% s:  0 -> a0;  1, 2, 3 -> d
-% d:  0, 1, 2, 3 -> d
-% a0: 1 -> a1;  0, 2, 3 -> a0
-% a1: 1 -> b;   0, 2, 3 -> a0
-% b:  2 -> b2;  0, 1, 3 -> b
-% b2: 0 -> f;   2 -> b2;  1, 3 -> b
-% f:  2 -> b2;  0, 1, 3 -> b
+\begin{frame}
+        \frametitle{Esercizio 0}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+                L = \{ \zero^{n} \uno^{n} \; \vert \; n \ge 0 \}
+	\]
+	sull'alfabeto $\Sigma_{B}$.
+% Soluzione: S -> 0 S 1 1 | epsilon
+% Ogni applicazione di S -> 0S11 aggiunge uno 0 a sinistra e due 1 a destra.
 \end{frame}
 
+
+
+\begin{frame}
+	\frametitle{Esercizio 1}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+		L = \{ \zero^{n} \uno^{2n} \; \vert \; n \ge 0 \}
+	\]
+	sull'alfabeto $\Sigma_{B}$.
+% Soluzione: S -> 0 S 1 1 | epsilon
+% Ogni applicazione di S -> 0S11 aggiunge uno 0 a sinistra e due 1 a destra.
+\end{frame}
 
 
 \begin{frame}
 	\frametitle{Esercizio 2}
-	Disegnare un DFA che riconosca il linguaggio delle parole su alfabeto $\Sigma_{B}$
-	che contengono un numero pari di \zero e un numero di \uno multiplo di 3.
-% Soluzione: costruzione prodotto di un DFA a 2 stati (parità degli 0)
-% e di un DFA a 3 stati (numero di 1 modulo 3).
-% Stati q_{i,j} con i in {0,1} e j in {0,1,2}:
-% q_{i,j} --0--> q_{1-i, j},  q_{i,j} --1--> q_{i, (j+1) mod 3}.
-% Stato iniziale e unico stato finale: q_{0,0}. Il DFA ha 6 stati ed è minimo.
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Esercizio 3: minimizzare il DFA}
-	\begin{center}
-		\begin{tikzpicture}[enfa]
-			\node[state, initial]   (q0) at (0,0)  {$q_0$};
-			\node[state]            (q1) at (3,0)  {$q_1$};
-			\node[state, accepting] (q2) at (6,0)  {$q_2$};
-			\node[state]            (q3) at (0,-3) {$q_3$};
-			\node[state]            (q4) at (3,-3) {$q_4$};
-			\node[state, accepting] (q5) at (6,-3) {$q_5$};
-			\path (q0) edge [bend left=20]      node       {\uno}  (q1)
-			           edge [bend left=20]      node       {\zero} (q3)
-			      (q1) edge [bend left=20]      node       {\zero} (q0)
-			           edge                     node       {\uno}  (q2)
-			      (q2) edge [loop above]        node       {\uno}  ()
-			           edge [bend left=20]      node       {\zero} (q5)
-			      (q3) edge [bend left=20]      node       {\zero} (q0)
-			           edge [bend left=20]      node       {\uno}  (q4)
-			      (q4) edge [bend left=20]      node       {\zero} (q3)
-			           edge                     node[swap] {\uno}  (q5)
-			      (q5) edge [loop below]        node       {\zero} ()
-			           edge [bend left=20]      node       {\uno}  (q2);
-		\end{tikzpicture}
-	\end{center}
-% Soluzione.
-% Tutti gli stati sono raggiungibili.
-% Partizione iniziale: {q2, q5} (finali), {q0, q1, q3, q4}.
-% Con 1: q1 -> q2 e q4 -> q5 (finali), q0 -> q1 e q3 -> q4 (non finali).
-% Partizione: {q0, q3}, {q1, q4}, {q2, q5}, che è stabile.
-% DFA minimo (3 stati): A = {q0, q3} iniziale, B = {q1, q4}, C = {q2, q5} finale.
-% A: 0 -> A, 1 -> B;  B: 0 -> A, 1 -> C;  C: 0 -> C, 1 -> C.
-% Riconosce le parole che contengono la sottostringa 11.
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Esercizio 4: minimizzare il DFA}
-	Stato iniziale $q_0$, stati finali $q_2, q_3, q_5$.
-	\begin{center}
-		\begin{tabular}{c|cc}
-			         & \zero  & \uno  \\
-			\hline
-                        $\to q_0$    & $q_1$  & $q_4$ \\
-			$q_1$    & $q_2$  & $q_5$ \\
-                        $*q_2$    & $q_2$  & $q_3$ \\
-                        $*q_3$    & $q_1$  & $q_4$ \\
-			$q_4$    & $q_1$  & $q_0$ \\
-                        $*q_5$    & $q_1$  & $q_0$ \\
-		\end{tabular}
-	\end{center}
-% Soluzione.
-% Tutti gli stati sono raggiungibili.
-% Partizione iniziale: {q2, q3, q5} (finali), {q0, q1, q4}.
-% Con 0: q1 -> q2 (finale), q0 -> q1 e q4 -> q1 (non finali);
-%        q2 -> q2 (finale), q3 -> q1 e q5 -> q1 (non finali).
-% Partizione: {q0, q4}, {q1}, {q2}, {q3, q5}, che è stabile.
-% DFA minimo (4 stati): A = {q0, q4} iniziale, B = {q1}, C = {q2} finale,
-% D = {q3, q5} finale.
-% A: 0 -> B, 1 -> A;  B: 0 -> C, 1 -> D;  C: 0 -> C, 1 -> D;  D: 0 -> B, 1 -> A.
-% Riconosce le parole in cui il penultimo simbolo è 0
-% (gli stati ricordano gli ultimi due simboli letti).
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Esercizio 5: trasformare l'$\epsilon$-NFA in DFA}
-	\begin{center}
-		\begin{tikzpicture}[enfa]
-			\node[state, initial]   (p0) at (0,0)  {$p_0$};
-			\node[state]            (p1) at (4,0)  {$p_1$};
-			\node[state]            (p2) at (4,-3) {$p_2$};
-			\node[state, accepting] (p3) at (0,-3) {$p_3$};
-			\path (p0) edge [loop above]        node       {\zero}  ()
-			           edge                     node       {$\varepsilon$} (p1)
-			      (p1) edge [loop above]        node       {\uno}  ()
-			           edge                     node       {\uno}  (p2)
-			      (p2) edge                     node       {\zero, $\varepsilon$} (p3)
-			      (p3) edge                     node       {\uno}  (p0);
-		\end{tikzpicture}
-	\end{center}
-% Soluzione (costruzione per sottoinsiemi con epsilon-chiusura).
-% ECLOSE(p0) = {p0, p1}, ECLOSE(p1) = {p1}, ECLOSE(p2) = {p2, p3}, ECLOSE(p3) = {p3}.
-% A = {p0, p1} (iniziale):     0 -> A,  1 -> B
-% B = {p1, p2, p3} (finale):   0 -> C,  1 -> D
-% C = {p3} (finale):           0 -> E,  1 -> A
-% D = {p0, p1, p2, p3} (finale): 0 -> F, 1 -> D
-% E = {} (pozzo):              0 -> E,  1 -> E
-% F = {p0, p1, p3} (finale):   0 -> A,  1 -> D
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Esercizio 6: trasformare l'$\epsilon$-NFA in DFA}
-	\begin{center}
-		\begin{tikzpicture}[enfa]
-			\node[state, initial]   (r0) at (0,0)      {$r_0$};
-			\node[state]            (r1) at (2.5,1.5)  {$r_1$};
-			\node[state]            (r2) at (5,1.5)    {$r_2$};
-			\node[state]            (r3) at (3.75,-0.5) {$r_3$};
-			\node[state]            (r4) at (7.5,0)    {$r_4$};
-			\node[state, accepting] (r5) at (0,-2.5)   {$r_5$};
-			\path (r0) edge                     node       {$\varepsilon$} (r1)
-                                   edge                     node[swap] {$\zero$} (r3)
-                                   edge                     node[swap] {\uno} (r5)
-			      (r1) edge                     node       {\zero} (r2)
-			      (r2) edge                     node       {\uno}  (r4)
-                              (r3) edge                     node[swap] {\uno}  (r4)
-                                   edge                     node[swap] {\zero}  (r2)
-                              (r4) edge [bend left=50]      node       {$\varepsilon$} (r0)
-                              (r5) edge [bend right=50]      node[swap]       {\uno} (r4);
-		\end{tikzpicture}
-	\end{center}
-% Soluzione (costruzione per sottoinsiemi con epsilon-chiusura).
-% ECLOSE(r0) = {r0, r1, r3, r5}, ECLOSE(r4) = {r0, r1, r3, r4, r5},
-% gli altri stati hanno chiusura uguale a se stessi.
-% A = {r0, r1, r3, r5} (iniziale, finale):  0 -> B,  1 -> C
-% B = {r2}:                                 0 -> D,  1 -> C
-% C = {r0, r1, r3, r4, r5} (finale):        0 -> B,  1 -> C
-% D = {} (pozzo):                           0 -> D,  1 -> D
-% Riconosce il linguaggio (01 + 1)*.
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Esercizio 7}
-	Dimostrare, usando il pumping lemma, che il linguaggio
+	Scrivere una grammatica context-free che genera il linguaggio delle
+	\emph{palindrome} sull'alfabeto $\Sigma_{B}$, cioè
 	\[
-		L = \{ ww \; \vert \; w \in \Sigma_{B}\kleene \}
+		L = \{ w \in \Sigma_{B}\kleene \; \vert \; w = w^{R} \}
 	\]
-	non è regolare.
-% Soluzione. Supponiamo per assurdo che L sia regolare e sia p la costante
-% del pumping lemma. Scegliamo z = 0^p 1 0^p 1: z in L (w = 0^p 1) e |z| >= p.
-% Per ogni decomposizione z = uvw con |uv| <= p e |v| >= 1, si ha v = 0^k
-% con k >= 1. Allora u v^2 w = 0^{p+k} 1 0^p 1.
-% Se fosse della forma xx, avendo due soli 1, ciascuna metà dovrebbe
-% terminare con 1, quindi x = 0^{p+k} 1 = 0^p 1: assurdo perché k >= 1.
-% Nota: z = 0^p 0^p non funziona, perché è pompabile restando in L.
+	dove $w^{R}$ è la parola $w$ letta da destra a sinistra.
+% Soluzione: S -> 0 S 0 | 1 S 1 | 0 | 1 | epsilon
+% Le produzioni S -> 0 | 1 generano le palindrome di lunghezza dispari,
+% S -> epsilon quelle di lunghezza pari.
 \end{frame}
 
 
 \begin{frame}
-	\frametitle{Esercizio 8}
-	Dimostrare, usando il pumping lemma, che il linguaggio
+	\frametitle{Esercizio 3}
+	Scrivere una grammatica context-free che genera il linguaggio
 	\[
-		L = \{ \zero^{n^{2}} \; \vert \; n \ge 0 \}
+		L = \{ \zero^{n} \uno^{m} \due^{m} \tre^{n} \; \vert \; n, m \ge 0 \}
 	\]
-	non è regolare.
-% Soluzione. Supponiamo per assurdo che L sia regolare e sia p la costante
-% del pumping lemma. Scegliamo z = 0^{p^2}: z in L e |z| >= p.
-% Per ogni decomposizione z = uvw con |uv| <= p e |v| >= 1, si ha v = 0^k
-% con 1 <= k <= p. Allora |u v^2 w| = p^2 + k e
-%   p^2 < p^2 + k <= p^2 + p < p^2 + 2p + 1 = (p+1)^2.
-% Quindi p^2 + k non è un quadrato perfetto e u v^2 w non appartiene a L.
+	sull'alfabeto $\{\zero, \uno, \due, \tre\}$.
+% Soluzione:
+% S -> 0 S 3 | A
+% A -> 1 A 2 | epsilon
+% S genera le coppie esterne 0...3, poi A genera le coppie interne 1...2.
 \end{frame}
 
+
 \begin{frame}
-        \frametitle{Esercizio 9}
-	Disegnare un DFA che riconosca il linguaggio delle parole su alfabeto $\Sigma_{B}$
-	che, interpretate come numeri in base 2, sono multipli di 3.
+	\frametitle{Esercizio 4}
+	Scrivere una grammatica context-free che genera il linguaggio delle
+	parentesi \emph{bilanciate} sull'alfabeto $\{ (, ) \}$.
 
 	\bigskip
-	Esempi: \zero, \uno\uno, \uno\uno\zero, \uno\zero\zero\uno appartengono al linguaggio;
-	\uno, \uno\zero, \uno\zero\zero non appartengono al linguaggio.
-% Soluzione: lo stato r_i indica che il numero letto finora vale i modulo 3.
-% Leggendo il simbolo c, il valore x diventa 2x + c, quindi
-% r_i --c--> r_{(2i + c) mod 3}.
-% r_0 (iniziale e finale): 0 -> r_0, 1 -> r_1
-% r_1:                     0 -> r_2, 1 -> r_0
-% r_2:                     0 -> r_1, 1 -> r_2
-% (La parola vuota viene accettata: si può considerarla come il numero 0,
-% oppure aggiungere uno stato iniziale non finale.)
+	Esempi: $\varepsilon$, $()$, $(())()$, $((()())())$ appartengono al linguaggio;
+	$)($, $(()$, $())($ non appartengono al linguaggio.
+% Soluzione: S -> ( S ) S | epsilon
+% Ogni parola non vuota bilanciata si scompone in modo unico come (x)y,
+% dove ( e ) sono una coppia corrispondente e x, y sono bilanciate.
+% Alternativa (ambigua): S -> S S | ( S ) | epsilon
+\end{frame}
+
+
+\begin{frame}
+	\frametitle{Esercizio 5}
+	Scrivere una grammatica context-free che genera il linguaggio
+	\[
+		L = \{ w \in \Sigma_{B}\kleene \; \vert \; w \text{ contiene lo stesso numero di \zero e di \uno} \}
+	\]
+% Soluzione: S -> 0 S 1 S | 1 S 0 S | epsilon
+% Una parola non vuota di L inizia con 0 oppure con 1. Se inizia con 0,
+% sia 1 il primo simbolo in cui il numero di 0 e di 1 nel prefisso si
+% eguaglia: la parola è 0 x 1 y con x, y in L. Analogamente se inizia con 1.
 \end{frame}
 
 
