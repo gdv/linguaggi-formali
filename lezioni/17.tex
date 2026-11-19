@@ -4,12 +4,218 @@
 
 
 \begin{frame}[fragile]
-	\frametitle{Linguaggi e Computabilità: Lezione 17}
-\begin{enumerate}
+        \frametitle{Linguaggi e Computabilità: Lezione 17}
+\begin{itemize}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
-\end{enumerate}
+      Automi a pila: definizione
+\item
+      Rappresentazione grafica
+\item
+      Configurazione
+\item
+      Accettazione per stato finale e per pila vuota
+\end{itemize}
 \end{frame}
 
 
+
+% \begin{frame}
+%         \frametitle{Notazione}
+%         Un arco da $p$ a $q$ con etichetta
+%         \[
+%                 a, X / \gamma
+%         \]
+%         significa $(q, \gamma) \in \delta(p, a, X)$:
+%         \begin{itemize}
+%                 \item si legge $a \in \Sigma \cup \{\varepsilon\}$ dall'input
+%                 \item si toglie $X$ dalla cima della pila
+%                 \item si mette $\gamma \in \Gamma\kleene$ sulla pila (il primo simbolo di $\gamma$ va in cima)
+%         \end{itemize}
+
+%         \bigskip
+%         Configurazione (descrizione istantanea): $(q, w, \alpha)$, con $q$ stato corrente, $w$ input da
+%         leggere, $\alpha$ contenuto della pila (cima a sinistra).
+% \end{frame}
+
+
+
+\begin{frame}
+        \frametitle{Esempio: accettazione per stato finale}
+        $L = \{ \zero^{n} \uno^{n} \; \vert \; n \ge 0 \}$
+
+        \smallskip
+        \begin{center}
+                \begin{tikzpicture}[enfa, node distance=4cm]
+                        \node[state, initial]          (q0)                {$q_0$};
+                        \node[state]                   (q1) [right=of q0]  {$q_1$};
+                        \node[state, accepting]        (q2) [right=of q1]  {$q_2$};
+
+                        \path (q0) edge[loop above] node[align=center]
+                                        {$\zero, Z_0 / \zero Z_0$ \\ $\zero, \zero / \zero\zero$} ()
+                                   edge node {$\uno, \zero / \varepsilon$} (q1)
+                                   edge[bend right=30] node[below] {$\varepsilon, Z_0 / Z_0$} (q2)
+                              (q1) edge[loop above] node {$\uno, \zero / \varepsilon$} ()
+                                   edge node {$\varepsilon, Z_0 / Z_0$} (q2);
+                \end{tikzpicture}
+        \end{center}
+\end{frame}
+
+
+
+\begin{frame}
+        \frametitle{Esempio: computazione}
+        % Parola $\zero\zero\uno\uno \in L$:
+        % \[
+        %         \begin{array}{l}
+        %                 (q_0, \zero\zero\uno\uno, Z_0) \vdash
+        %                 (q_0, \zero\uno\uno, \zero Z_0) \vdash
+        %                 (q_0, \uno\uno, \zero\zero Z_0) \vdash \\
+        %                 (q_1, \uno, \zero Z_0) \vdash
+        %                 (q_1, \varepsilon, Z_0) \vdash
+        %                 (q_2, \varepsilon, Z_0)
+        %         \end{array}
+        % \]
+        % Input esaurito in uno stato finale: la parola è accettata.
+
+        % \bigskip
+        % Parola $\zero\zero\uno \notin L$:
+        % \[
+        %         (q_0, \zero\zero\uno, Z_0) \vdash
+        %         (q_0, \zero\uno, \zero Z_0) \vdash
+        %         (q_0, \uno, \zero\zero Z_0) \vdash
+        %         (q_1, \varepsilon, \zero Z_0)
+        % \]
+        % Nessuna mossa possibile e $q_1$ non è finale.
+
+        % \bigskip
+        % Parola $\zero\uno\uno \notin L$: si arriva in $(q_1, \uno, Z_0)$, si può solo andare in
+        % $(q_2, \uno, Z_0)$, ma l'input non è esaurito.
+\end{frame}
+
+
+
+
+\begin{frame}
+        \frametitle{Esempio: accettazione per pila vuota}
+        $L = \{ \zero^{n} \uno^{n} \; \vert \; n \ge 0 \}$
+
+        \smallskip
+        \begin{center}
+                \begin{tikzpicture}[enfa, node distance=4cm]
+                        \node[state, initial]          (q0)                {$q_0$};
+                        \node[state]                   (q1) [right=of q0]  {$q_1$};
+                        \node[state]        (q2) [right=of q1]  {$q_2$};
+
+                        \path (q0) edge[loop above] node[align=center]
+                                        {$\zero, Z_0 / \zero Z_0$ \\ $\zero, \zero / \zero\zero$} ()
+                                   edge node {$\uno, \zero / \varepsilon$} (q1)
+                                   edge[bend right=30] node[below] {$\varepsilon, Z_0 / \varepsilon$} (q2)
+                              (q1) edge[loop above] node {$\uno, \zero / \varepsilon$} ()
+                                   edge node {$\varepsilon, Z_0 / \varepsilon$} (q2);
+                \end{tikzpicture}
+        \end{center}
+        \end{frame}
+
+\begin{frame}
+        \frametitle{Esercizio 1: accettazione per pila vuota}
+Scrivere un PDA che accetta per pila vuota il linguaggio        $L = \{ w w^{R} \; \vert \; w \in \Sigma_{B}\kleene \}$
+        % \begin{center}
+        %         \begin{tikzpicture}[enfa, node distance=5cm]
+        %                 \node[state, initial]  (q0)                {$q_0$};
+        %                 \node[state]           (q1) [right=of q0]  {$q_1$};
+        %                 \path (q0) edge[loop above] node[align=center]
+        %                                 {$\zero, X / \zero X$ \\ $\uno, X / \uno X$} ()
+        %                            edge node {$\varepsilon, X / X$} (q1)
+        %                       (q1) edge[loop above] node[align=center]
+        %                                 {$\zero, \zero / \varepsilon$ \\ $\uno, \uno / \varepsilon$ \\
+        %                                  $\varepsilon, Z_0 / \varepsilon$} ();
+        %         \end{tikzpicture}
+        %         {\small($X$ indica un qualsiasi simbolo di $\Gamma = \{\zero, \uno, Z_0\}$)}
+        % \end{center}
+\end{frame}
+
+
+
+
+\begin{frame}
+        \frametitle{Esercizio 2}
+        Scrivere un PDA che riconosce il linguaggio
+        \[
+                L = \{ \zero^{n} \uno^{m} \; \vert \; n \neq m, n\ge 0, m\ge 0 \}
+        \]
+        sull'alfabeto $\Sigma_{B}$.
+% Soluzione (accettazione per stato finale), Gamma = {0, Z0}.
+% Stati: q0 (lettura degli 0), q1 (lettura degli 1, pila con 0),
+% q2 finale (n > m), q3 finale (n < m).
+% q0: 0, Z0 / 0 Z0;  0, 0 / 00            (si impilano gli 0)
+% q0 -> q1: 1, 0 / epsilon
+% q1: 1, 0 / epsilon                        (ogni 1 toglie uno 0)
+% q0 -> q2: epsilon, 0 / 0                  (n > 0, m = 0)
+% q1 -> q2: epsilon, 0 / 0                  (input finito con 0 sulla pila: n > m)
+% q0 -> q3: 1, Z0 / Z0                      (n = 0, m > 0)
+% q1 -> q3: 1, Z0 / Z0                      (si legge un 1 a pila "vuota": n < m)
+% q3: 1, Z0 / Z0                            (si leggono gli 1 restanti)
+% q2 non ha transizioni uscenti: accetta solo se l'input è esaurito.
+% Se n = m si termina in q0 (n = 0) o in q1 con Z0 in cima: stati non finali.
+% Dopo un 1 non si può più leggere uno 0 (q1, q2, q3 non hanno transizioni con 0).
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio 3}
+        Scrivere un PDA che riconosce il linguaggio
+        \[
+                L = \{ \zero^{i} \uno^{j} \due^{k} \; \vert \; j = i + k, i>0, j>0 \}
+        \]
+        sull'alfabeto $\{\zero, \uno, \due\}$.
+% Soluzione (accettazione per stato finale), Gamma = {0, 1, Z0}.
+% Una parola di L si scompone in modo unico come 0^i 1^i 1^k 2^k:
+% i primi i simboli 1 cancellano gli 0, gli altri k vengono impilati
+% e poi cancellati dai 2.
+% q0: 0, Z0 / 0 Z0;  0, 0 / 00             (si impilano gli 0)
+% q0 -> q1: 1, 0 / epsilon                  (garantisce i > 0)
+% q1: 1, 0 / epsilon                        (gli 1 cancellano gli 0)
+% q1 -> q2: 1, Z0 / 1 Z0                    (finiti gli 0, si impilano gli 1)
+% q2: 1, 1 / 11
+% q2 -> q3: 2, 1 / epsilon
+% q3: 2, 1 / epsilon                        (i 2 cancellano gli 1)
+% q1 -> q4: epsilon, Z0 / Z0                (caso k = 0)
+% q3 -> q4: epsilon, Z0 / Z0
+% q4 unico stato finale, senza transizioni uscenti.
+% Variante per pila vuota: q1 e q3 hanno epsilon, Z0 / epsilon al posto
+% delle transizioni verso q4.
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio 4}
+        Scrivere un PDA che riconosce il linguaggio
+        \[
+                L = \{ \zero^{n} \uno^{m} \; \vert \; n \le m \le 2n, n>0, m>0 \}
+        \]
+        sull'alfabeto $\Sigma_{B}$.
+
+        \bigskip
+
+% Soluzione (accettazione per pila vuota), Gamma = {X, Z0}.
+% Per ogni 0 letto si impilano, in modo non deterministico, una oppure due X;
+% ogni 1 letto toglie una X.
+% q0: 0, Z0 / X Z0;  0, Z0 / XX Z0;  0, X / XX;  0, X / XXX
+% q0 -> q1: 1, X / epsilon                  (garantisce n > 0 e m > 0)
+% q1: 1, X / epsilon
+% q1: epsilon, Z0 / epsilon                 (si svuota la pila)
+% Dopo aver letto 0^n la pila contiene tra n e 2n simboli X (ogni valore
+% intermedio è possibile), quindi la pila si svuota leggendo esattamente
+% m simboli 1 se e solo se n <= m <= 2n.
+% Variante per stato finale: q1 -> q2 con epsilon, Z0 / Z0, q2 finale.
+\end{frame}
+
+
+
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-engine: luatex
+%%% TeX-master: t
+%%% End:

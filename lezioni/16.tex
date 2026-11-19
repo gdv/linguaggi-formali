@@ -1,15 +1,253 @@
 \include{common/header}
 
+\tikzset{
+        albero/.style={level distance=9mm, every node/.style={font=\small},
+                edge from parent/.style={draw, white!70!black}},
+}
+
 \begin{document}
 
 
 \begin{frame}[fragile]
-	\frametitle{Linguaggi e Computabilità: Lezione 16}
-\begin{enumerate}
+        \frametitle{Linguaggi e Computabilità: Lezione 16}
+\begin{itemize}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
-\end{enumerate}
+Grammatiche ambigue
+\end{itemize}
+\end{frame}
+
+
+
+
+\begin{frame}
+        \frametitle{Esempio 1: espressioni aritmetiche}
+        \[
+                E \to E + E \mid E \ast E \mid ( E ) \mid \mathtt{x}
+        \]
+        La parola $\mathtt{x} + \mathtt{x} \ast \mathtt{x}$ ha due alberi di derivazione:
+
+        \medskip
+        \begin{columns}[T]
+                \begin{column}{0.45\textwidth}
+                        \centering
+                        \begin{tikzpicture}[albero, sibling distance=12mm]
+                                \node {$E$}
+                                child {node {$E$} child {node {$\mathtt{x}$}}}
+                                child {node {$+$}}
+                                child {node {$E$}
+                                        child {node {$E$} child {node {$\mathtt{x}$}}}
+                                        child {node {$\ast$}}
+                                        child {node {$E$} child {node {$\mathtt{x}$}}}};
+                        \end{tikzpicture}
+
+                        $\mathtt{x} + (\mathtt{x} \ast \mathtt{x})$
+                \end{column}
+                \begin{column}{0.45\textwidth}
+                        \centering
+                        \begin{tikzpicture}[albero, sibling distance=12mm]
+                                \node {$E$}
+                                child {node {$E$}
+                                        child {node {$E$} child {node {$\mathtt{x}$}}}
+                                        child {node {$+$}}
+                                        child {node {$E$} child {node {$\mathtt{x}$}}}}
+                                child {node {$\ast$}}
+                                child {node {$E$} child {node {$\mathtt{x}$}}};
+                        \end{tikzpicture}
+
+                        $(\mathtt{x} + \mathtt{x}) \ast \mathtt{x}$
+                \end{column}
+        \end{columns}
+\end{frame}
+
+
+% \begin{frame}
+%         \frametitle{Esempio 1: derivazioni sinistre}
+%         Prima derivazione (si applica prima $E \to E + E$):
+%         \[
+%                 E \Rightarrow E + E \Rightarrow \mathtt{x} + E
+%                 \Rightarrow \mathtt{x} + E \ast E
+%                 \Rightarrow \mathtt{x} + \mathtt{x} \ast E
+%                 \Rightarrow \mathtt{x} + \mathtt{x} \ast \mathtt{x}
+%         \]
+%         Seconda derivazione (si applica prima $E \to E \ast E$):
+%         \[
+%                 E \Rightarrow E \ast E \Rightarrow E + E \ast E
+%                 \Rightarrow \mathtt{x} + E \ast E
+%                 \Rightarrow \mathtt{x} + \mathtt{x} \ast E
+%                 \Rightarrow \mathtt{x} + \mathtt{x} \ast \mathtt{x}
+%         \]
+
+%         \bigskip
+%         Grammatica non ambigua per lo stesso linguaggio (precedenza e associatività):
+%         \[
+%                 E \to E + T \mid T \qquad
+%                 T \to T \ast F \mid F \qquad
+%                 F \to ( E ) \mid \mathtt{x}
+%         \]
+% \end{frame}
+
+
+\begin{frame}
+        \frametitle{Esempio 2: \emph{dangling else}}
+        \[
+                S \to \texttt{if}\ b\ \texttt{then}\ S
+                \mid \texttt{if}\ b\ \texttt{then}\ S\ \texttt{else}\ S
+                \mid a
+        \]
+        La parola
+        \[
+                \texttt{if}\ b\ \texttt{then}\ \texttt{if}\ b\ \texttt{then}\ a\ \texttt{else}\ a
+        \]
+        ha due alberi di derivazione:
+        \begin{itemize}
+                \item
+                $\texttt{if}\ b\ \texttt{then}\ \bigl(\texttt{if}\ b\ \texttt{then}\ a\ \texttt{else}\ a\bigr)$:
+                l'\texttt{else} appartiene all'\texttt{if} interno
+                \item
+                $\texttt{if}\ b\ \texttt{then}\ \bigl(\texttt{if}\ b\ \texttt{then}\ a\bigr)\ \texttt{else}\ a$:
+                l'\texttt{else} appartiene all'\texttt{if} esterno
+        \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esempio 2: alberi di derivazione}
+        \begin{columns}[T]
+                \begin{column}{0.5\textwidth}
+                        \centering
+                        \begin{tikzpicture}[albero, level 1/.style={sibling distance=11mm},
+                                level 2/.style={sibling distance=8mm}]
+                                \node {$S$}
+                                child {node {\texttt{if}}}
+                                child {node {$b$}}
+                                child {node {\texttt{then}}}
+                                child {node {$S$}
+                                        child {node {\texttt{if}}}
+                                        child {node {$b$}}
+                                        child {node {\texttt{then}}}
+                                        child {node {$S$} child {node {$a$}}}
+                                        child {node {\texttt{else}}}
+                                        child {node {$S$} child {node {$a$}}}};
+                        \end{tikzpicture}
+                \end{column}
+                \begin{column}{0.5\textwidth}
+                        \centering
+                        \begin{tikzpicture}[albero, level 1/.style={sibling distance=11mm},
+                                level 2/.style={sibling distance=8mm}]
+                                \node {$S$}
+                                child {node {\texttt{if}}}
+                                child {node {$b$}}
+                                child {node {\texttt{then}}}
+                                child {node {$S$}
+                                        child {node {\texttt{if}}}
+                                        child {node {$b$}}
+                                        child {node {\texttt{then}}}
+                                        child {node {$S$} child {node {$a$}}}}
+                                child {node {\texttt{else}}}
+                                child {node {$S$} child {node {$a$}}};
+                        \end{tikzpicture}
+                \end{column}
+        \end{columns}
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esempio 3: parentesi bilanciate}
+        \[
+                S \to S S \mid ( S ) \mid \varepsilon
+        \]
+        La parola $()()()$ ha (almeno) due alberi di derivazione:
+
+        \medskip
+        \begin{columns}[T]
+                \begin{column}{0.45\textwidth}
+                        \centering
+                        \begin{tikzpicture}[albero, level distance=8mm, level 1/.style={sibling distance=30mm},
+                                level 2/.style={sibling distance=16mm}, level 3/.style={sibling distance=6mm}]
+                                \node {$S$}
+                                child {node {$S$}
+                                        child {node {$S$} child {node {$($}} child {node {$S$} child {node {$\varepsilon$}}} child {node {$)$}}}
+                                        child {node {$S$} child {node {$($}} child {node {$S$} child {node {$\varepsilon$}}} child {node {$)$}}}}
+                                child[level 2/.style={sibling distance=6mm}] {node {$S$} child {node {$($}} child {node {$S$} child {node {$\varepsilon$}}} child {node {$)$}}};
+                        \end{tikzpicture}
+                \end{column}
+                \begin{column}{0.45\textwidth}
+                        \centering
+                        \begin{tikzpicture}[albero, level distance=8mm, level 1/.style={sibling distance=30mm},
+                                level 2/.style={sibling distance=16mm}, level 3/.style={sibling distance=6mm}]
+                                \node {$S$}
+                                child[level 2/.style={sibling distance=6mm}] {node {$S$} child {node {$($}} child {node {$S$} child {node {$\varepsilon$}}} child {node {$)$}}}
+                                child {node {$S$}
+                                        child {node {$S$} child {node {$($}} child {node {$S$} child {node {$\varepsilon$}}} child {node {$)$}}}
+                                        child {node {$S$} child {node {$($}} child {node {$S$} child {node {$\varepsilon$}}} child {node {$)$}}}};
+                        \end{tikzpicture}
+                \end{column}
+        \end{columns}
+
+        \medskip
+        Peggio: anche $\varepsilon$ ha infiniti alberi
+        ($S \Rightarrow SS \Rightarrow S \Rightarrow \varepsilon$, \dots).
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio 1}
+        Scrivere una grammatica context-free che genera il linguaggio
+        \[
+                L = \{ \zero^{n} \uno^{m} \; \vert \; n \neq m, n\ge 0, m\ge 0 \}
+        \]
+        sull'alfabeto $\Sigma_{B}$.
+% Soluzione:
+% S -> 0 S 1 | A | B
+% A -> 0 A | 0
+% B -> 1 B | 1
+% S genera coppie 0...1 bilanciate, poi un blocco non vuoto di soli 0
+% (n > m) oppure di soli 1 (n < m).
+% La grammatica non è ambigua.
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio 2}
+        Scrivere una grammatica context-free che genera il linguaggio
+        \[
+                L = \{ \zero^{i} \uno^{j} \due^{k} \; \vert \; j = i + k, i>0, j>0 \}
+        \]
+        sull'alfabeto $\{\zero, \uno, \due\}$.
+% Soluzione:
+% S -> A B
+% A -> 0 A 1 | epsilon
+% B -> 1 B 2 | epsilon
+% Una parola di L si scompone in modo unico come 0^i 1^i 1^k 2^k:
+% A genera la prima parte, B la seconda.
+\end{frame}
+
+
+\begin{frame}
+        \frametitle{Esercizio 3}
+        Scrivere una grammatica context-free ambigua e una non ambigua che generino il linguaggio
+        \[
+                L = \{ \zero^{n} \uno^{m} \; \vert \; n \le m \le 2n, n>0, m>0 \}
+        \]
+        sull'alfabeto $\Sigma_{B}$.
+
+        \bigskip
+
+% Soluzione (ambigua):
+% S -> 0 S 1 | 0 S 1 1 | 01 | 011
+% Ogni 0 è accoppiato con uno oppure due 1.
+% È ambigua: 00111 si ottiene come 0(0 1 1)1 oppure 0(0 1)11, cioè
+% S => 0S1 => 00S111 => 00111  e  S => 0S11 => 00S111 => 00111.
+% Soluzione (non ambigua): si usano prima tutte le coppie 0-1, poi le 0-11
+% S -> 0 S 1 | T | 01
+% T -> 0 T 1 1 |  011
 \end{frame}
 
 
 \end{document}
+
+%%% Local Variables:
+%%% mode: LaTeX
+%%% TeX-engine: luatex
+%%% TeX-master: t
+%%% End:
