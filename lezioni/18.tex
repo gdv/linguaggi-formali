@@ -4,12 +4,80 @@
 
 
 \begin{frame}[fragile]
-	\frametitle{Linguaggi e Computabilità: Lezione 18}
+        \frametitle{Linguaggi e Computabilità: Lezione 18}
 \begin{enumerate}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
+Equivalenza dei PDA che accettano per pila vuota o per stato accettante
 \end{enumerate}
 \end{frame}
 
+
+\begin{frame}[fragile]
+        \frametitle{Costruire il DFA equivalente}
+\begin{tikzpicture}[
+    shorten >=1pt,
+    node distance=2cm,
+    on grid,
+    auto,
+    every state/.style={draw=black, thick, fill=white, minimum size=1.2cm},
+    >=Stealth,
+    thick
+]
+
+   % Define the states based on the layout
+   \node[state, accepting, initial, initial text=] (q0) {$q_0$};
+   \node[state] (q1) [below=of q0] {$q_1$};
+   \node[state] (q3) [right=of q0, xshift=3cm] {$q_3$};
+   \node[state, accepting] (q2) [below=of q3] {$q_2$};
+   \node[state] (q4) [below left=of q1] {$q_4$};
+   \node[state] (q5) [below right=1cm and 2.7cm of q3] {$q_5$};
+
+   % Define the transition paths
+   \path[->]
+    % Transitions from q0
+    (q0) edge [bend left=15] node {\zero,\uno} (q3)
+    (q0) edge [bend left=20] node [right] {$\epsilon$} (q1)
+
+    % Transitions from q1
+    (q1) edge [bend left=20] node [left] {\zero} (q0)
+    (q1) edge node [above] {$\varepsilon$} (q4)
+    (q1) edge node [above left] {\uno} (q2)
+
+    % Transitions from q2
+    (q2) edge [out=165, in=-15, looseness=.4] node [above left, yshift=1ex] {\zero} (q0)
+    (q2) edge [bend right=20] node [right] {\uno} (q3)
+
+    % Transitions from q3
+    (q3) edge [bend right=20] node [left] {\zero} (q2)
+
+    % Transitions from q4
+    (q4) edge [out=75, in=195, looseness=0.9] node [left] {\zero} (q0)
+
+    % Transitions from q5
+    (q5) edge node [below right] {\zero} (q2)
+    (q5) edge node [above right] {\uno} (q3)
+    (q5) edge [out=270, in=15] node [above] {\zero} (q4);
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]
+        \frametitle{Pumping Lemma}
+        $L = \{ \uno^{2n}\zero\uno\zero\zero^{n-1}\uno^{n} \; \vert \; n \ge 1 \}$ è regolare ?
+        \end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Costruire il DFA}
+linguaggio $L$ sull'alfabeto $\Sigma = \{\zero, \uno, \due, \tre\}$ e formato dalle
+parole $w$ tali che:
+(1) $w$ contiene la sottostringa \zero\zero\uno;
+(2) $w$ termina con \zero;
+(3) $w$ inizia con almeno due \zero.\\
+Ad esempio, le parole \zero\zero\uno\zero, \zero\zero\uno\zero\uno\zero,
+\zero\zero\uno\uno\due\uno\zero,
+\zero\zero\zero\tre\zero\zero\uno\due\tre\zero appartengono a $L$,
+mentre
+le parole \zero\zero\due\uno\due\tre\zero, \zero\zero\uno\due\uno\tre\tre, \zero\uno\due\uno\tre\uno\zero non appartengono a $L$.
+\end{frame}
 
 \end{document}
