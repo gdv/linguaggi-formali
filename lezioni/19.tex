@@ -12,4 +12,152 @@ Passaggio da CFG a PDA
 \end{frame}
 
 
+\begin{frame}[fragile]
+        \frametitle{Esercizio 1}
+Data la grammatica $G$ con variabile iniziale $S$ e produzioni
+\[
+S \to aSb \mid \varepsilon
+\]
+\begin{enumerate}
+\item costruire il PDA $P$ che accetta per pila vuota il linguaggio $L(G)$;
+\item mostrare la computazione di $P$ che accetta la stringa $aabb$.
+\end{enumerate}
+\end{frame}
+% SOLUZIONE
+% P = ({q}, {a,b}, {S,a,b}, delta, q, S), accettazione per pila vuota.
+% delta(q, eps, S) = {(q, aSb), (q, eps)}
+% delta(q, a, a)   = {(q, eps)}
+% delta(q, b, b)   = {(q, eps)}
+% Computazione su aabb:
+% (q,aabb,S) |- (q,aabb,aSb) |- (q,abb,Sb) |- (q,abb,aSbb) |- (q,bb,Sbb)
+%   |- (q,bb,bb) |- (q,b,b) |- (q,eps,eps)   => accettata
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 2}
+Data la grammatica $G$ con variabile iniziale $S$ e produzioni
+\[
+S \to aSa \mid bSb \mid a \mid b \mid \varepsilon
+\]
+\begin{enumerate}
+\item costruire il PDA $P$ che accetta per pila vuota il linguaggio $L(G)$;
+\item mostrare la computazione di $P$ che accetta la stringa $abba$;
+\item mostrare una computazione di $P$ su $abba$ che \emph{non} porta ad accettare.
+\end{enumerate}
+\end{frame}
+% SOLUZIONE
+% L(G) = palindromi su {a,b}.
+% P = ({q}, {a,b}, {S,a,b}, delta, q, S), accettazione per pila vuota.
+% delta(q, eps, S) = {(q, aSa), (q, bSb), (q, a), (q, b), (q, eps)}
+% delta(q, a, a)   = {(q, eps)}
+% delta(q, b, b)   = {(q, eps)}
+% Computazione accettante su abba (S => aSa => abSba => abba):
+% (q,abba,S) |- (q,abba,aSa) |- (q,bba,Sa) |- (q,bba,bSba) |- (q,ba,Sba)
+%   |- (q,ba,ba) |- (q,a,a) |- (q,eps,eps)
+% Computazione non accettante: scelgo S -> eps al primo passo
+% (q,abba,S) |- (q,abba,eps): pila vuota ma input non letto, nessuna mossa possibile.
+% Oppure: (q,abba,S) |- (q,abba,bSb): b in cima alla pila, a in input, bloccato.
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 3}
+Data la grammatica $G$ delle espressioni aritmetiche, con variabile iniziale $E$ e produzioni
+\begin{align*}
+E & \to E + T \mid T\\
+T & \to T * F \mid F\\
+F & \to (E) \mid a
+\end{align*}
+\begin{enumerate}
+\item costruire il PDA $P$ che accetta per pila vuota il linguaggio $L(G)$;
+\item mostrare la computazione di $P$ che accetta la stringa $a+a*a$;
+\item $P$ ha computazioni infinite? Perché?
+\end{enumerate}
+\end{frame}
+% SOLUZIONE
+% P = ({q}, {+,*,(,),a}, {E,T,F,+,*,(,),a}, delta, q, E), pila vuota.
+% delta(q, eps, E) = {(q, E+T), (q, T)}
+% delta(q, eps, T) = {(q, T*F), (q, F)}
+% delta(q, eps, F) = {(q, (E)), (q, a)}
+% delta(q, x, x)   = {(q, eps)}   per ogni x in {+,*,(,),a}
+% Derivazione sinistra: E => E+T => T+T => F+T => a+T => a+T*F => a+F*F
+%   => a+a*F => a+a*a
+% Computazione:
+% (q,a+a*a,E) |- (q,a+a*a,E+T) |- (q,a+a*a,T+T) |- (q,a+a*a,F+T)
+%   |- (q,a+a*a,a+T) |- (q,+a*a,+T) |- (q,a*a,T) |- (q,a*a,T*F)
+%   |- (q,a*a,F*F) |- (q,a*a,a*F) |- (q,*a,*F) |- (q,a,F) |- (q,a,a)
+%   |- (q,eps,eps)   => accettata
+% Computazioni infinite: si', a causa della ricorsione sinistra.
+% (q,w,E) |- (q,w,E+T) |- (q,w,E+T+T) |- ... la pila cresce senza
+% leggere input (analogamente con T -> T*F). Non e' un problema per
+% l'accettazione (basta che esista una computazione accettante), ma
+% mostra perche' un parser top-down non puo' gestire la ricorsione sinistra.
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 4}
+Sia $L = \{ a^n b^m c^{n+m} \mid n, m \ge 0 \}$.
+\begin{enumerate}
+\item scrivere una grammatica CFG $G$ tale che $L(G) = L$;
+\item costruire il PDA $P_N$ che accetta $L$ per pila vuota;
+\item mostrare la computazione di $P_N$ che accetta la stringa $aabccc$;
+\item trasformare $P_N$ in un PDA $P_F$ che accetta $L$ per stato accettante.
+\end{enumerate}
+\end{frame}
+% SOLUZIONE
+% Grammatica: S -> aSc | B ;  B -> bBc | eps
+% P_N = ({q}, {a,b,c}, {S,B,a,b,c}, delta_N, q, S), pila vuota.
+% delta_N(q, eps, S) = {(q, aSc), (q, B)}
+% delta_N(q, eps, B) = {(q, bBc), (q, eps)}
+% delta_N(q, x, x)   = {(q, eps)}  per x in {a,b,c}
+% Derivazione: S => aSc => aaScc => aaBcc => aabBccc => aabccc
+% Computazione:
+% (q,aabccc,S) |- (q,aabccc,aSc) |- (q,abccc,Sc) |- (q,abccc,aScc)
+%   |- (q,bccc,Scc) |- (q,bccc,Bcc) |- (q,bccc,bBccc) |- (q,ccc,Bccc)
+%   |- (q,ccc,ccc) |- (q,cc,cc) |- (q,c,c) |- (q,eps,eps)
+% P_F = ({p0, q, pf}, {a,b,c}, {S,B,a,b,c,X0}, delta_F, p0, X0, {pf})
+% delta_F(p0, eps, X0) = {(q, S X0)}
+% delta_F contiene tutte le transizioni di delta_N
+% delta_F(q, eps, X0)  = {(pf, eps)}
+% Su aabccc: (p0,aabccc,X0) |- (q,aabccc,S X0) |- ... |- (q,eps,X0) |- (pf,eps,eps)
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 5}
+Sia $L$ il linguaggio delle stringhe su $\{a,b\}$ con lo stesso numero di $a$ e di $b$.
+\begin{enumerate}
+\item scrivere una grammatica CFG $G$ tale che $L(G) = L$ e dimostrare che $L(G)=L$;
+\item costruire il PDA $P$ che accetta $L$ per pila vuota;
+\item mostrare la computazione di $P$ che accetta la stringa $abba$;
+\item costruire un PDA \emph{con al più due simboli di pila oltre al simbolo iniziale} che accetti $L$ senza passare dalla grammatica, e confrontarlo con $P$.
+\end{enumerate}
+\end{frame}
+% SOLUZIONE
+% Grammatica: S -> aSbS | bSaS | eps
+% Correttezza (cenno):
+%  - L(G) in L: induzione sulla lunghezza della derivazione, ogni produzione
+%    aggiunge una a e una b.
+%  - L in L(G): induzione su |w|. Se w = eps ok. Se w inizia con a, sia
+%    w = a u b v dove b e' la prima posizione in cui il prefisso ha #a = #b.
+%    Allora u e v hanno #a = #b, sono piu' corte e per ipotesi induttiva
+%    S =>* u, S =>* v, quindi S => aSbS =>* aubv = w. Simmetrico se inizia con b.
+% P = ({q}, {a,b}, {S,a,b}, delta, q, S), pila vuota.
+% delta(q, eps, S) = {(q, aSbS), (q, bSaS), (q, eps)}
+% delta(q, a, a)   = {(q, eps)}
+% delta(q, b, b)   = {(q, eps)}
+% Derivazione: S => aSbS => abS => abbSaS => abbaS => abba
+% Computazione:
+% (q,abba,S) |- (q,abba,aSbS) |- (q,bba,SbS) |- (q,bba,bS) |- (q,ba,S)
+%   |- (q,ba,bSaS) |- (q,a,SaS) |- (q,a,aS) |- (q,eps,S) |- (q,eps,eps)
+% PDA diretto: un solo stato q, simboli di pila {Z0, A, B}, pila vuota.
+%  La pila conta l'eccesso di a (simboli A) o di b (simboli B).
+% delta(q, a, Z0) = {(q, A Z0)}   delta(q, b, Z0) = {(q, B Z0)}
+% delta(q, a, A)  = {(q, AA)}     delta(q, b, B)  = {(q, BB)}
+% delta(q, a, B)  = {(q, eps)}    delta(q, b, A)  = {(q, eps)}
+% delta(q, eps, Z0) = {(q, eps)}
+% Confronto: il PDA diretto e' deterministico tranne per la mossa su Z0
+%  (e diventa un DPDA se accetta per stato finale), mentre P e'
+%  intrinsecamente non deterministico: deve "indovinare" la produzione
+%  da applicare (es. su abba, scegliere S -> eps all'inizio fallisce).
+
+
 \end{document}

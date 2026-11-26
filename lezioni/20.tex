@@ -4,12 +4,138 @@
 
 
 \begin{frame}[fragile]
-	\frametitle{Linguaggi e Computabilità: Lezione 20}
+        \frametitle{Linguaggi e Computabilità: Lezione 20}
 \begin{enumerate}
 \item
-Passaggio Espressioni regolari a $\epsilon$-NFA
+      Forme normali
+\item PDA deterministici e linguaggi prefix-free
 \end{enumerate}
 \end{frame}
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 1: forma normale di Chomsky}
+Trasformare in forma normale di Chomsky la grammatica con variabile iniziale $S$ e produzioni
+\begin{align*}
+S & \to aAb \mid B \mid E\\
+A & \to aA \mid \varepsilon\\
+B & \to bB \mid b\\
+E & \to cE
+\end{align*}
+Descrivere ogni passo: eliminazione delle $\varepsilon$-produzioni, delle produzioni unitarie,
+dei simboli inutili, e infine riduzione dei corpi a due variabili o a un terminale.
+\end{frame}
+% SOLUZIONE
+% 1. epsilon-produzioni. Annullabili: {A}. S non annullabile, quindi eps non in L.
+%    S -> aAb | ab | B | E
+%    A -> aA | a
+%    B -> bB | b
+%    E -> cE
+% 2. Produzioni unitarie. Coppie unitarie: (S,S), (S,B), (S,E), (A,A), (B,B), (E,E).
+%    S -> aAb | ab | bB | b | cE
+%    A -> aA | a
+%    B -> bB | b
+%    E -> cE
+% 3. Simboli inutili.
+%    Generatori: a, b, c, A, B, S. E NON e' generatore (E -> cE non termina mai).
+%    Elimino E e le produzioni che lo contengono:
+%    S -> aAb | ab | bB | b ;  A -> aA | a ;  B -> bB | b
+%    Raggiungibili da S: S, A, B (tutti) -> nessuna altra eliminazione.
+% 4. Terminali nei corpi lunghi: Ca -> a, Cb -> b
+%    S -> Ca A Cb | Ca Cb | Cb B | b
+%    A -> Ca A | a
+%    B -> Cb B | b
+% 5. Corpi di lunghezza > 2: S -> Ca A Cb diventa S -> Ca D, D -> A Cb
+% Grammatica finale in CNF:
+%    S  -> Ca D | Ca Cb | Cb B | b
+%    D  -> A Cb
+%    A  -> Ca A | a
+%    B  -> Cb B | b
+%    Ca -> a
+%    Cb -> b
+% (L = { a^n b : n >= 1 } unione { b^m : m >= 1 })
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 2: forma normale di Chomsky}
+Trasformare in forma normale di Chomsky la grammatica con variabile iniziale $S$ e produzioni
+\begin{align*}
+S & \to ASB \mid \varepsilon\\
+A & \to aAS \mid a\\
+B & \to SbS \mid A \mid bb
+\end{align*}
+Il linguaggio generato contiene $\varepsilon$: come si deve trattare?
+\end{frame}
+% SOLUZIONE
+% 1. epsilon-produzioni. Annullabili: {S} (A e B non sono annullabili).
+%    Poiche' eps in L(G), la CNF genera L(G) - {eps}
+%    (se serve eps, si aggiunge una nuova variabile iniziale S0 -> S | eps).
+%    S -> ASB | AB
+%    A -> aAS | aA | a
+%    B -> SbS | bS | Sb | b | A | bb
+% 2. Produzioni unitarie: solo B -> A. Coppie unitarie: (B,A) oltre a quelle banali.
+%    B -> SbS | bS | Sb | b | bb | aAS | aA | a
+% 3. Simboli inutili. Generatori: A (a), B (b), S (AB). Tutti raggiungibili da S.
+%    Nessuna eliminazione.
+% 4. Terminali: Ca -> a, Cb -> b
+%    S -> A S B | A B
+%    A -> Ca A S | Ca A | a
+%    B -> S Cb S | Cb S | S Cb | b | Cb Cb | Ca A S | Ca A | a
+% 5. Corpi lunghi: introduco
+%    D1 -> S B   (per A S B)
+%    D2 -> A S   (per Ca A S, usato sia in A che in B)
+%    D3 -> Cb S  (per S Cb S)
+% Grammatica finale in CNF:
+%    S  -> A D1 | A B
+%    D1 -> S B
+%    A  -> Ca D2 | Ca A | a
+%    D2 -> A S
+%    B  -> S D3 | Cb S | S Cb | b | Cb Cb | Ca D2 | Ca A | a
+%    D3 -> Cb S
+%    Ca -> a
+%    Cb -> b
+
+
+\begin{frame}[fragile]
+        \frametitle{Esercizio 3: da PDA a DPDA}
+Sia $P = (\{q_0, q_1\}, \{a,b\}, \{X, Z_0\}, \delta, q_0, Z_0)$ con accettazione per pila vuota e
+\begin{align*}
+\delta(q_0, a, Z_0) & = \{(q_0, XZ_0)\} &
+\delta(q_0, a, X) & = \{(q_0, XX)\}\\
+\delta(q_0, \varepsilon, X) & = \{(q_1, X)\} &
+\delta(q_1, b, X) & = \{(q_1, \varepsilon)\}\\
+\delta(q_1, \varepsilon, Z_0) & = \{(q_1, \varepsilon)\}
+\end{align*}
+\begin{enumerate}
+\item dire perché $P$ non è deterministico e quale linguaggio $N(P)$ accetta;
+\item verificare che $N(P)$ è prefix-free;
+\item costruire un DPDA che accetta $N(P)$ per pila vuota;
+\item si può fare lo stesso per $\{a^n b^m \mid n \ge m \ge 1\}$? Perché?
+\end{enumerate}
+\end{frame}
+% SOLUZIONE
+% 1. In q0 con X in cima alla pila sono possibili sia la mossa su a sia la
+%    mossa eps verso q1: P deve "indovinare" quando sono finite le a.
+%    N(P) = { a^n b^n : n >= 1 }.
+% 2. Se a^m b^m fosse prefisso proprio di a^n b^n, con m < n, dopo a^m
+%    dovrebbe esserci b, ma in a^n b^n c'e' a. Quindi nessuna stringa di L
+%    e' prefisso proprio di un'altra stringa di L.
+% 3. DPDA: si passa in q1 leggendo la prima b invece che con una mossa eps.
+%    delta(q0, a, Z0)  = {(q0, X Z0)}
+%    delta(q0, a, X)   = {(q0, XX)}
+%    delta(q0, b, X)   = {(q1, eps)}
+%    delta(q1, b, X)   = {(q1, eps)}
+%    delta(q1, eps, Z0) = {(q1, eps)}
+%    Deterministico: per ogni (stato, simbolo di pila) c'e' al piu' una mossa,
+%    e quando c'e' una mossa eps (q1, Z0) non ci sono mosse su input.
+%    Es. aabb: (q0,aabb,Z0) |- (q0,abb,XZ0) |- (q0,bb,XXZ0) |- (q1,b,XZ0)
+%              |- (q1,eps,Z0) |- (q1,eps,eps)
+% 4. No: {a^n b^m : n >= m >= 1} non e' prefix-free (aab e aabb stanno
+%    entrambe in L). Un DPDA che accetta per pila vuota, dopo aver letto aab
+%    ha la pila vuota e non puo' piu' muoversi, quindi non accetta aabb.
+%    I linguaggi accettati da DPDA per pila vuota sono esattamente i DCFL
+%    prefix-free. (Il linguaggio e' comunque accettato da un DPDA per stato
+%    finale.)
 
 
 \end{document}
